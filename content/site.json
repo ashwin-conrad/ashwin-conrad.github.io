@@ -1,0 +1,959 @@
+{
+  "site": {
+    "name": "Ashwin Conrad",
+    "initials": "AC.",
+    "title": "Ashwin Conrad | Engineering Portfolio",
+    "year": "2026",
+    "resume_path": "portfolio/resume.pdf"
+  },
+  "nav": [
+    {
+      "label": "About",
+      "href": "#about"
+    },
+    {
+      "label": "Experience",
+      "href": "#experience"
+    },
+    {
+      "label": "Projects",
+      "href": "#projects"
+    },
+    {
+      "label": "Passions",
+      "href": "#passions"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
+  ],
+  "hero": {
+    "eyebrow": "ENGINEERING / ELECTRONICS / FABRICATION",
+    "headline_prefix": "Hi, I'm",
+    "headline_name": "Ashwin Conrad.",
+    "description": "Electronics engineer and fabricator with hands-on experience in controls, automation, panel design, and low-voltage systems. I build reliable solutions that work.",
+    "buttons": [
+      {
+        "label": "View Projects",
+        "href": "#projects",
+        "style": "primary"
+      },
+      {
+        "label": "View Resume",
+        "href": "portfolio/resume.pdf",
+        "style": "secondary",
+        "target": "_blank"
+      }
+    ]
+  },
+  "about": {
+    "number": "01 / ABOUT",
+    "heading": "Building things that work.",
+    "lead": "I'm an electronics engineer who takes projects from concept through design, fabrication, testing, and delivery. I combine electronics, controls, automation, and hands-on fabrication to solve real problems.",
+    "body": "My background spans industrial control systems, low-voltage electronics for motorsports, electrical panel design and assembly, and personal projects in metalworking and autobody restoration. I thrive at the intersection of hardware, software, and mechanical systems\u2014whether building electrical panels, developing data pipelines, or learning new fabrication skills.",
+    "skills": [
+      "Electrical Panel Design",
+      "Low Voltage Electronics",
+      "Controls & Automation",
+      "Python",
+      "Power BI",
+      "Data Analysis",
+      "Quality Assurance",
+      "Fabrication & CAD"
+    ]
+  },
+  "experience": {
+    "number": "02 / EXPERIENCE",
+    "heading": "Work Experience",
+    "items": [
+      {
+        "date": "Winter 2025 \u2013 Present",
+        "role": "Low Voltage Electronics Lead",
+        "company": "Formula EV Racing",
+        "description": "Lead low-voltage electrical systems for a university Formula EV team. Manage power distribution, control modules, and sensor integration while coordinating with mechanical and software teams.",
+        "tags": [
+          "Electronics",
+          "Leadership",
+          "CAD",
+          "Team Coordination"
+        ]
+      },
+      {
+        "date": "2025 - 2026",
+        "role": "Engineering Co-op",
+        "company": "AltaGas",
+        "description": "Developed data pipelines, automation tools, and technical systems across corrosion monitoring, asset management, and inspection planning for multi-facility operations.",
+        "tags": [
+          "Python",
+          "Data Analysis",
+          "Power BI",
+          "Automation"
+        ]
+      },
+      {
+        "date": "May \u2013 Aug 2024, Jun \u2013 Aug 2023",
+        "role": "Control Panel Technician",
+        "company": "Spartan Controls",
+        "description": "Built electrical panels from design through assembly and QC. Loaded control module software, performed pre-delivery quality assurance, and managed projects from issue to customer delivery.",
+        "tags": [
+          "Panel Assembly",
+          "Electrical",
+          "QA",
+          "Project Management"
+        ]
+      }
+    ],
+    "callout": {
+      "number": "FULL EXPERIENCE",
+      "heading": "Want the complete version?",
+      "button_label": "Open Resume ->"
+    }
+  },
+  "projects": {
+    "number": "03 / PROJECTS",
+    "heading": "Selected Projects",
+    "items": [
+      {
+        "number": "01",
+        "type": "AUTOMATION & DATA",
+        "name": "Corrosion Monitoring Dashboard",
+        "description": "Built a centralized data pipeline in Microsoft Fabric to automate corrosion coupon tracking across 12 facilities with 100+ monitored assets, replacing manual vendor report processing.",
+        "tags": [
+          "Fabric",
+          "Power BI",
+          "Python",
+          "Automation"
+        ],
+        "image": {
+          "src": "assets/photos/AltaGas1.jpeg",
+          "alt": "AltaGas facility inspection with team members examining equipment"
+        },
+        "featured": true
+      },
+      {
+        "number": "02",
+        "type": "SOFTWARE AUTOMATION",
+        "name": "Inspection Scope Generation Tool",
+        "description": "Developed a Python-based tool using openpyxl and python-docx to automate creation of 500+ equipment-specific inspection scopes from database exports, reducing manual creation time by 95%.",
+        "tags": [
+          "Python",
+          "Automation",
+          "Documentation"
+        ],
+        "image": {
+          "src": "",
+          "alt": ""
+        }
+      },
+      {
+        "number": "03",
+        "type": "ENGINEERING SYSTEMS",
+        "name": "Heat Exchanger Lifecycle Analysis",
+        "description": "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers to assess fatigue risk, identify monitoring gaps, and recommend operational changes to extend asset life.",
+        "tags": [
+          "Data Analysis",
+          "Python",
+          "Technical Analysis"
+        ],
+        "image": {
+          "src": "",
+          "alt": ""
+        }
+      },
+      {
+        "number": "04",
+        "type": "MOTORSPORTS ELECTRONICS",
+        "name": "Formula EV Electrical Systems",
+        "description": "Leading low-voltage electrical design and integration for a university Formula EV team, managing power distribution, sensor networks, and control system coordination.",
+        "tags": [
+          "Electronics",
+          "CAD",
+          "Leadership",
+          "Integration"
+        ],
+        "image": {
+          "src": "",
+          "alt": ""
+        }
+      }
+    ]
+  },
+  "photos": {
+    "number": "04 / PHOTOS",
+    "heading": "Build Photos",
+    "intro": "Photos from projects, prototypes, events, and work worth showing visually.",
+    "items": [
+      {
+        "src": "assets/photos/AltaGas2.png",
+        "alt": "AltaGas equipment inspection work"
+      },
+      {
+        "src": "assets/photos/Tour1.png",
+        "alt": "Tour Alberta for Cancer Ride team participation"
+      },
+      {
+        "src": "assets/photos/Tour2.jpeg",
+        "alt": "Tour Alberta for Cancer Ride event"
+      }
+    ]
+  },
+  "passions": {
+    "number": "05 / OUTSIDE ENGINEERING",
+    "heading": "Projects, Passions & Curiosity",
+    "items": [
+      {
+        "number": "01",
+        "name": "Fabrication & Metalworking",
+        "description": "Metal fabrication, welding, autobody work, and hands-on problem-solving. I enjoy learning new fabrication techniques and building durable solutions that last."
+      },
+      {
+        "number": "02",
+        "name": "Motorsports",
+        "description": "Formula EV racing, vehicle engineering, and pushing the boundaries of what student teams can achieve. Building systems that perform under pressure."
+      },
+      {
+        "number": "03",
+        "name": "Woodworking & Design",
+        "description": "Woodworking projects, industrial design, and CAD. I enjoy the process of designing something functional and building it with my hands."
+      },
+      {
+        "number": "04",
+        "name": "Community & Volunteerism",
+        "description": "Tour Alberta for Cancer Ride and other community initiatives. Supporting causes I believe in and building stronger teams and communities."
+      }
+    ]
+  },
+  "contact": {
+    "number": "06 / CONTACT",
+    "heading": "Let's build something.",
+    "lead": "I'm always interested in engineering projects, new opportunities, and meeting people who like designing and building things. Whether it's automation, electronics, fabrication, or motorsports\u2014let's talk.",
+    "links": [
+      {
+        "label": "conrad.ashwin@gmail.com",
+        "href": "mailto:conrad.ashwin@gmail.com"
+      },
+      {
+        "label": "LinkedIn ->",
+        "href": "https://www.linkedin.com/in/ashwin-conrad-17b6722a0/",
+        "target": "_blank"
+      },
+      {
+        "label": "GitHub ->",
+        "href": "https://github.com/ashwin-conrad",
+        "target": "_blank"
+      }
+    ]
+  },
+  "resume": {
+    "name": "Ashwin Conrad",
+    "headline": "[Insert degree, discipline, or target role]",
+    "contact": [
+      "[insert email]",
+      "[insert phone]",
+      "[insert city, province]",
+      "[insert LinkedIn]",
+      "[insert GitHub or portfolio URL]"
+    ],
+    "pages": [
+      {
+        "title": "Work Experience, Skills & Volunteering",
+        "blocks": [
+          {
+            "type": "section",
+            "heading": "Work Experience",
+            "items": [
+              {
+                "role": "[insert job title]",
+                "organization": "[insert company]",
+                "location": "[insert location]",
+                "dates": "[insert dates]",
+                "bullets": [
+                  "[insert impact-focused bullet with action, technical detail, and result]",
+                  "[insert second bullet focused on tools, process, or collaboration]",
+                  "[insert third bullet if needed]"
+                ]
+              },
+              {
+                "role": "[insert job title]",
+                "organization": "[insert company]",
+                "location": "[insert location]",
+                "dates": "[insert dates]",
+                "bullets": [
+                  "[insert impact-focused bullet]",
+                  "[insert technical or leadership bullet]"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "skills",
+            "heading": "Skills",
+            "groups": [
+              {
+                "label": "Mechanical",
+                "items": [
+                  "[insert CAD tool]",
+                  "[insert design skill]",
+                  "[insert manufacturing skill]"
+                ]
+              },
+              {
+                "label": "Electrical / Controls",
+                "items": [
+                  "[insert electronics skill]",
+                  "[insert controls skill]",
+                  "[insert test equipment]"
+                ]
+              },
+              {
+                "label": "Software / Data",
+                "items": [
+                  "Python",
+                  "[insert analysis tool]",
+                  "[insert automation or web skill]"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "heading": "Volunteering & Leadership",
+            "items": [
+              {
+                "role": "[insert volunteer or leadership role]",
+                "organization": "[insert organization]",
+                "location": "[insert location]",
+                "dates": "[insert dates]",
+                "bullets": [
+                  "[insert leadership, mentoring, fundraising, event, or service contribution]",
+                  "[insert measurable outcome or responsibility]"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Project & Club Portfolio",
+        "blocks": [
+          {
+            "type": "section",
+            "heading": "Engineering Projects",
+            "items": [
+              {
+                "role": "[insert project name]",
+                "organization": "[insert course, club, or personal context]",
+                "location": "[insert tools or system type]",
+                "dates": "[insert dates]",
+                "bullets": [
+                  "[insert problem statement and your role]",
+                  "[insert design/build/test methods]",
+                  "[insert outcome, metric, or lesson learned]"
+                ]
+              },
+              {
+                "role": "[insert project name]",
+                "organization": "[insert course, club, or personal context]",
+                "location": "[insert tools or system type]",
+                "dates": "[insert dates]",
+                "bullets": [
+                  "[insert concise project contribution]",
+                  "[insert technical details and result]"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "heading": "Clubs & Teams",
+            "items": [
+              {
+                "role": "[insert club/team role]",
+                "organization": "[insert club/team name]",
+                "location": "[insert subsystem, committee, or focus area]",
+                "dates": "[insert dates]",
+                "bullets": [
+                  "[insert responsibility or technical contribution]",
+                  "[insert teamwork, competition, or delivery outcome]"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "excel_layout": [
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": "",
+        "field": "name",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A1",
+        "range": "A1:H1"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": "",
+        "field": "headline",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A2",
+        "range": "A2:H2"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": "",
+        "field": "contact",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A3",
+        "range": "A3:H3"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": "",
+        "field": "page_title",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A5",
+        "range": "A5:H5"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "block_heading",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A7",
+        "range": "A7:H7"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "role",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A8",
+        "range": "A8:D8"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "dates",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E8",
+        "range": "E8:H8"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "organization",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A9",
+        "range": "A9:D9"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "location",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E9",
+        "range": "E9:H9"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "bullet_0",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A10",
+        "range": "A10:H11"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "bullet_1",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A12",
+        "range": "A12:H13"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "bullet_2",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A14",
+        "range": "A14:H15"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "role",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A17",
+        "range": "A17:D17"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "dates",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "E17",
+        "range": "E17:H17"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "organization",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A18",
+        "range": "A18:D18"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "location",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "E18",
+        "range": "E18:H18"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "bullet_0",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A19",
+        "range": "A19:H20"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 0,
+        "field": "bullet_1",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A21",
+        "range": "A21:H22"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "block_heading",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A25",
+        "range": "A25:H25"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "skill_label",
+        "item_index": "",
+        "group_index": 0,
+        "anchor": "A26",
+        "range": "A26:B26"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "skill_items",
+        "item_index": "",
+        "group_index": 0,
+        "anchor": "C26",
+        "range": "C26:H27"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "skill_label",
+        "item_index": "",
+        "group_index": 1,
+        "anchor": "A28",
+        "range": "A28:B28"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "skill_items",
+        "item_index": "",
+        "group_index": 1,
+        "anchor": "C28",
+        "range": "C28:H29"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "skill_label",
+        "item_index": "",
+        "group_index": 2,
+        "anchor": "A30",
+        "range": "A30:B30"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 1,
+        "field": "skill_items",
+        "item_index": "",
+        "group_index": 2,
+        "anchor": "C30",
+        "range": "C30:H31"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "block_heading",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A33",
+        "range": "A33:H33"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "role",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A34",
+        "range": "A34:D34"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "dates",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E34",
+        "range": "E34:H34"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "organization",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A35",
+        "range": "A35:D35"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "location",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E35",
+        "range": "E35:H35"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "bullet_0",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A36",
+        "range": "A36:H37"
+      },
+      {
+        "sheet": "Page 1 - Experience",
+        "page_index": 0,
+        "block_index": 2,
+        "field": "bullet_1",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A38",
+        "range": "A38:H39"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": "",
+        "field": "name",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A1",
+        "range": "A1:H1"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": "",
+        "field": "headline",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A2",
+        "range": "A2:H2"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": "",
+        "field": "contact",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A3",
+        "range": "A3:H3"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": "",
+        "field": "page_title",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A5",
+        "range": "A5:H5"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "block_heading",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A7",
+        "range": "A7:H7"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "role",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A8",
+        "range": "A8:D8"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "dates",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E8",
+        "range": "E8:H8"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "organization",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A9",
+        "range": "A9:D9"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "location",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E9",
+        "range": "E9:H9"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "bullet_0",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A10",
+        "range": "A10:H11"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "bullet_1",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A12",
+        "range": "A12:H13"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "bullet_2",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A14",
+        "range": "A14:H15"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "role",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A17",
+        "range": "A17:D17"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "dates",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "E17",
+        "range": "E17:H17"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "organization",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A18",
+        "range": "A18:D18"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "location",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "E18",
+        "range": "E18:H18"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "bullet_0",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A19",
+        "range": "A19:H20"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 0,
+        "field": "bullet_1",
+        "item_index": 1,
+        "group_index": "",
+        "anchor": "A21",
+        "range": "A21:H22"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "block_heading",
+        "item_index": "",
+        "group_index": "",
+        "anchor": "A25",
+        "range": "A25:H25"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "role",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A26",
+        "range": "A26:D26"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "dates",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E26",
+        "range": "E26:H26"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "organization",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A27",
+        "range": "A27:D27"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "location",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "E27",
+        "range": "E27:H27"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "bullet_0",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A28",
+        "range": "A28:H29"
+      },
+      {
+        "sheet": "Page 2 - Portfolio",
+        "page_index": 1,
+        "block_index": 1,
+        "field": "bullet_1",
+        "item_index": 0,
+        "group_index": "",
+        "anchor": "A30",
+        "range": "A30:H31"
+      }
+    ]
+  }
+}
