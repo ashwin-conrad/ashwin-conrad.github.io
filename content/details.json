@@ -453,5 +453,244 @@
         ]
       }
     ]
+  },
+  "portfolio": {
+    "hero": {
+      "eyebrow": "MECHANICAL ENGINEERING / VEHICLE SYSTEMS / MANUFACTURING",
+      "title": "Engineering physical systems from the package outward.",
+      "description": "Mechanical engineering student with hands-on experience in vehicle low-voltage systems, industrial panel assembly, manufacturing quality, asset integrity, and engineering automation. I work across the details that make a design buildable, testable, serviceable, and documented.",
+      "image": {
+        "src": "assets/photos/formula-ua27-lv-ac.jpg",
+        "alt": "Ashwin Conrad holding a Formula EV low-voltage electrical enclosure during competition preparation"
+      },
+      "facts": [
+        "Mechanical Engineering · University of Alberta",
+        "Low Voltage Electronics Lead · Formula EV Racing",
+        "Engineering Co-op · AltaGas"
+      ]
+    },
+    "profile": {
+      "number": "01 / ENGINEERING PROFILE",
+      "heading": "Mechanical engineering first. Systems thinking in practice.",
+      "lead": "My work starts with the physical system: how it fits, how it is built, how it is accessed, how it behaves in use, and how the people around it can diagnose and improve it.",
+      "body": "Electrical integration, data tooling, and technical documentation extend that mechanical foundation. Across Formula EV, industrial controls, and asset-integrity work, I have worked where packaging, hardware, manufacturing, testing, data, and communication meet.",
+      "signals": [
+        {
+          "label": "DESIGN WITH THE BUILD IN MIND",
+          "text": "Vehicle packaging, panel drawings, physical assembly, and fabrication projects keep the practical constraints visible early."
+        },
+        {
+          "label": "CLOSE THE LOOP WITH TESTING",
+          "text": "QA checks, troubleshooting, inspection planning, and operating-data analysis turn observations into engineering decisions."
+        },
+        {
+          "label": "MAKE THE WORK TRANSFERABLE",
+          "text": "Diagrams, scope packages, dashboards, and repeatable tools help technicians, operations teams, and other engineers use the result."
+        }
+      ]
+    },
+    "case_studies": [
+      {
+        "id": "formula-ev",
+        "number": "02 / FEATURED ENGINEERING PROJECT",
+        "type": "FORMULA SAE / VEHICLE INTEGRATION",
+        "title": "Formula UA27 low-voltage systems",
+        "subtitle": "Vehicle electrical integration shaped by packaging, safety interfaces, accessibility, and team coordination.",
+        "image": {
+          "src": "assets/photos/formula-ua27-unveiling.jpg",
+          "alt": "Formula UA27 at its unveiling, showing the full vehicle context for low-voltage electrical integration"
+        },
+        "metadata": [
+          {"label": "ROLE", "value": "Low Voltage Electronics Lead"},
+          {"label": "TEAM", "value": "Formula EV Racing"},
+          {"label": "SYSTEM", "value": "Vehicle low-voltage systems"},
+          {"label": "TIMEFRAME", "value": "Winter 2025 – Present"}
+        ],
+        "objective": "Plan and integrate the low-voltage system for Formula UA27 around the vehicle package, including power distribution, control hardware, sensors, and safety interfaces.",
+        "context": "Formula EV work requires electrical decisions to coexist with the chassis, vehicle packaging, team schedule, and the practical need to inspect and service the car.",
+        "contribution": "Lead low-voltage electrical system planning and integration; coordinate board-level hardware, safety interfaces, sensor integration, and power-distribution work with mechanical and software teammates.",
+        "constraints": ["Vehicle packaging", "Safety interfaces", "Sensor and control integration", "Accessibility and serviceability", "Cross-team coordination"],
+        "process": ["System planning", "Vehicle packaging coordination", "Hardware and safety-interface integration", "Build support", "Inspection and iteration"],
+        "decision": {
+          "label": "ENGINEERING FOCUS",
+          "title": "Treat the electrical system as part of the vehicle package.",
+          "text": "Low-voltage work is not isolated from the mechanical system. Component placement, access, and integration are considered alongside the electrical function so the team can build, inspect, and troubleshoot the vehicle as a complete system."
+        },
+        "results": ["Current subsystem leadership role for Formula UA27.", "Coordinates low-voltage planning across board-level hardware, sensors, safety interfaces, and vehicle packaging."],
+        "tools": ["Low-voltage systems", "Power distribution", "Sensor integration", "Vehicle packaging", "Technical coordination"],
+        "figures": [
+          {
+            "src": "assets/photos/formula-ua27-lv-ac.jpg",
+            "alt": "Ashwin holding the Formula EV low-voltage enclosure at competition",
+            "caption": "Figure 01 — Low-voltage enclosure in the competition environment. The work is evaluated in the context of the vehicle, access, inspection, and team readiness—not only at the bench."
+          },
+          {
+            "src": "assets/photos/formula-ua27-frame-progress.jpg",
+            "alt": "Formula vehicle chassis progressing through fabrication",
+            "caption": "Figure 02 — Chassis progress provides the packaging context for subsystem placement, routing, and service access."
+          }
+        ],
+        "placeholders": ["[ADD DIAGRAM: UA27 low-voltage architecture and safety interfaces]", "[ADD PHOTO: installed low-voltage system or harness routing]", "[ADD TEST RECORD: electrical inspection, debugging, or validation evidence]"]
+      },
+      {
+        "id": "heat-exchanger",
+        "number": "03 / FEATURED ENGINEERING PROJECT",
+        "type": "ASSET INTEGRITY / ENGINEERING ANALYSIS",
+        "title": "Brazed aluminum heat-exchanger lifecycle analysis",
+        "subtitle": "Operating data, OEM limits, and field context combined to support risk-based decisions on aging process equipment.",
+        "image": {
+          "src": "assets/photos/altagas-field-inspection-1.jpg",
+          "alt": "AltaGas field inspection team examining facility equipment"
+        },
+        "metadata": [
+          {"label": "ROLE", "value": "Engineering Co-op"},
+          {"label": "CONTEXT", "value": "AltaGas asset integrity"},
+          {"label": "SCOPE", "value": "12+ heat exchangers"},
+          {"label": "DATA WINDOW", "value": "2+ years of operation"}
+        ],
+        "objective": "Assess fatigue risk and monitoring gaps for brazed aluminum heat exchangers using historical operating data and OEM-prescribed operating limits.",
+        "context": "The equipment supports facility operations, so the analysis had to connect historical process behaviour with inspection planning and practical operational awareness.",
+        "contribution": "Extracted process data with the PI Historian Excel add-in and developed Python screening tools for thermal ramp rates, cyclic operation limits, and parting-sheet temperature distributions.",
+        "constraints": ["Historical-data quality", "OEM operating limits", "Sensor coverage", "Aging equipment", "Operational practicality"],
+        "process": ["Extract operating data", "Screen against OEM limits", "Identify monitoring gaps", "Develop recommendations", "Present lifecycle findings"],
+        "decision": {
+          "label": "ENGINEERING DECISION",
+          "title": "Use measured operating behaviour to focus the next action.",
+          "text": "The work connected process data with failure mechanisms and monitoring coverage. Recommendations included additional instrumentation where coverage was insufficient and reduced actuated-valve opening rates to limit turbulent flow and erosion on the inner pipe face."
+        },
+        "results": ["Analyzed 2+ years of data across 12+ brazed aluminum heat exchangers.", "Compiled lifecycle findings for leadership to support risk-based decision-making and inspection planning."],
+        "tools": ["Python", "PI Historian Excel add-in", "Data analysis", "Technical assessment", "Engineering reporting"],
+        "figures": [
+          {
+            "src": "assets/photos/altagas-field-inspection-2.jpg",
+            "alt": "Field inspection activity around AltaGas equipment",
+            "caption": "Figure 03 — Field context for the asset data. Engineering analysis is stronger when it remains connected to the equipment, inspection work, and operating decisions it supports."
+          }
+        ],
+        "placeholders": ["[ADD DIAGRAM: anonymized analysis workflow from historian data to screening result]", "[ADD FIGURE: anonymized thermal-ramp or cycling trend with engineering annotation]"]
+      },
+      {
+        "id": "spartan-controls",
+        "number": "04 / FEATURED ENGINEERING PROJECT",
+        "type": "MANUFACTURING / ELECTRICAL ASSEMBLY / QA",
+        "title": "Control panel builds and pre-delivery quality",
+        "subtitle": "Drawing interpretation, panel assembly, wiring, software loading, and quality checks in an industrial manufacturing environment.",
+        "image": {
+          "src": "assets/photos/spartan-panel-3.jpg",
+          "alt": "Open electrical control panel with internal wiring and industrial hardware"
+        },
+        "metadata": [
+          {"label": "ROLE", "value": "Control Panel Technician"},
+          {"label": "COMPANY", "value": "Spartan Controls"},
+          {"label": "WORK", "value": "Panel assembly and QA"},
+          {"label": "TERMS", "value": "Summer 2023 & 2024"}
+        ],
+        "objective": "Build, wire, load, and check industrial control panels from engineering drawings through pre-delivery quality assurance.",
+        "context": "The work required precision at the component level while maintaining the broader delivery context: documented designs, repeatable build processes, quality expectations, and technician teamwork.",
+        "contribution": "Interpreted panel designs and electrical schematics; assembled and wired control panels; loaded control-module software; completed pre-delivery QA; and resolved quality-control deficiencies before customer delivery.",
+        "constraints": ["Drawing accuracy", "Wiring quality", "Repeatable assembly", "Pre-delivery QA", "Delivery schedule"],
+        "process": ["Review drawings", "Assemble hardware", "Wire and label", "Load software", "Check quality", "Resolve deficiencies"],
+        "decision": {
+          "label": "MANUFACTURING LESSON",
+          "title": "A panel is not complete when the last conductor is landed.",
+          "text": "The build also has to be checked against the documentation and prepared for the next person who will inspect, ship, install, or diagnose it. This perspective translates directly to serviceable product development."
+        },
+        "results": ["Built, wired, loaded, and checked a sample of 30+ control panels across individual and team builds.", "Processed 250+ PLC software updates in under half the allocated time while supporting panel production and QA."],
+        "tools": ["Engineering drawings", "Electrical schematics", "Panel assembly", "Wiring", "QA", "PLC software updates"],
+        "figures": [
+          {
+            "src": "assets/photos/spartan-panel-1.jpg",
+            "alt": "Electrical control panel with neatly routed and labelled wiring",
+            "caption": "Figure 04 — Panel build sample. Wiring, layout, labelling, and component placement must be executed consistently to support manufacturing quality and later inspection."
+          },
+          {
+            "src": "assets/photos/spartan-panel-4.jpg",
+            "alt": "Industrial electrical control panel during assembly or inspection",
+            "caption": "Figure 05 — Pre-delivery work is both a build task and a documentation task: the physical system has to match the intended design before it leaves the shop."
+          }
+        ],
+        "placeholders": ["[ADD DETAIL: redacted drawing or wiring-schematic excerpt that shows how a panel build was interpreted]", "[ADD PHOTO: QA or software-loading workflow]"]
+      }
+    ],
+    "experience": {
+      "number": "05 / ENGINEERING EXPERIENCE",
+      "heading": "Experience that connects design intent to physical work.",
+      "items": [
+        {
+          "date": "Winter 2025 – Present",
+          "role": "Low Voltage Electronics Lead",
+          "organization": "Formula EV Racing · University of Calgary",
+          "text": "Leads planning and integration for Formula UA27 low-voltage systems, coordinating power distribution, sensors, board-level hardware, safety interfaces, and vehicle packaging with mechanical and software teammates.",
+          "tags": ["Vehicle systems", "Low-voltage integration", "Packaging", "Technical leadership"]
+        },
+        {
+          "date": "2025 – 2026",
+          "role": "Engineering Co-op",
+          "organization": "AltaGas · Calgary, AB",
+          "text": "Developed engineering data workflows for corrosion monitoring, inspection planning, and asset lifecycle management across multi-facility operations. Work connected historical data, field context, operating decisions, and technical deliverables.",
+          "tags": ["Asset integrity", "Python", "Data analysis", "Technical documentation"]
+        },
+        {
+          "date": "Summer 2023 & 2024",
+          "role": "Control Panel Technician",
+          "organization": "Spartan Controls · Calgary, AB",
+          "text": "Built and quality-checked industrial control panels from drawings through assembly, wiring, software loading, and pre-delivery review. Worked in a production setting where safety, repeatability, documentation, and delivery mattered.",
+          "tags": ["Manufacturing", "Electrical assembly", "QA", "Troubleshooting"]
+        }
+      ]
+    },
+    "skills": {
+      "number": "06 / TECHNICAL SKILLS",
+      "heading": "Skill context over self-ratings.",
+      "groups": [
+        {"title": "Mechanical design & build", "items": ["SolidWorks", "AutoCAD & 2D laser cutting", "Engineering drawings", "Mechanical prototyping", "3D modelling and printing", "Fabrication and materials", "Packaging considerations"]},
+        {"title": "Vehicle & electrical systems", "items": ["Low-voltage systems", "Power distribution", "Sensor integration", "Safety interfaces", "Electrical schematics", "Panel wiring"]},
+        {"title": "Manufacturing & test", "items": ["Panel assembly", "Pre-delivery QA", "Inspection planning", "Troubleshooting", "Process and equipment context"]},
+        {"title": "Data & engineering automation", "items": ["Python", "Excel data analysis", "Power BI", "Microsoft Fabric", "Power Query", "openpyxl", "python-docx", "Aspen HYSYS", "Maximo", "JDE"]},
+        {"title": "Engineering communication", "items": ["Technical reporting", "Scope generation", "Engineering documentation", "Cross-functional coordination", "Leadership presentations"]}
+      ]
+    },
+    "documentation": {
+      "number": "07 / ENGINEERING DOCUMENTATION",
+      "heading": "Evidence from the vehicle, shop, field, and prototype bench.",
+      "intro": "These figures are selected for the engineering context they show. Open an image to inspect it at a larger size.",
+      "items": [
+        {"src": "assets/photos/formula-ua26-competition.jpg", "alt": "Formula vehicle at competition", "figure": "Figure 06", "title": "Competition context", "caption": "Vehicle systems are built for inspection, track-side troubleshooting, and team execution—not just for a desk review.", "wide": true},
+        {"src": "assets/photos/formula-ua27-lv-ac.jpg", "alt": "Formula EV low-voltage enclosure held at competition", "figure": "Figure 07", "title": "Low-voltage hardware", "caption": "A real subsystem is evaluated alongside the car, its interfaces, and the people who need to service it."},
+        {"src": "assets/photos/spartan-panel-2.jpg", "alt": "Industrial control panel interior with organised wiring", "figure": "Figure 08", "title": "Panel execution", "caption": "Industrial panel assembly reinforced the importance of drawings, wire routing, labelling, and quality checks."},
+        {"src": "assets/photos/mec260-prototype.jpg", "alt": "Small mechanical vehicle prototype with wheels and linkage", "figure": "Figure 09", "title": "Mechanical prototype", "caption": "Small-format course prototyping: physical packaging and iteration make design decisions visible quickly."},
+        {"src": "assets/photos/composite-skateboard-3.jpg", "alt": "Handmade composite skateboard deck", "figure": "Figure 10", "title": "Composite layup", "caption": "Early hands-on learning with lamination and fiberglass layups through a built composite deck."},
+        {"src": "assets/photos/altagas-field-inspection-2.jpg", "alt": "Inspection activity around industrial facility equipment", "figure": "Figure 11", "title": "Field context", "caption": "Asset data and documentation are useful only when they support equipment, inspections, and operating decisions."}
+      ]
+    },
+    "leadership": {
+      "number": "08 / LEADERSHIP & COMMUNICATION",
+      "heading": "Technical work becomes more useful when the team can act on it.",
+      "items": [
+        {"title": "Subsystem coordination", "text": "As Formula EV’s Low Voltage Electronics Lead, coordinate electrical planning with the mechanical and software constraints around the Formula UA27 vehicle."},
+        {"title": "Engineering communication", "text": "Built dashboards, inspection scopes, lifecycle summaries, and technical deliverables that turn source data and engineering judgement into work others can review and use."},
+        {"title": "Student leadership", "text": "Engineering Student Engagement Leader and recipient of the Undergraduate Student Leadership Award (2024–2025)."}
+      ]
+    },
+    "personal_builds": {
+      "number": "09 / HANDS-ON LEARNING",
+      "heading": "Materials and fabrication beyond the job description.",
+      "items": [
+        {"src": "assets/photos/knife-forging-blade.jpg", "alt": "Forged knife blade being shaped in a workshop", "title": "Knife forging", "text": "A Father’s Day forging project focused on shaping, heat response, grinding, and finish work."},
+        {"src": "assets/photos/composite-skateboard-2.jpg", "alt": "Green handmade composite skateboard deck", "title": "Composite skateboard deck", "text": "Hands-on learning in lamination and fiberglass layup, including a deck with sealed-in aluminum."},
+        {"src": "assets/photos/leather-tool-carrier-1.jpg", "alt": "Handmade leather tool carrier used in a workshop", "title": "Tool carrier", "text": "A durable shop aid designed and built to keep common hand tools organised during repeated panel work."}
+      ]
+    },
+    "contact": {
+      "number": "10 / CONTACT",
+      "heading": "Interested in automotive, mechanical design, vehicle systems, manufacturing, and product-development opportunities.",
+      "lead": "For engineering internships, co-ops, and early-career roles, I would be glad to share more context on the systems, decisions, and work shown here.",
+      "links": [
+        {"label": "Email Ashwin", "href": "mailto:conrad.ashwin@gmail.com"},
+        {"label": "LinkedIn", "href": "https://www.linkedin.com/in/ashwin-conrad-17b6722a0/", "external": true},
+        {"label": "GitHub", "href": "https://github.com/ashwin-conrad", "external": true},
+        {"label": "Download résumé (PDF)", "href": "portfolio/resume.pdf", "external": true}
+      ]
+    }
   }
 }

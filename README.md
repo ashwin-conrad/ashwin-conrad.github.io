@@ -3,23 +3,30 @@ Ashwin Conrad's Github Portfolio Website
 
 ## Repository layout
 
-- `content/` - editable site, resume, gallery, and project source data.
+- `content/` - editable site, resume, gallery, project, and case-study source data.
 - `content/context/` - supporting notes used while maintaining content.
 - `assets/photos/` - optimized images referenced by the site.
 - `assets/brand/` - brand references and visual assets.
-- `scripts/` - build and content-editing tools; shared paths live in `project_paths.py`.
-- `index.html`, `styles.css`, and `portfolio/resume.pdf` - generated GitHub Pages output.
+- `scripts/` - build and content-editing tools; `site_renderer.py` contains the presentation layer and `project_paths.py` contains shared paths.
+- `portfolio/resume.docx` - retained editable Word resume, including the Content Controls used for Word-to-website synchronization.
+- `index.html`, `styles.css`, `script.js`, and `portfolio/resume.pdf` - generated GitHub Pages output.
 - `tmp/` - local-only previews, downloads, and cloned reference repositories.
 
 ## Editing workflow
 
-Edit structure, navigation, and resume high-level details in `content/site.json`. Edit longer website descriptions, tags, image captions, gallery groups, and related links in `content/details.json`. Then rebuild the generated files:
+For a fresh local checkout, install the build dependencies first:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Edit structure, navigation, and resume high-level details in `content/site.json`. Edit the recruiter-facing engineering case studies, skills, figures, captions, gallery groups, and contact copy in `content/details.json` under `portfolio`. Then rebuild the generated files:
 
 ```powershell
 python scripts/build_site.py
 ```
 
-The script regenerates `index.html`, `styles.css`, and `portfolio/resume.pdf`. The resume block in `content/site.json` is the source of truth for roles, organizations, locations, and dates. Experience and project cards reference those resume items with `resume_id`, so the website mirrors the resume automatically.
+The script regenerates `index.html`, `styles.css`, `script.js`, and `portfolio/resume.pdf`, while refreshing the editable fields in `portfolio/resume.docx`. The resume block in `content/site.json` remains the structured source for roles, organizations, locations, dates, bullets, leadership, and awards. The case-study copy is deliberately separate so longer descriptions and placeholders can be maintained without bloating the resume.
 
 ## Shared resume and site links
 
@@ -65,6 +72,8 @@ Project cards support an optional image:
 }
 ```
 
+The primary portfolio renderer also uses image objects in `content/details.json > portfolio`. Images in case studies and documentation figures open in a small dependency-free lightbox. Keep public images in `assets/photos/` and add any missing engineering evidence listed in `CONTENT_TODO.md`.
+
 The grouped gallery is defined in `content/details.json` under `photos.groups`:
 
 ```json
@@ -88,38 +97,29 @@ The grouped gallery is defined in `content/details.json` under `photos.groups`:
 }
 ```
 
-## Resume template
+## Resume architecture
 
-The PDF resume is generated from the `resume` block in `content/site.json`.
+`content/site.json` is the structured synchronization data behind the resume and website. `content/details.json` remains for longer website case studies and is not used to duplicate resume text.
 
-- Page 1 is reserved for work experience, skills, and volunteering.
-- Page 2 is reserved for projects and clubs.
-- The builder enforces a two-page maximum and fails if a page has too much content.
-- The resume never includes website photos, photo captions, or project images.
+`portfolio/resume.docx` is both the public editable Word resume and the retained layout artifact. Its Content Controls are addressed by tag, not by Word's numeric `w:id`. Keep the controls intact when adjusting its layout; the build validates their complete tag inventory.
 
-Edit placeholder fields such as `[insert job title]`, `[insert impact-focused bullet]`, and `[insert project name]`, then rebuild:
+`scripts/resume/mapper.py` adapts stable resume IDs to the template's fixed slots: AltaGas and Spartan Controls are the two page-one experience entries; Formula EV is leadership plus a page-two technical project; four explicitly selected stable-ID projects populate page two. This makes any intentional fixed-template selection clear without duplicating resume prose.
 
-```powershell
-python scripts/build_site.py
-```
+Use `portfolio/resume.docx` as the only concise-resume editor. After making changes in Word, save and close it, then run `python scripts/sync_resume_from_word.py`. This imports its controls into `content/site.json` and rebuilds the PDF and website.
 
-## Excel resume editing
+Do not run the regular build after manual Word content changes without first running the Word sync command, because the regular build applies the structured JSON values back to the document. Technical-category labels and the portfolio callout are Word-only presentation copy, so direct edits to those controls remain in Word and are not copied into website JSON.
 
-Create or refresh the editable Excel template:
+Build only the resume:
 
 ```powershell
-python scripts/create_resume_template.py
+python scripts/build_resume.py
 ```
 
-Edit `content/resume_template.xlsx`:
-
-- Yellow merged cells are editable placeholders.
-- Borders show the reserved text areas that will be imported.
-- You can resize merged-cell boundaries in Excel to reserve more or less space.
-- Do not delete the top-left anchor cell of a placeholder block.
-
-Sync Excel back into JSON and rebuild the generated site/resume:
+Useful validation/build variants:
 
 ```powershell
-python scripts/sync_resume_from_excel.py
+python scripts/build_resume.py --validate-only
+python scripts/build_resume.py --docx-only
 ```
+
+The renderer validates Content Control tags, required values, configurable field-length limits, and the final two-page PDF. PDF export uses Microsoft Word automation when available, with LibreOffice headless as a local fallback. If neither is installed, the DOCX remains valid and the command reports how to proceed.

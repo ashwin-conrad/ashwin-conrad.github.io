@@ -2,22 +2,18 @@ from __future__ import annotations
 
 import html
 import json
-from pathlib import Path
-
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.units import inch
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph
 
 from project_paths import (
     DETAILS_CONTENT_PATH,
+    RESUME_DOCX_OUTPUT_PATH,
     RESUME_OUTPUT_PATH,
+    SCRIPT_OUTPUT_PATH,
     SITE_CONTENT_PATH,
     SITE_OUTPUT_PATH,
     STYLES_OUTPUT_PATH,
 )
+from resume.build import build_resume
+from site_renderer import render_engineering_index, render_engineering_styles, render_site_script
 
 ROOT = SITE_OUTPUT_PATH.parent
 
@@ -80,6 +76,8 @@ def apply_resume_mirrors(data: dict, details: dict) -> None:
 
     if details.get("photos"):
         data.setdefault("photos", {}).update(details["photos"])
+    if details.get("portfolio"):
+        data["portfolio"] = details["portfolio"]
 
 
 def mirror_resume_item(site_item: dict, resume_item: dict | None, organization_key: str) -> None:
@@ -1066,384 +1064,21 @@ footer {
 """
 
 
-def build_pdf(data: dict, output_path: Path) -> None:
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    resume = data.get("resume")
-    if not resume:
-        raise ValueError("content/site.json must include a resume block")
-    if len(resume.get("pages", [])) > 2:
-        raise ValueError("Resume template supports a maximum of two pages")
-
-    renderer = ResumeRenderer(output_path)
-    renderer.draw(resume)
-
-
-class ResumeRenderer:
-    def __init__(self, output_path: Path) -> None:
-        self.output_path = output_path
-        self.width, self.height = LETTER
-        self.margin_x = 0.58 * inch
-        self.top = self.height - 0.52 * inch
-        self.bottom = 0.5 * inch
-        self.content_width = self.width - (2 * self.margin_x)
-        self.canvas = canvas.Canvas(str(output_path), pagesize=LETTER)
-        self.resume_text = colors.HexColor("#151515")
-        self.resume_muted = colors.HexColor("#666666")
-        self.resume_accent = colors.HexColor("#e94f2f")
-        self.resume_border = colors.HexColor("#cccccc")
-        self.styles = {
-            "headline": ParagraphStyle(
-                "headline",
-                fontName="Helvetica",
-                fontSize=9,
-                leading=11,
-                textColor=self.resume_muted,
-            ),
-            "body": ParagraphStyle(
-                "body",
-                fontName="Helvetica",
-                fontSize=8.7,
-                leading=10.5,
-                textColor=self.resume_text,
-            ),
-            "bullet": ParagraphStyle(
-                "bullet",
-                fontName="Helvetica",
-                fontSize=8.5,
-                leading=10.2,
-                leftIndent=10,
-                bulletIndent=0,
-                textColor=self.resume_text,
-            ),
-            "classic_profile": ParagraphStyle(
-                "classic_profile",
-                fontName="Helvetica",
-                fontSize=10.5,
-                leading=13,
-                textColor=self.resume_text,
-            ),
-            "classic_body": ParagraphStyle(
-                "classic_body",
-                fontName="Helvetica",
-                fontSize=8.3,
-                leading=9.8,
-                textColor=self.resume_muted,
-            ),
-            "classic_body_bold": ParagraphStyle(
-                "classic_body_bold",
-                fontName="Helvetica-Bold",
-                fontSize=8.4,
-                leading=9.8,
-                textColor=self.resume_text,
-            ),
-            "classic_sidebar": ParagraphStyle(
-                "classic_sidebar",
-                fontName="Helvetica",
-                fontSize=9.5,
-                leading=11.2,
-                textColor=self.resume_muted,
-            ),
-            "classic_bullet": ParagraphStyle(
-                "classic_bullet",
-                fontName="Helvetica",
-                fontSize=8.1,
-                leading=9.6,
-                leftIndent=11,
-                bulletIndent=0,
-                textColor=self.resume_muted,
-            ),
-            "classic_title": ParagraphStyle(
-                "classic_title",
-                fontName="Helvetica-Bold",
-                fontSize=18,
-                leading=20,
-                textColor=self.resume_text,
-            ),
-        }
-
-    def draw(self, resume: dict) -> None:
-        if resume.get("template") == "classic_sidebar":
-            pages = resume.get("pages", [])
-            self._draw_classic_sidebar(resume)
-            for page_index, page in enumerate(pages[1:], start=2):
-                self.canvas.showPage()
-                self._draw_classic_content_page(resume, page, page_index)
-            self.canvas.save()
-            return
-
-        pages = resume.get("pages", [])
-        for page_index in range(2):
-            page = pages[page_index] if page_index < len(pages) else {"title": "", "blocks": []}
-            self._draw_page(resume, page, page_index + 1)
-            if page_index == 0:
-                self.canvas.showPage()
-        self.canvas.save()
-
-    def _draw_classic_sidebar(self, resume: dict) -> None:
-        c = self.canvas
-        margin_x = 0.52 * inch
-        top = self.height - 0.58 * inch
-        bottom = 0.42 * inch
-        gutter = 0.35 * inch
-        sidebar_width = 1.85 * inch
-        main_width = self.width - (2 * margin_x) - gutter - sidebar_width
-        sidebar_x = margin_x + main_width + gutter
-
-        c.setFillColor(self.resume_text)
-        c.setFont("Helvetica-Bold", 34)
-        c.drawString(margin_x, top, str(resume.get("name", "")))
-
-        contact_y = top + 4
-        for contact in resume.get("contact", []):
-            c.setFont("Helvetica-Bold" if "@" in str(contact) or "." in str(contact) and " " not in str(contact) else "Helvetica", 8.8)
-            c.setFillColor(self.resume_accent if "@" in str(contact) or str(contact).endswith(".ca") else self.resume_text)
-            c.drawString(sidebar_x, contact_y, str(contact))
-            contact_y -= 12
-
-        profile_y = top - 34
-        self._draw_paragraph_at(
-            str(resume.get("headline", "")),
-            margin_x,
-            profile_y,
-            main_width + 0.25 * inch,
-            "classic_profile",
-            bottom,
-            gap=0,
-        )
-
-        page = resume.get("pages", [{}])[0]
-        main_blocks = [block for block in page.get("blocks", []) if block.get("column", "main") != "sidebar"]
-        sidebar_blocks = [block for block in page.get("blocks", []) if block.get("column") == "sidebar"]
-
-        y_main = top - 118
-        for block in main_blocks:
-            y_main = self._draw_classic_block(block, margin_x, y_main, main_width, bottom)
-            y_main -= 8
-
-        y_side = top - 118
-        for block in sidebar_blocks:
-            y_side = self._draw_classic_block(block, sidebar_x, y_side, sidebar_width, bottom, sidebar=True)
-            y_side -= 26
-
-    def _draw_classic_content_page(self, resume: dict, page: dict, page_number: int) -> None:
-        c = self.canvas
-        margin_x = 0.52 * inch
-        top = self.height - 0.55 * inch
-        bottom = 0.45 * inch
-        width = self.width - (2 * margin_x)
-
-        c.setFillColor(self.resume_text)
-        c.setFont("Helvetica-Bold", 13)
-        c.drawString(margin_x, top, str(resume.get("name", "")))
-        c.setFont("Helvetica", 8.2)
-        c.setFillColor(self.resume_muted)
-        c.drawRightString(self.width - margin_x, top + 1, f"Page {page_number} of {max(len(resume.get('pages', [])), page_number)}")
-
-        c.setStrokeColor(self.resume_border)
-        c.setLineWidth(0.7)
-        c.line(margin_x, top - 11, self.width - margin_x, top - 11)
-
-        y = top - 34
-        if page.get("title"):
-            c.setFillColor(self.resume_text)
-            c.setFont("Helvetica-Bold", 23)
-            c.drawString(margin_x, y, str(page["title"]))
-            y -= 34
-
-        for block in page.get("blocks", []):
-            y = self._draw_classic_block(block, margin_x, y, width, bottom)
-            y -= 11
-
-    def _draw_classic_block(
-        self,
-        block: dict,
-        x: float,
-        y: float,
-        width: float,
-        bottom: float,
-        sidebar: bool = False,
-    ) -> float:
-        y = self._draw_classic_heading(str(block.get("heading", "")), x, y, bottom)
-        block_type = block.get("type", "section")
-        if block_type == "skills":
-            for group in block.get("groups", []):
-                items = ", ".join(str(item) for item in group.get("items", []))
-                y = self._draw_paragraph_at(items, x + 18, y, width - 18, "classic_body", bottom, bullet_text="-", gap=3)
-            return y
-        if block_type == "list":
-            for item in block.get("items", []):
-                text = item.get("text", item) if isinstance(item, dict) else item
-                style = "classic_sidebar" if sidebar else "classic_body"
-                y = self._draw_paragraph_at(str(text), x, y, width, style, bottom, gap=9 if sidebar else 4)
-            return y
-
-        for item in block.get("items", []):
-            y = self._draw_classic_item(item, x, y, width, bottom)
-        return y
-
-    def _draw_classic_heading(self, heading: str, x: float, y: float, bottom: float) -> float:
-        if y - 14 < bottom:
-            raise RuntimeError(f"Resume overflowed before heading {heading!r}. Shorten content/site.json.")
-        self.canvas.setFillColor(self.resume_accent)
-        self.canvas.setFont("Helvetica-Bold", 10)
-        self.canvas.drawString(x, y, heading.upper())
-        return y - 20
-
-    def _draw_classic_item(self, item: dict, x: float, y: float, width: float, bottom: float) -> float:
-        org = str(item.get("organization", ""))
-        loc = str(item.get("location", ""))
-        role = str(item.get("role", ""))
-        dates = str(item.get("dates", ""))
-        left = ", ".join(part for part in [org, loc] if part)
-        meta_parts = []
-        if left:
-            meta_parts.append(f"<b>{html.escape(left, quote=False)}</b>")
-        if role:
-            meta_parts.append(html.escape(role, quote=False))
-        if dates:
-            meta_parts.append(f"<i>{html.escape(dates, quote=False)}</i>")
-        y = self._draw_paragraph_at(" - ".join(meta_parts), x, y, width, "classic_body", bottom, allow_markup=True, gap=3)
-
-        for bullet in item.get("bullets", []):
-            style = "classic_body_bold" if str(bullet).startswith("2nd Year") else "classic_bullet"
-            y = self._draw_paragraph_at(str(bullet), x + 18, y, width - 18, style, bottom, bullet_text="-", gap=1)
-        return y - 6
-
-    def _draw_paragraph_at(
-        self,
-        text: str,
-        x: float,
-        y: float,
-        width: float,
-        style_name: str,
-        bottom: float,
-        gap: float = 4,
-        bullet_text: str | None = None,
-        allow_markup: bool = False,
-    ) -> float:
-        if not text:
-            return y
-        paragraph_text = text if allow_markup else html.escape(text, quote=False)
-        paragraph = Paragraph(paragraph_text, self.styles[style_name], bulletText=bullet_text)
-        _, height = paragraph.wrap(width, y - bottom)
-        if y - height - gap < bottom:
-            raise RuntimeError("Resume page overflowed. Shorten content/site.json to fit the classic one-page template.")
-        paragraph.drawOn(self.canvas, x, y - height)
-        return y - height - gap
-
-    def _draw_page(self, resume: dict, page: dict, page_number: int) -> None:
-        c = self.canvas
-        y = self.top
-
-        c.setFillColor(self.resume_text)
-        c.setFont("Helvetica-Bold", 20)
-        c.drawString(self.margin_x, y, str(resume.get("name", "[insert name]")))
-        c.setFont("Helvetica", 9)
-        c.setFillColor(self.resume_muted)
-        c.drawRightString(self.width - self.margin_x, y + 1, f"Page {page_number} of 2")
-        y -= 16
-
-        y = self._draw_paragraph(str(resume.get("headline", "")), y, "headline", page_number, gap=5)
-        contact = "  |  ".join(str(item) for item in resume.get("contact", []) if item)
-        y = self._draw_paragraph(contact, y, "headline", page_number, gap=12)
-
-        c.setStrokeColor(self.resume_accent)
-        c.setLineWidth(1.3)
-        c.line(self.margin_x, y, self.width - self.margin_x, y)
-        y -= 14
-
-        if page.get("title"):
-            c.setFont("Helvetica-Bold", 8.5)
-            c.setFillColor(self.resume_accent)
-            c.drawString(self.margin_x, y, str(page["title"]).upper())
-            y -= 18
-
-        for block in page.get("blocks", []):
-            y = self._draw_block(block, y, page_number)
-
-        c.setStrokeColor(self.resume_border)
-        c.setLineWidth(0.6)
-        c.line(self.margin_x, self.bottom - 5, self.width - self.margin_x, self.bottom - 5)
-
-    def _draw_block(self, block: dict, y: float, page_number: int) -> float:
-        block_type = block.get("type", "section")
-        y = self._draw_heading(str(block.get("heading", "[insert section heading]")), y, page_number)
-        if block_type == "skills":
-            for group in block.get("groups", []):
-                label = html.escape(str(group.get("label", "[insert skill group]")), quote=False)
-                items = html.escape(", ".join(str(item) for item in group.get("items", [])), quote=False)
-                text = f"<b>{label}:</b> {items}"
-                y = self._draw_paragraph(text, y, "body", page_number, gap=4, allow_markup=True)
-            return y - 7
-
-        for item in block.get("items", []):
-            y = self._draw_resume_item(item, y, page_number)
-        return y - 4
-
-    def _draw_heading(self, heading: str, y: float, page_number: int) -> float:
-        y = self._ensure_space(y, 22, page_number)
-        self.canvas.setFillColor(self.resume_text)
-        self.canvas.setFont("Helvetica-Bold", 10.5)
-        self.canvas.drawString(self.margin_x, y, heading.upper())
-        self.canvas.setStrokeColor(self.resume_border)
-        self.canvas.setLineWidth(0.5)
-        self.canvas.line(self.margin_x, y - 4, self.width - self.margin_x, y - 4)
-        return y - 16
-
-    def _draw_resume_item(self, item: dict, y: float, page_number: int) -> float:
-        title = str(item.get("role", "[insert role or project title]"))
-        org = str(item.get("organization", "[insert organization]"))
-        location = str(item.get("location", ""))
-        dates = str(item.get("dates", "[insert dates]"))
-        meta = " | ".join(part for part in [org, location] if part)
-
-        y = self._ensure_space(y, 36, page_number)
-        self.canvas.setFillColor(self.resume_text)
-        self.canvas.setFont("Helvetica-Bold", 9.4)
-        self.canvas.drawString(self.margin_x, y, title)
-        self.canvas.setFont("Helvetica", 8.4)
-        self.canvas.setFillColor(self.resume_muted)
-        self.canvas.drawRightString(self.width - self.margin_x, y, dates)
-        y -= 10
-
-        y = self._draw_paragraph(meta, y, "headline", page_number, gap=4)
-        for bullet in item.get("bullets", []):
-            y = self._draw_paragraph(str(bullet), y, "bullet", page_number, gap=2, bullet_text="-")
-        return y - 6
-
-    def _draw_paragraph(
-        self,
-        text: str,
-        y: float,
-        style_name: str,
-        page_number: int,
-        gap: float = 4,
-        bullet_text: str | None = None,
-        allow_markup: bool = False,
-    ) -> float:
-        if not text:
-            return y
-        paragraph_text = text if allow_markup else html.escape(text, quote=False)
-        paragraph = Paragraph(paragraph_text, self.styles[style_name], bulletText=bullet_text)
-        _, height = paragraph.wrap(self.content_width, y - self.bottom)
-        y = self._ensure_space(y, height + gap, page_number)
-        paragraph.drawOn(self.canvas, self.margin_x, y - height)
-        return y - height - gap
-
-    def _ensure_space(self, y: float, needed: float, page_number: int) -> float:
-        if y - needed < self.bottom:
-            raise RuntimeError(
-                f"Resume page {page_number} overflowed. Shorten blocks in content/site.json to keep the resume at two pages."
-            )
-        return y
-
-
 def main() -> None:
     data = load_content()
-    SITE_OUTPUT_PATH.write_text(render_index(data), encoding="utf-8", newline="\n")
-    STYLES_OUTPUT_PATH.write_text(render_styles(), encoding="utf-8", newline="\n")
-    build_pdf(data, RESUME_OUTPUT_PATH)
-    print(f"Built {SITE_OUTPUT_PATH.relative_to(ROOT)}, {STYLES_OUTPUT_PATH.relative_to(ROOT)}, and {RESUME_OUTPUT_PATH.relative_to(ROOT)}")
+    SITE_OUTPUT_PATH.write_text(render_engineering_index(data), encoding="utf-8", newline="\n")
+    STYLES_OUTPUT_PATH.write_text(render_engineering_styles(), encoding="utf-8", newline="\n")
+    SCRIPT_OUTPUT_PATH.write_text(render_site_script(), encoding="utf-8", newline="\n")
+    resume_result = build_resume(
+        data,
+        docx_path=RESUME_DOCX_OUTPUT_PATH,
+        pdf_path=RESUME_OUTPUT_PATH,
+    )
+    print(
+        f"Built {SITE_OUTPUT_PATH.relative_to(ROOT)}, {STYLES_OUTPUT_PATH.relative_to(ROOT)}, "
+        f"{SCRIPT_OUTPUT_PATH.relative_to(ROOT)}, {RESUME_DOCX_OUTPUT_PATH.relative_to(ROOT)}, and "
+        f"{RESUME_OUTPUT_PATH.relative_to(ROOT)} via {resume_result.pdf_backend}"
+    )
 
 
 if __name__ == "__main__":

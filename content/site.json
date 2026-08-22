@@ -2,14 +2,14 @@
   "site": {
     "name": "Ashwin Conrad",
     "initials": "AC.",
-    "title": "Ashwin Conrad | Engineering Portfolio",
+    "title": "Ashwin Conrad | Mechanical Engineering & Automotive Systems Portfolio",
     "year": "2026",
     "resume_path": "portfolio/resume.pdf"
   },
   "nav": [
     {
-      "label": "About",
-      "href": "#about"
+      "label": "Profile",
+      "href": "#profile"
     },
     {
       "label": "Experience",
@@ -20,12 +20,12 @@
       "href": "#projects"
     },
     {
-      "label": "Gallery",
-      "href": "#gallery"
+      "label": "Documentation",
+      "href": "#documentation"
     },
     {
-      "label": "Passions",
-      "href": "#passions"
+      "label": "Résumé",
+      "href": "#resume"
     },
     {
       "label": "Contact",
@@ -33,10 +33,10 @@
     }
   ],
   "hero": {
-    "eyebrow": "ENGINEERING / ELECTRONICS / FABRICATION",
-    "headline_prefix": "Hi, I'm",
-    "headline_name": "Ashwin Conrad.",
-    "description": "Electronics engineer and fabricator with hands-on experience in controls, automation, panel design, and low-voltage systems. I build reliable solutions that work.",
+    "eyebrow": "MECHANICAL ENGINEERING / VEHICLE SYSTEMS / MANUFACTURING",
+    "headline_prefix": "Mechanical engineering,",
+    "headline_name": "built for real systems.",
+    "description": "Mechanical engineering student with hands-on experience in vehicle systems, industrial manufacturing, engineering analysis, and technical automation. I work across the details that make a design buildable, testable, serviceable, and documented.",
     "buttons": [
       {
         "label": "View Projects",
@@ -52,37 +52,51 @@
     ]
   },
   "about": {
-    "number": "01 / ABOUT",
-    "heading": "Building things that work.",
-    "lead": "I'm an electronics engineer who takes projects from concept through design, fabrication, testing, and delivery. I combine electronics, controls, automation, and hands-on fabrication to solve real problems.",
-    "body": "My background spans industrial control systems, low-voltage electronics for motorsports, electrical panel design and assembly, and personal projects in metalworking and autobody restoration. I thrive at the intersection of hardware, software, and mechanical systems\u2014whether building electrical panels, developing data pipelines, or learning new fabrication skills.",
+    "number": "01 / ENGINEERING PROFILE",
+    "heading": "Mechanical engineering first. Systems thinking in practice.",
+    "lead": "My work starts with the physical system: how it fits, how it is built, how it is accessed, and how it can be tested and improved.",
+    "body": "Electrical integration, engineering data, and technical documentation extend a mechanical engineering foundation across Formula EV, industrial controls, and asset-integrity work. I am interested in automotive, motorsport, mechanical design, manufacturing, test, and product-development engineering roles.",
     "skills": [
+      "Mechanical Design",
+      "Project Management",
       "Electrical Panel Design",
       "Low Voltage Electronics",
-      "Controls & Automation",
-      "Python",
-      "Power BI",
       "Data Analysis",
-      "Quality Assurance",
-      "Fabrication & CAD"
+      "Fabrication & CAD",
+      "AI Enabled Design"
+    ],
+    "programs": [
+      "Microsoft Fabric",
+      "Microsoft Power BI",
+      "Microsoft Power Query",
+      "Microsoft Excel",
+      "SolidWorks",
+      "LoggerPro",
+      "Python",
+      "Java",
+      "VS Code",
+      "Bluebeam",
+      "Aspen HYSYS",
+      "Maximo",
+      "JDE"
     ]
   },
   "experience": {
-    "number": "02 / EXPERIENCE",
-    "heading": "Work Experience",
+    "number": "05 / ENGINEERING EXPERIENCE",
+    "heading": "Experience that connects design intent to physical work.",
     "items": [
       {
         "id": "formula-ev-lv",
         "resume_id": "formula-ev-lv",
-        "date": "Winter 2025 \u2013 Present",
+        "date": "Winter 2025 – Present",
         "role": "Low Voltage Electronics Lead",
         "company": "Formula EV Racing",
-        "description": "Lead low-voltage electrical systems for a university Formula EV team. Manage power distribution, control modules, and sensor integration while coordinating with mechanical and software teams.",
+        "description": "Lead low-voltage electrical-system planning and integration for Formula UA27, coordinating board-level hardware, safety interfaces, sensors, power distribution, and vehicle packaging with mechanical and software teammates.",
         "tags": [
-          "Electronics",
-          "Leadership",
-          "CAD",
-          "Team Coordination"
+          "Vehicle Systems",
+          "Low-Voltage Integration",
+          "Vehicle Packaging",
+          "Technical Leadership"
         ]
       },
       {
@@ -91,38 +105,38 @@
         "date": "2025 - 2026",
         "role": "Engineering Co-op",
         "company": "AltaGas",
-        "description": "Developed data pipelines, automation tools, and technical systems across corrosion monitoring, asset management, and inspection planning for multi-facility operations.",
+        "description": "Developed Python, Microsoft Fabric, and Power BI workflows for corrosion monitoring, inspection planning, and asset lifecycle work across multi-facility operations, connecting data analysis with field and operating context.",
         "tags": [
+          "Asset Integrity",
           "Python",
           "Data Analysis",
-          "Power BI",
-          "Automation"
+          "Technical Documentation"
         ]
       },
       {
         "id": "spartan-controls-technician",
         "resume_id": "spartan-controls-technician",
-        "date": "May \u2013 Aug 2024, Jun \u2013 Aug 2023",
+        "date": "May – Aug 2024, Jun – Aug 2023",
         "role": "Control Panel Technician",
         "company": "Spartan Controls",
-        "description": "Built electrical panels from design through assembly and QC. Loaded control module software, performed pre-delivery quality assurance, and managed projects from issue to customer delivery.",
+        "description": "Built and quality-checked industrial control panels from engineering drawings through assembly, wiring, software loading, and pre-delivery review in a production environment.",
         "tags": [
-          "Panel Assembly",
-          "Electrical",
-          "QA",
-          "Project Management"
+          "Manufacturing",
+          "Electrical Assembly",
+          "Quality Assurance",
+          "Troubleshooting"
         ]
       }
     ],
     "callout": {
-      "number": "FULL EXPERIENCE",
-      "heading": "Want the complete version?",
-      "button_label": "Open Resume ->"
+      "number": "RÉSUMÉ / SELECTED EXPERIENCE",
+      "heading": "The concise version, ready to share.",
+      "button_label": "Download Résumé PDF"
     }
   },
   "projects": {
-    "number": "03 / PROJECTS",
-    "heading": "Selected Projects",
+    "number": "02 / FEATURED ENGINEERING PROJECTS",
+    "heading": "Evidence of engineering judgement",
     "items": [
       {
         "id": "corrosion-monitoring-dashboard",
@@ -236,44 +250,44 @@
     ]
   },
   "photos": {
-    "id": "gallery",
-    "number": "04 / BUILD GALLERY",
-    "heading": "Build Gallery"
+    "id": "documentation",
+    "number": "07 / ENGINEERING DOCUMENTATION",
+    "heading": "Evidence from the vehicle, shop, field, and prototype bench"
   },
   "passions": {
-    "number": "05 / OUTSIDE ENGINEERING",
-    "heading": "Projects, Passions & Curiosity",
+    "number": "09 / HANDS-ON LEARNING",
+    "heading": "Materials and fabrication beyond the job description",
     "items": [
       {
         "number": "01",
         "name": "Fabrication & Metalworking",
-        "description": "Metal fabrication, welding, autobody work, and hands-on problem-solving. I enjoy learning new fabrication techniques and building durable solutions that last."
+        "description": "Hands-on projects in forging, fabrication, and material work. These builds make material response, process constraints, and finish quality visible."
       },
       {
         "number": "02",
         "name": "Motorsports",
-        "description": "Formula EV racing, vehicle engineering, and pushing the boundaries of what student teams can achieve. Building systems that perform under pressure."
+        "description": "Formula EV vehicle integration and the practical work of making systems accessible, serviceable, and ready for team use."
       },
       {
         "number": "03",
-        "name": "Woodworking & Design",
-        "description": "Woodworking projects, industrial design, and CAD. I enjoy the process of designing something functional and building it with my hands."
+        "name": "Composite Builds & Design",
+        "description": "Composite skateboard decks, prototyping, and CAD-supported design work developed through hands-on iteration and fabrication."
       },
       {
         "number": "04",
-        "name": "Community & Volunteerism",
-        "description": "Tour Alberta for Cancer Ride and other community initiatives. Supporting causes I believe in and building stronger teams and communities."
+        "name": "Technical Leadership",
+        "description": "Formula EV subsystem coordination and Engineering Student Engagement leadership, with a focus on making technical work useful to a broader team."
       }
     ]
   },
   "contact": {
-    "number": "06 / CONTACT",
-    "heading": "Let's build something.",
-    "lead": "I'm always interested in engineering projects, new opportunities, and meeting people who like designing and building things. Whether it's automation, electronics, fabrication, or motorsports\u2014let's talk.",
+    "number": "10 / CONTACT",
+    "heading": "Interested in automotive, mechanical design, vehicle systems, manufacturing, and product-development opportunities.",
+    "lead": "For engineering internships, co-ops, and early-career roles, I would be glad to share more context on the systems, decisions, and work shown here.",
     "links": [
       {
-        "label": "conrad.ashwin@gmail.com",
-        "href": "mailto:conrad.ashwin@gmail.com"
+        "label": "conradashwin@gmail.com",
+        "href": "mailto:conradashwin@gmail.com"
       },
       {
         "label": "LinkedIn ->",
@@ -288,12 +302,10 @@
     ]
   },
   "resume": {
-    "template": "classic_sidebar",
     "name": "Ashwin Conrad",
-    "headline": "I am dedicated to continuous learning and excited to contribute innovative solutions to a company that shares my values of sustainability, responsibility, and respect.",
+    "headline": "Mechanical engineering student with hands-on experience in vehicle low-voltage systems, industrial panel assembly, engineering analysis, and technical automation. Interested in automotive, motorsport, manufacturing, test, and product-development engineering roles.",
     "contact": [
-      "219 Parkside Cress, SE",
-      "Calgary, AB, T2J4J3",
+      "Calgary, AB",
       "(403) 826-9320",
       "conradashwin@gmail.com",
       "ashwinconrad.ca"
@@ -313,17 +325,7 @@
                 "location": "Edmonton, AB",
                 "dates": "2023 - Present",
                 "bullets": [
-                  "2nd Year Engineering Student",
-                  "Extra Curricular: Engineering Student Engagement Leader, Society of Automotive Engineers Formula Racing Club Member"
-                ]
-              },
-              {
-                "role": "Highschool Diploma",
-                "organization": "West Island College",
-                "location": "Calgary, AB",
-                "dates": "2020 - 2023",
-                "bullets": [
-                  "Extra Curricular: LADS Clubs (Male Leadership in the Local Community), Diversity Inclusion Pluralism Committee, Senior Varsity Basketball and Rugby"
+                  "Mechanical Engineering student; Formula EV Racing member and Engineering Student Engagement Leader."
                 ]
               }
             ]
@@ -334,15 +336,29 @@
             "heading": "Technical Skills",
             "groups": [
               {
-                "label": "Tools & Technical",
+                "label": "Engineering",
                 "items": [
-                  "Office 365",
+                  "SolidWorks",
                   "AutoCAD & 2D laser cutting",
-                  "Excel data and statistical analysis",
-                  "LoggerPro",
-                  "3D-modeling & printing",
+                  "engineering drawings",
+                  "mechanical prototyping",
+                  "3D modelling & printing",
+                  "low-voltage systems",
+                  "power distribution",
+                  "sensor integration",
+                  "electrical schematics",
+                  "panel assembly",
+                  "QA",
                   "Python",
-                  "Java"
+                  "Excel data analysis",
+                  "Power BI",
+                  "Microsoft Fabric",
+                  "Power Query",
+                  "openpyxl",
+                  "python-docx",
+                  "Aspen HYSYS",
+                  "Maximo",
+                  "JDE"
                 ]
               }
             ]
@@ -358,7 +374,7 @@
                 "location": "University of Calgary",
                 "dates": "Winter 2025 - Present",
                 "bullets": [
-                  "Lead low-voltage electrical system planning and integration for Formula UA27, coordinating board-level hardware, safety interfaces, and vehicle packaging with the broader team."
+                  "Lead low-voltage electrical-system planning and integration for Formula UA27, coordinating board-level hardware, safety interfaces, sensors, power distribution, and vehicle packaging across mechanical and software teams."
                 ],
                 "id": "formula-ev-lv"
               },
@@ -368,7 +384,8 @@
                 "location": "Calgary, AB",
                 "dates": "2025 - 2026",
                 "bullets": [
-                  "Built automation and data-analysis workflows for corrosion monitoring, inspection planning, and asset lifecycle work across multi-facility operations."
+                  "Developed Python, Microsoft Fabric, and Power BI workflows for corrosion monitoring, inspection planning, and asset lifecycle work across multi-facility operations.",
+                  "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers, screening against OEM limits and summarizing monitoring gaps and risk-based recommendations."
                 ],
                 "id": "altagas-coop"
               },
@@ -378,38 +395,34 @@
                 "location": "Calgary, AB",
                 "dates": "Summer Terms, '23, '24",
                 "bullets": [
-                  "Gained hands-on experience in remote transmission units, RTU, and electrical departments, focusing on panel production and quality assurance.",
-                  "Completed 15+ multi-panel projects in individual, partner-based, and group setups, consistently meeting and exceeding expectations.",
-                  "Interpreted and analyzed engineering drawings, panel designs, and electrical schematics.",
-                  "Worked extensively with advanced panel systems, including various industry-standard Distributed Control Systems, DCS, and signal transmission and power supply units.",
-                  "Resolved quality control issues accurately and met strict deadlines.",
-                  "Assisted with pressure and instrumentation testing for RemVue Control Panels and processed 250+ PLC software updates in under half the allocated time.",
-                  "Collaborated in team environments emphasizing safety and efficiency.",
-                  "Applied technical understanding and precision skills in panel assembly while adhering to high standards and identifying deficiencies."
+                  "Built, wired, loaded, and checked 30+ industrial control panels using engineering drawings, electrical schematics, pre-delivery QA, and documented deficiency resolution.",
+                  "Processed 250+ PLC software updates in under half the allocated time while supporting panel production and quality checks."
                 ],
                 "id": "spartan-controls-technician"
-              },
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "column": "main",
+            "heading": "Selected Projects",
+            "items": [
               {
-                "role": "Floor Worker/Cashier",
-                "organization": "Cherry Pit",
-                "location": "Calgary, AB",
-                "dates": "Mar 2022 - Jul 2023",
+                "role": "Brazed Aluminum Heat-Exchanger Lifecycle Analysis",
+                "organization": "AltaGas",
+                "location": "Python, PI Historian Excel add-in",
+                "dates": "2025 - 2026",
                 "bullets": [
-                  "Stocked vegetable displays and provided customer service.",
-                  "Conducted timely deliveries to customers and businesses.",
-                  "Managed and organized incoming pallets.",
-                  "Assisted in training new hires."
+                  "Assessed historical operating data against OEM thermal and cycling limits, identified sensor-coverage gaps, and presented lifecycle findings to support inspection and operating decisions."
                 ]
               },
               {
-                "role": "Service Technician",
-                "organization": "A-Plus Parking",
-                "location": "Calgary, AB",
-                "dates": "Dec 2019 - Sep 2022",
+                "role": "Inspection Scope Generation Tool",
+                "organization": "AltaGas",
+                "location": "Python, openpyxl, python-docx",
+                "dates": "2025 - 2026",
                 "bullets": [
-                  "Completed general maintenance and troubleshooting repairs on trucks, trailers, and old/broken equipment.",
-                  "Silicon moulded and 2 part casted bumper plates for street-sweeping equipment, reducing the cost of single-use products by 50%.",
-                  "Assisted with bookkeeping, painting parkade lines, and cleaning."
+                  "Automated generation of 500+ equipment-specific inspection scopes from database exports, replacing a manual Power Query and Power BI export workflow."
                 ]
               }
             ]
@@ -420,7 +433,7 @@
             "heading": "Skills",
             "items": [
               {
-                "text": "Leadership & Teamwork - Organization - Trouble Shooting/Problem Solving - Fast Learner"
+                "text": "Mechanical design - vehicle systems - engineering drawings - electrical assembly - manufacturing QA - Python automation - technical documentation"
               }
             ]
           },
@@ -430,42 +443,47 @@
             "heading": "Awards",
             "items": [
               {
-                "text": "Undergraduate Student Leadership Award Winner - 2024-2025"
+                "text": "Undergraduate Student Leadership Award, 2024-2025"
               },
               {
-                "text": "Nomination for Best Project - Eng 160 Final Project 2024"
+                "text": "Leadership in Engineering Scholarship, 2023-2024"
               },
               {
-                "text": "Leadership in Engineering Scholarship Winner 2023-2024"
-              },
-              {
-                "text": "APEGA Science Olympics Medalist: Silver 2021-2022, Silver 2022-2023"
+                "text": "APEGA Science Olympics Medalist: Silver, 2021-2023"
               }
             ]
           },
           {
             "type": "list",
             "column": "sidebar",
-            "heading": "Volunteering",
+            "heading": "Leadership",
             "items": [
               {
-                "text": "Engineering Student Engagement Leader 2024-2025"
+                "text": "Engineering Student Engagement Leader, 2024-2025"
               },
               {
-                "text": "CYDC Assistant Youth Basketball Coach 2024"
-              },
-              {
-                "text": "WIC Grade 7-8 Head & Assistant Basketball Coach 2022-2023"
+                "text": "Formula EV Racing: Low Voltage Electronics Lead"
               }
             ]
           },
           {
             "type": "list",
             "column": "sidebar",
-            "heading": "Personal Interests",
+            "heading": "Hands-on Work",
             "items": [
               {
-                "text": "Cooking - Physical Fitness - metal/wood/leather/composite material design and projects"
+                "text": "Metal, leather, composite, and small mechanical build projects"
+              }
+            ]
+          },
+          {
+            "type": "list",
+            "column": "sidebar",
+            "heading": "Community",
+            "items": [
+              {
+                "id": "cydc-basketball-coach",
+                "text": "CYDC Basketball Coach - Youth coaching and team development."
               }
             ]
           }
@@ -495,8 +513,7 @@
                 "location": "Python, openpyxl, python-docx",
                 "dates": "2025 - 2026",
                 "bullets": [
-                  "Developed a Python tool to generate 500+ equipment-specific inspection scopes from database exports.",
-                  "Reduced manual document creation time by standardizing Excel-to-Word scope generation."
+                  "Developed a Python tool to generate 500+ equipment-specific inspection scopes from database exports. Reduced manual document creation time by standardizing Excel-to-Word scope generation."
                 ],
                 "id": "inspection-scope-tool"
               },
@@ -506,8 +523,7 @@
                 "location": "Python, data analysis, technical assessment",
                 "dates": "2025 - 2026",
                 "bullets": [
-                  "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers to assess fatigue risk and monitoring gaps.",
-                  "Summarized lifecycle findings into practical recommendations for inspection planning and operating awareness."
+                  "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers to assess fatigue risk and monitoring gaps. Summarized lifecycle findings into practical recommendations for inspection planning and operating awareness."
                 ],
                 "id": "heat-exchanger-lifecycle-analysis"
               },
@@ -528,8 +544,7 @@
                 "location": "Shop workflow tooling",
                 "dates": "2024",
                 "bullets": [
-                  "Designed and built a leather tool carrier to keep common hand tools organized and accessible during panel assembly.",
-                  "Turned a personal workflow problem into a durable shop aid for faster repeated work."
+                  "Designed and built a leather tool carrier to keep common hand tools organized and accessible during panel assembly. Turned a personal workflow problem into a durable shop aid for faster repeated work."
                 ],
                 "id": "leather-tool-carrier"
               }
@@ -545,8 +560,7 @@
                 "location": "Low-voltage electrical systems",
                 "dates": "Winter 2025 - Present",
                 "bullets": [
-                  "Coordinate low-voltage power distribution, sensor integration, and safety-interface planning around the UA27 vehicle package.",
-                  "Work across mechanical and software constraints to make electrical systems accessible, serviceable, and competition-ready."
+                  "Coordinate low-voltage power distribution, sensor integration, and safety-interface planning around the UA27 vehicle package. Work across mechanical and software constraints to make electrical systems accessible, serviceable, and competition-ready."
                 ],
                 "id": "formula-ev-electrical-systems"
               }
@@ -577,1238 +591,6 @@
             ]
           }
         ]
-      }
-    ],
-    "excel_layout": [
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": "",
-        "field": "name",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A1",
-        "range": "A1:H1"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": "",
-        "field": "headline",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A2",
-        "range": "A2:H2"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": "",
-        "field": "contact",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A3",
-        "range": "A3:H3"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": "",
-        "field": "page_title",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A5",
-        "range": "A5:H5"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A7",
-        "range": "A7:H7"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A8",
-        "range": "A8:D8"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E8",
-        "range": "E8:H8"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A9",
-        "range": "A9:D9"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E9",
-        "range": "E9:H9"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A10",
-        "range": "A10:H11"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "bullet_1",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A12",
-        "range": "A12:H13"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A15",
-        "range": "A15:D15"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E15",
-        "range": "E15:H15"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A16",
-        "range": "A16:D16"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E16",
-        "range": "E16:H16"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A17",
-        "range": "A17:H18"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 1,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A21",
-        "range": "A21:H21"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 1,
-        "field": "skill_label",
-        "item_index": "",
-        "group_index": 0,
-        "anchor": "A22",
-        "range": "A22:B22"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 1,
-        "field": "skill_items",
-        "item_index": "",
-        "group_index": 0,
-        "anchor": "C22",
-        "range": "C22:H23"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A25",
-        "range": "A25:H25"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A26",
-        "range": "A26:D26"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E26",
-        "range": "E26:H26"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A27",
-        "range": "A27:D27"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E27",
-        "range": "E27:H27"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A28",
-        "range": "A28:H29"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A31",
-        "range": "A31:D31"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E31",
-        "range": "E31:H31"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A32",
-        "range": "A32:D32"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E32",
-        "range": "E32:H32"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A33",
-        "range": "A33:H34"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A36",
-        "range": "A36:D36"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "E36",
-        "range": "E36:H36"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A37",
-        "range": "A37:D37"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "E37",
-        "range": "E37:H37"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A38",
-        "range": "A38:H39"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_1",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A40",
-        "range": "A40:H41"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_2",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A42",
-        "range": "A42:H43"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_3",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A44",
-        "range": "A44:H45"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_4",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A46",
-        "range": "A46:H47"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_5",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A48",
-        "range": "A48:H49"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_6",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A50",
-        "range": "A50:H51"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_7",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A52",
-        "range": "A52:H53"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A55",
-        "range": "A55:D55"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "E55",
-        "range": "E55:H55"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A56",
-        "range": "A56:D56"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "E56",
-        "range": "E56:H56"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A57",
-        "range": "A57:H58"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_1",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A59",
-        "range": "A59:H60"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_2",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A61",
-        "range": "A61:H62"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_3",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A63",
-        "range": "A63:H64"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A66",
-        "range": "A66:D66"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "E66",
-        "range": "E66:H66"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A67",
-        "range": "A67:D67"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "E67",
-        "range": "E67:H67"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A68",
-        "range": "A68:H69"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_1",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A70",
-        "range": "A70:H71"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 2,
-        "field": "bullet_2",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A72",
-        "range": "A72:H73"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 3,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A76",
-        "range": "A76:H76"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 3,
-        "field": "list_item",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A77",
-        "range": "A77:H78"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 4,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A80",
-        "range": "A80:H80"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 4,
-        "field": "list_item",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A81",
-        "range": "A81:H82"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 4,
-        "field": "list_item",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A83",
-        "range": "A83:H84"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 4,
-        "field": "list_item",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A85",
-        "range": "A85:H86"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 4,
-        "field": "list_item",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A87",
-        "range": "A87:H88"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 5,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A90",
-        "range": "A90:H90"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 5,
-        "field": "list_item",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A91",
-        "range": "A91:H92"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 5,
-        "field": "list_item",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A93",
-        "range": "A93:H94"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 5,
-        "field": "list_item",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A95",
-        "range": "A95:H96"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 6,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A98",
-        "range": "A98:H98"
-      },
-      {
-        "sheet": "Resume",
-        "page_index": 0,
-        "block_index": 6,
-        "field": "list_item",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A99",
-        "range": "A99:H100"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": "",
-        "field": "name",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A1",
-        "range": "A1:H1"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": "",
-        "field": "headline",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A2",
-        "range": "A2:H2"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": "",
-        "field": "contact",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A3",
-        "range": "A3:H3"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": "",
-        "field": "page_title",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A5",
-        "range": "A5:H5"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A7",
-        "range": "A7:H7"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A8",
-        "range": "A8:D8"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E8",
-        "range": "E8:H8"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A9",
-        "range": "A9:D9"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E9",
-        "range": "E9:H9"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A10",
-        "range": "A10:H11"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_1",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A12",
-        "range": "A12:H13"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A15",
-        "range": "A15:D15"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E15",
-        "range": "E15:H15"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A16",
-        "range": "A16:D16"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E16",
-        "range": "E16:H16"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A17",
-        "range": "A17:H18"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_1",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A19",
-        "range": "A19:H20"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A22",
-        "range": "A22:D22"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "E22",
-        "range": "E22:H22"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A23",
-        "range": "A23:D23"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "E23",
-        "range": "E23:H23"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A24",
-        "range": "A24:H25"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_1",
-        "item_index": 2,
-        "group_index": "",
-        "anchor": "A26",
-        "range": "A26:H27"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A29",
-        "range": "A29:D29"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "E29",
-        "range": "E29:H29"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A30",
-        "range": "A30:D30"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "E30",
-        "range": "E30:H30"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A31",
-        "range": "A31:H32"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_1",
-        "item_index": 3,
-        "group_index": "",
-        "anchor": "A33",
-        "range": "A33:H34"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "role",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A36",
-        "range": "A36:D36"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "dates",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "E36",
-        "range": "E36:H36"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "organization",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A37",
-        "range": "A37:D37"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "location",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "E37",
-        "range": "E37:H37"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_0",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A38",
-        "range": "A38:H39"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 0,
-        "field": "bullet_1",
-        "item_index": 4,
-        "group_index": "",
-        "anchor": "A40",
-        "range": "A40:H41"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A44",
-        "range": "A44:H44"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "role",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A45",
-        "range": "A45:D45"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "dates",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E45",
-        "range": "E45:H45"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "organization",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A46",
-        "range": "A46:D46"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "location",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E46",
-        "range": "E46:H46"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "bullet_0",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A47",
-        "range": "A47:H48"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 1,
-        "field": "bullet_1",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A49",
-        "range": "A49:H50"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "block_heading",
-        "item_index": "",
-        "group_index": "",
-        "anchor": "A53",
-        "range": "A53:H53"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A54",
-        "range": "A54:D54"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E54",
-        "range": "E54:H54"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A55",
-        "range": "A55:D55"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "E55",
-        "range": "E55:H55"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 0,
-        "group_index": "",
-        "anchor": "A56",
-        "range": "A56:H57"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "role",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A59",
-        "range": "A59:D59"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "dates",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E59",
-        "range": "E59:H59"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "organization",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A60",
-        "range": "A60:D60"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "location",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "E60",
-        "range": "E60:H60"
-      },
-      {
-        "sheet": "Portfolio",
-        "page_index": 1,
-        "block_index": 2,
-        "field": "bullet_0",
-        "item_index": 1,
-        "group_index": "",
-        "anchor": "A61",
-        "range": "A61:H62"
       }
     ]
   }

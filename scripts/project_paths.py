@@ -9,7 +9,10 @@ ASSETS_DIR = ROOT / "assets"
 
 SITE_CONTENT_PATH = CONTENT_DIR / "site.json"
 DETAILS_CONTENT_PATH = CONTENT_DIR / "details.json"
-RESUME_TEMPLATE_PATH = CONTENT_DIR / "resume_template.xlsx"
 SITE_OUTPUT_PATH = ROOT / "index.html"
 STYLES_OUTPUT_PATH = ROOT / "styles.css"
+SCRIPT_OUTPUT_PATH = ROOT / "script.js"
+# The public Word resume is also the retained editable layout artifact. It
+# contains the Content Controls used by the build and Word-to-JSON sync tools.
+RESUME_DOCX_OUTPUT_PATH = ROOT / "portfolio" / "resume.docx"
 RESUME_OUTPUT_PATH = ROOT / "portfolio" / "resume.pdf"
