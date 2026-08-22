@@ -1,6 +1,16 @@
 # ashwin-conrad.github.io
 Ashwin Conrad's Github Portfolio Website
 
+## Repository layout
+
+- `content/` - editable site, resume, gallery, and project source data.
+- `content/context/` - supporting notes used while maintaining content.
+- `assets/photos/` - optimized images referenced by the site.
+- `assets/brand/` - brand references and visual assets.
+- `scripts/` - build and content-editing tools; shared paths live in `project_paths.py`.
+- `index.html`, `styles.css`, and `portfolio/resume.pdf` - generated GitHub Pages output.
+- `tmp/` - local-only previews, downloads, and cloned reference repositories.
+
 ## Editing workflow
 
 Edit structure, navigation, and resume high-level details in `content/site.json`. Edit longer website descriptions, tags, image captions, gallery groups, and related links in `content/details.json`. Then rebuild the generated files:

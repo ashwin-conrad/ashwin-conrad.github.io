@@ -7,15 +7,14 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 
+from project_paths import RESUME_TEMPLATE_PATH, SITE_CONTENT_PATH
 
-ROOT = Path(__file__).resolve().parents[1]
-CONTENT_PATH = ROOT / "content" / "site.json"
-TEMPLATE_PATH = ROOT / "content" / "resume_template.xlsx"
+ROOT = SITE_CONTENT_PATH.parent.parent
 
 
 def main() -> None:
-    data = json.loads(CONTENT_PATH.read_text(encoding="utf-8"))
-    workbook = load_workbook(TEMPLATE_PATH, data_only=False)
+    data = json.loads(SITE_CONTENT_PATH.read_text(encoding="utf-8"))
+    workbook = load_workbook(RESUME_TEMPLATE_PATH, data_only=False)
     if "_resume_map" not in workbook.sheetnames:
         raise RuntimeError("resume_template.xlsx is missing the hidden _resume_map sheet")
 
@@ -97,10 +96,10 @@ def main() -> None:
 
     data["resume"] = resume
     data["resume"]["excel_layout"] = excel_layout
-    CONTENT_PATH.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    SITE_CONTENT_PATH.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
     subprocess.run([sys.executable, str(ROOT / "scripts" / "build_site.py")], cwd=ROOT, check=True)
-    print(f"Synced {TEMPLATE_PATH.relative_to(ROOT)} into {CONTENT_PATH.relative_to(ROOT)} and rebuilt generated files")
+    print(f"Synced {RESUME_TEMPLATE_PATH.relative_to(ROOT)} into {SITE_CONTENT_PATH.relative_to(ROOT)} and rebuilt generated files")
 
 
 def read_anchor_value(ws, anchor: str) -> tuple[str, str]:

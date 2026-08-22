@@ -8,10 +8,9 @@ from openpyxl.comments import Comment
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
+from project_paths import RESUME_TEMPLATE_PATH, SITE_CONTENT_PATH
 
-ROOT = Path(__file__).resolve().parents[1]
-CONTENT_PATH = ROOT / "content" / "site.json"
-TEMPLATE_PATH = ROOT / "content" / "resume_template.xlsx"
+ROOT = SITE_CONTENT_PATH.parent.parent
 
 PAGE_SPECS = [
     {
@@ -27,17 +26,17 @@ PAGE_SPECS = [
 ]
 
 
-THIN = Side(style="thin", color="D8D3CA")
-MEDIUM = Side(style="medium", color="151515")
+THIN = Side(style="thin", color="CCCCCC")
+MEDIUM = Side(style="medium", color="222222")
 ACCENT = "E94F2F"
-SURFACE = "E9E6DF"
-BACKGROUND = "F4F2ED"
+SURFACE = "F3F3F3"
+BACKGROUND = "FFFFFF"
 INPUT = "FFF8E8"
 HELP = "F8FAFC"
 
 
 def main() -> None:
-    data = json.loads(CONTENT_PATH.read_text(encoding="utf-8"))
+    data = json.loads(SITE_CONTENT_PATH.read_text(encoding="utf-8"))
     resume = data["resume"]
 
     wb = Workbook()
@@ -55,9 +54,9 @@ def main() -> None:
         build_page_sheet(wb, ws, meta, resume, spec)
 
     wb.active = 1
-    TEMPLATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(TEMPLATE_PATH)
-    print(f"Created {TEMPLATE_PATH.relative_to(ROOT)}")
+    RESUME_TEMPLATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(RESUME_TEMPLATE_PATH)
+    print(f"Created {RESUME_TEMPLATE_PATH.relative_to(ROOT)}")
 
 
 def build_instructions_sheet(ws) -> None:

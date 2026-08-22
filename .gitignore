@@ -1,0 +1,14 @@
+# Local environments
+.venv/
+
+# Temporary downloads, previews, and cloned references
+tmp/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
