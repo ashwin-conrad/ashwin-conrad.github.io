@@ -3,17 +3,48 @@ Ashwin Conrad's Github Portfolio Website
 
 ## Editing workflow
 
-Edit the portfolio and resume content in `content/site.json`, then rebuild the generated files:
+Edit structure, navigation, and resume high-level details in `content/site.json`. Edit longer website descriptions, tags, image captions, gallery groups, and related links in `content/details.json`. Then rebuild the generated files:
 
 ```powershell
 python scripts/build_site.py
 ```
 
-The script regenerates `index.html`, `styles.css`, and `portfolio/resume.pdf` from `content/site.json`. Website content, website photos, and resume blocks are edited in the same file but rendered separately.
+The script regenerates `index.html`, `styles.css`, and `portfolio/resume.pdf`. The resume block in `content/site.json` is the source of truth for roles, organizations, locations, and dates. Experience and project cards reference those resume items with `resume_id`, so the website mirrors the resume automatically.
+
+## Shared resume and site links
+
+Use stable IDs to connect resume entries, work cards, and project cards:
+
+```json
+{
+  "id": "altagas-coop",
+  "resume_id": "altagas-coop"
+}
+```
+
+Longer body copy lives in `content/details.json` under the same ID:
+
+```json
+{
+  "experience": {
+    "altagas-coop": {
+      "description": "Longer website copy...",
+      "related": [
+        {
+          "label": "Corrosion Monitoring Dashboard",
+          "href": "#project-corrosion-monitoring-dashboard"
+        }
+      ]
+    }
+  }
+}
+```
+
+Resume bullets stay in the resume block and can be filled in later per organization or project.
 
 ## Photos
 
-Save website photos in `assets/photos/`, then reference them in `content/site.json`.
+Keep original uploads in `assets/` if you want the source files preserved. The website should reference optimized copies in `assets/photos/` so the page stays fast.
 
 Project cards support an optional image:
 
@@ -24,14 +55,26 @@ Project cards support an optional image:
 }
 ```
 
-The standalone photos section appears only when `photos.items` has entries:
+The grouped gallery is defined in `content/details.json` under `photos.groups`:
 
 ```json
 {
-  "src": "assets/photos/shop-build.jpg",
-  "alt": "Prototype assembly on a workbench",
-  "title": "Prototype Assembly",
-  "caption": "Early fit-up and wiring test."
+  "heading": "Spartan Controls: Panels + Shop Systems",
+  "intro": "A short group overview.",
+  "items": [
+    {
+      "src": "assets/photos/spartan-panel-1.jpg",
+      "alt": "Open electrical control panel",
+      "title": "Panel Build Sample",
+      "caption": "Context for the photo.",
+      "related": [
+        {
+          "label": "Control Panel Builds",
+          "href": "#project-spartan-control-panel-builds"
+        }
+      ]
+    }
+  ]
 }
 ```
 

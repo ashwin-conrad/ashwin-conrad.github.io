@@ -1,0 +1,457 @@
+{
+  "experience": {
+    "formula-ev-lv": {
+      "description": "Lead low-voltage electrical systems for a university Formula EV team. Manage power distribution, control modules, and sensor integration while coordinating with mechanical and software teams.",
+      "tags": [
+        "Electronics",
+        "Leadership",
+        "CAD",
+        "Team Coordination"
+      ],
+      "related": [
+        {
+          "label": "Formula EV Electrical Systems",
+          "href": "#project-formula-ev-electrical-systems"
+        }
+      ]
+    },
+    "altagas-coop": {
+      "description": "Developed data pipelines, automation tools, and technical systems across corrosion monitoring, asset management, and inspection planning for multi-facility operations.",
+      "tags": [
+        "Python",
+        "Data Analysis",
+        "Power BI",
+        "Automation"
+      ],
+      "related": [
+        {
+          "label": "Corrosion Monitoring Dashboard",
+          "href": "#project-corrosion-monitoring-dashboard"
+        },
+        {
+          "label": "Inspection Scope Generation Tool",
+          "href": "#project-inspection-scope-tool"
+        },
+        {
+          "label": "Heat Exchanger Lifecycle Analysis",
+          "href": "#project-heat-exchanger-lifecycle-analysis"
+        }
+      ]
+    },
+    "spartan-controls-technician": {
+      "description": "Built electrical panels from design through assembly and QC. Loaded control module software, performed pre-delivery quality assurance, and managed projects from issue to customer delivery.",
+      "tags": [
+        "Panel Assembly",
+        "Electrical",
+        "QA",
+        "Project Management"
+      ],
+      "related": [
+        {
+          "label": "Control Panel Builds",
+          "href": "#project-spartan-control-panel-builds"
+        },
+        {
+          "label": "Leather Tool Carrier",
+          "href": "#project-leather-tool-carrier"
+        }
+      ]
+    }
+  },
+  "projects": {
+    "corrosion-monitoring-dashboard": {
+      "description": "Built a centralized data pipeline in Microsoft Fabric to automate corrosion coupon tracking across 12 facilities with 100+ monitored assets, replacing manual vendor report processing.",
+      "tags": [
+        "Fabric",
+        "Power BI",
+        "Python",
+        "Automation"
+      ],
+      "image": {
+        "src": "assets/photos/altagas-field-inspection-1.jpg",
+        "alt": "AltaGas facility inspection with team members examining equipment"
+      },
+      "related": [
+        {
+          "label": "AltaGas Engineering Co-op",
+          "href": "#work-altagas-coop"
+        }
+      ]
+    },
+    "inspection-scope-tool": {
+      "description": "Developed a Python-based tool using openpyxl and python-docx to automate creation of 500+ equipment-specific inspection scopes from database exports, reducing manual creation time by 95%.",
+      "tags": [
+        "Python",
+        "Automation",
+        "Documentation"
+      ],
+      "image": {
+        "src": "",
+        "alt": ""
+      },
+      "related": [
+        {
+          "label": "AltaGas Engineering Co-op",
+          "href": "#work-altagas-coop"
+        }
+      ]
+    },
+    "heat-exchanger-lifecycle-analysis": {
+      "description": "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers to assess fatigue risk, identify monitoring gaps, and recommend operational changes to extend asset life.",
+      "tags": [
+        "Data Analysis",
+        "Python",
+        "Technical Analysis"
+      ],
+      "image": {
+        "src": "",
+        "alt": ""
+      },
+      "related": [
+        {
+          "label": "AltaGas Engineering Co-op",
+          "href": "#work-altagas-coop"
+        }
+      ]
+    },
+    "formula-ev-electrical-systems": {
+      "description": "Leading low-voltage electrical design and integration for a university Formula EV team, managing power distribution, sensor networks, and control system coordination.",
+      "tags": [
+        "Electronics",
+        "CAD",
+        "Leadership",
+        "Integration"
+      ],
+      "image": {
+        "src": "assets/photos/formula-ua27-unveiling.jpg",
+        "alt": "Formula UA27 car at unveiling with team members nearby"
+      },
+      "related": [
+        {
+          "label": "Formula EV Leadership Role",
+          "href": "#work-formula-ev-lv"
+        }
+      ]
+    },
+    "spartan-control-panel-builds": {
+      "description": "Sample control panels from Spartan Controls build work, representing a subset of the 30+ panels assembled, wired, loaded, and checked through pre-delivery QA.",
+      "tags": [
+        "Panel Assembly",
+        "Wiring",
+        "QA",
+        "Controls"
+      ],
+      "image": {
+        "src": "assets/photos/spartan-panel-3.jpg",
+        "alt": "Open Spartan Controls electrical panel with dense internal wiring and hardware"
+      },
+      "related": [
+        {
+          "label": "Spartan Controls Technician",
+          "href": "#work-spartan-controls-technician"
+        }
+      ]
+    },
+    "leather-tool-carrier": {
+      "description": "Designed and built a leather tool carrier while working at Spartan to keep common hand tools organized and accessible during panel assembly and inspection work.",
+      "tags": [
+        "Leatherwork",
+        "Workflow",
+        "Fabrication",
+        "Shop Systems"
+      ],
+      "image": {
+        "src": "assets/photos/leather-tool-carrier-2.jpg",
+        "alt": "Leather tool carrier holding hand tools in a workshop"
+      },
+      "related": [
+        {
+          "label": "Spartan Controls Technician",
+          "href": "#work-spartan-controls-technician"
+        }
+      ]
+    }
+  },
+  "photos": {
+    "id": "gallery",
+    "number": "04 / BUILD GALLERY",
+    "heading": "Build Gallery",
+    "intro": "Project photos, shop snapshots, and travel moments that give more context to the work behind the resume entries.",
+    "groups": [
+      {
+        "heading": "Formula UA26 + UA27",
+        "intro": "Snapshots from Formula work across UA26 and UA27, showing vehicle progress, competition context, and low-voltage electrical integration around the full car.",
+        "items": [
+          {
+            "src": "assets/photos/formula-ua27-unveiling.jpg",
+            "alt": "Formula UA27 race car at a public unveiling",
+            "title": "UA27 Unveiling",
+            "caption": "The UA27 car at unveiling, where low-voltage electrical work had to fit into the complete vehicle package.",
+            "featured": true,
+            "related": [
+              {
+                "label": "Formula EV Electrical Systems",
+                "href": "#project-formula-ev-electrical-systems"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/formula-ua27-frame-progress.jpg",
+            "alt": "Formula UA27 chassis and frame during workshop build progress",
+            "title": "UA27 Build Progress",
+            "caption": "Mid-build chassis progress, useful for packaging, routing, and planning electrical subsystem integration.",
+            "related": [
+              {
+                "label": "Formula EV Role",
+                "href": "#work-formula-ev-lv"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/formula-ua27-lv-ac.jpg",
+            "alt": "Ashwin holding a Formula UA27 low-voltage electrical board outdoors at competition",
+            "title": "UA27 Low-Voltage Board",
+            "caption": "Low-voltage electrical hardware from UA27, connecting the car-level work back to board handling, inspection, and integration.",
+            "related": [
+              {
+                "label": "Formula EV Role",
+                "href": "#work-formula-ev-lv"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/formula-ua27-se-precomp.jpg",
+            "alt": "Formula UA27 shutdown and emergency interface panel before competition",
+            "title": "Shutdown + Emergency Interface",
+            "caption": "Pre-competition subsystem detail for UA27, showing serviceable interfaces and safety-critical electrical access.",
+            "related": [
+              {
+                "label": "Formula EV Electrical Systems",
+                "href": "#project-formula-ev-electrical-systems"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/formula-ua26-competition.jpg",
+            "alt": "Formula UA26 race car at competition on track",
+            "title": "UA26 Competition",
+            "caption": "Competition context from UA26, informing the expectations for reliability, access, and serviceability on later builds.",
+            "related": [
+              {
+                "label": "Formula EV Electrical Systems",
+                "href": "#project-formula-ev-electrical-systems"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Spartan Controls: Panels + Shop Systems",
+        "intro": "A sample of the 30+ control panels worked on at Spartan Controls, plus the shop systems and personal tooling that made repeated panel work faster and more organized.",
+        "items": [
+          {
+            "src": "assets/photos/spartan-panel-1.jpg",
+            "alt": "Open electrical control panel with terminal blocks and internal wiring",
+            "title": "Panel Build Sample",
+            "caption": "One representative panel from Spartan Controls assembly and QA work across 30+ panels.",
+            "featured": true,
+            "related": [
+              {
+                "label": "Control Panel Builds",
+                "href": "#project-spartan-control-panel-builds"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/spartan-panel-2.jpg",
+            "alt": "Mounted industrial control panel inside an enclosure",
+            "title": "Cabinet Integration",
+            "caption": "Component mounting, cabinet packaging, and field-ready layout work during panel assembly.",
+            "related": [
+              {
+                "label": "Spartan Controls Role",
+                "href": "#work-spartan-controls-technician"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/spartan-panel-3.jpg",
+            "alt": "Large open control panel cabinet with wiring and control modules",
+            "title": "Wiring + Verification",
+            "caption": "Dense wiring and module work where clean routing and consistent checks mattered before delivery.",
+            "related": [
+              {
+                "label": "Control Panel Builds",
+                "href": "#project-spartan-control-panel-builds"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/spartan-panel-4.jpg",
+            "alt": "Tall electrical cabinet with organized vertical wireway routing",
+            "title": "Panel Detail",
+            "caption": "A closer look at cabinet organization, wiring discipline, and panel completion detail.",
+            "related": [
+              {
+                "label": "Spartan Controls Role",
+                "href": "#work-spartan-controls-technician"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/leather-tool-carrier-1.jpg",
+            "alt": "Cut leather tool carrier material beside hand tools",
+            "title": "Tool Carrier Layout",
+            "caption": "Early leather tool carrier layout, developed to keep common hand tools ready during panel work.",
+            "related": [
+              {
+                "label": "Leather Tool Carrier",
+                "href": "#project-leather-tool-carrier"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/leather-tool-carrier-2.jpg",
+            "alt": "Finished leather tool carrier loaded with tools",
+            "title": "Finished Tool Carrier",
+            "caption": "Finished carrier with tools in place, built as a practical workflow improvement in the shop.",
+            "related": [
+              {
+                "label": "Leather Tool Carrier",
+                "href": "#project-leather-tool-carrier"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/spartan-toolbox-employee-belt.jpg",
+            "alt": "Toolbox with employee of the month belt in a workshop",
+            "title": "TB Toolbox",
+            "caption": "Toolbox snapshot with the employee-of-the-month belt from the Spartan shop.",
+            "related": [
+              {
+                "label": "Spartan Controls Role",
+                "href": "#work-spartan-controls-technician"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Materials + Fabrication",
+        "intro": "Hands-on builds from forging, composites, lamination, fiberglass layups, 3D printing, and mechanical prototyping.",
+        "items": [
+          {
+            "src": "assets/photos/knife-forging-blade.jpg",
+            "alt": "Forged knife blade being shaped in a workshop",
+            "title": "Father's Day Knife Forging",
+            "caption": "Knife forging project completed for Father's Day, focused on shaping, heat, grinding, and finish work.",
+            "featured": true
+          },
+          {
+            "src": "assets/photos/knife-forging-carbon-heat-experiment.jpg",
+            "alt": "Glowing heated metal during a carbon and heat experiment",
+            "title": "Carbon + Heat Experiment",
+            "caption": "Heat and carbon experiment from the forging process, capturing material response during the build."
+          },
+          {
+            "src": "assets/photos/composite-skateboard-1.jpg",
+            "alt": "Handmade skateboard deck with purple and white graphic pattern",
+            "title": "Early Composite Deck",
+            "caption": "Older skateboard project from learning lamination and fiberglass layups with composites."
+          },
+          {
+            "src": "assets/photos/composite-skateboard-2.jpg",
+            "alt": "Green handmade skateboard deck built with composite layup",
+            "title": "Aluminum-Sealed Deck",
+            "caption": "Green composite deck with a piece of aluminum sealed inside during the layup."
+          },
+          {
+            "src": "assets/photos/composite-skateboard-3.jpg",
+            "alt": "Red handmade skateboard deck with graphic and composite layup",
+            "title": "Fiberglass Layup Deck",
+            "caption": "Another early deck from experimenting with lamination, fiberglass, and handmade board construction."
+          },
+          {
+            "src": "assets/photos/mec260-prototype.jpg",
+            "alt": "Small mechanical prototype vehicle with wheels and linkage",
+            "title": "Mechanical Prototype",
+            "caption": "Course prototype work involving mechanical packaging, iteration, and hands-on build testing."
+          },
+          {
+            "src": "assets/photos/mc-bq-3d-printing.jpg",
+            "alt": "People reviewing a 3D printer during a prototyping project",
+            "title": "3D Printing + Prototyping",
+            "caption": "Prototype review around 3D printing work and small-format fabrication."
+          }
+        ]
+      },
+      {
+        "heading": "Field, Community + Travel",
+        "intro": "Field engineering context, community rides, and a Volkswagen Wolfsburg factory trip with my dad that fed the same curiosity for vehicles, manufacturing, and systems.",
+        "items": [
+          {
+            "src": "assets/photos/altagas-field-inspection-1.jpg",
+            "alt": "AltaGas facility inspection with team members examining equipment",
+            "title": "AltaGas Field Context",
+            "caption": "Facility context for corrosion monitoring, inspection planning, and asset data work.",
+            "featured": true,
+            "related": [
+              {
+                "label": "AltaGas Engineering Co-op",
+                "href": "#work-altagas-coop"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/altagas-field-inspection-2.jpg",
+            "alt": "AltaGas equipment inspection work in the field",
+            "title": "Equipment Inspection",
+            "caption": "Field-facing view of the systems behind the data, dashboards, and inspection workflows.",
+            "related": [
+              {
+                "label": "Corrosion Dashboard",
+                "href": "#project-corrosion-monitoring-dashboard"
+              }
+            ]
+          },
+          {
+            "src": "assets/photos/tour-alberta-ride-1.jpg",
+            "alt": "Tour Alberta for Cancer Ride team participation",
+            "title": "Tour Alberta for Cancer Ride",
+            "caption": "Community ride participation and team support outside engineering work."
+          },
+          {
+            "src": "assets/photos/tour-alberta-ride-2.jpg",
+            "alt": "Tour Alberta for Cancer Ride event scene",
+            "title": "Ride Weekend",
+            "caption": "Event-day context from the Tour Alberta for Cancer Ride."
+          },
+          {
+            "src": "assets/photos/tour-alberta-ride-3.jpg",
+            "alt": "Two cyclists at the Tour Alberta for Cancer Ride",
+            "title": "Community Ride",
+            "caption": "Another snapshot from the ride, showing the people side of the event."
+          },
+          {
+            "src": "assets/photos/vw-wolfsburg-factory-cars.jpg",
+            "alt": "Volkswagen cars displayed at the Wolfsburg factory",
+            "title": "Wolfsburg Factory Visit",
+            "caption": "Trip with my dad to see Volkswagen's Wolfsburg factory and the vehicle collection."
+          },
+          {
+            "src": "assets/photos/vw-sim-championship.jpg",
+            "alt": "Podium photo from a Volkswagen simulation championship",
+            "title": "VW Sim Mobility",
+            "caption": "Simulation podium photo from the same Volkswagen trip."
+          },
+          {
+            "src": "assets/photos/ac-hike-20th.jpg",
+            "alt": "Ashwin hiking near a mountain lake",
+            "title": "Outside the Shop",
+            "caption": "A personal hiking snapshot from the broader archive, included as context for the outside-engineering side of the portfolio."
+          }
+        ]
+      }
+    ]
+  }
+}

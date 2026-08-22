@@ -15,23 +15,14 @@ TEMPLATE_PATH = ROOT / "content" / "resume_template.xlsx"
 
 PAGE_SPECS = [
     {
-        "sheet": "Page 1 - Experience",
+        "sheet": "Resume",
         "page_index": 0,
-        "title": "Work Experience, Skills & Volunteering",
-        "blocks": [
-            ("section", "Work Experience", 2),
-            ("skills", "Skills", 0),
-            ("section", "Volunteering & Leadership", 1),
-        ],
+        "title": "Resume",
     },
     {
-        "sheet": "Page 2 - Portfolio",
+        "sheet": "Portfolio",
         "page_index": 1,
         "title": "Project & Club Portfolio",
-        "blocks": [
-            ("section", "Engineering Projects", 2),
-            ("section", "Clubs & Teams", 1),
-        ],
     },
 ]
 
@@ -140,6 +131,8 @@ def build_page_sheet(wb: Workbook, ws, meta, resume: dict, spec: dict) -> None:
         row = add_section_header(ws, meta, page_index, block_index, block, row)
         if block.get("type") == "skills":
             row = add_skills_block(ws, meta, page_index, block_index, block, row)
+        elif block.get("type") == "list":
+            row = add_list_block(ws, meta, page_index, block_index, block, row)
         else:
             row = add_items_block(ws, meta, page_index, block_index, block, row)
         row += 1
@@ -198,6 +191,18 @@ def add_skills_block(ws, meta, page_index: int, block_index: int, block: dict, r
     return row
 
 
+def add_list_block(ws, meta, page_index: int, block_index: int, block: dict, row: int) -> int:
+    for item_index, item in enumerate(block.get("items", [])):
+        value = item.get("text", item) if isinstance(item, dict) else item
+        merge_value(ws, f"A{row}:H{row + 1}", value, "list_item")
+        add_meta(meta, ws.title, page_index, block_index, "list", "list_item", item_index, "", f"A{row}")
+        style_input(ws, f"A{row}:H{row + 1}")
+        ws.row_dimensions[row].height = 24
+        ws.row_dimensions[row + 1].height = 24
+        row += 2
+    return row
+
+
 def merge_value(ws, range_ref: str, value: str, comment_label: str) -> None:
     ws.merge_cells(range_ref)
     cell = ws[range_ref.split(":")[0]]
@@ -249,7 +254,7 @@ def add_meta(meta, sheet: str, page_index, block_index, block_type, field, item_
 
 
 def apply_print_area(ws, last_row: int) -> None:
-    last_row = min(max(last_row, 20), 55)
+    last_row = min(max(last_row, 20), 120)
     ws.print_area = f"A1:H{last_row}"
     for row in range(1, last_row + 1):
         if ws.row_dimensions[row].height is None:

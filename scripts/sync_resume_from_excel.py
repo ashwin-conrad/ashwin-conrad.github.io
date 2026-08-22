@@ -24,6 +24,7 @@ def main() -> None:
 
     section_items: dict[tuple[int, int], dict[int, dict]] = {}
     skill_groups: dict[tuple[int, int], dict[int, dict]] = {}
+    list_items: dict[tuple[int, int], dict[int, dict]] = {}
     excel_layout: list[dict] = []
 
     for row in meta.iter_rows(min_row=2, values_only=True):
@@ -63,9 +64,17 @@ def main() -> None:
                 group["label"] = value
             elif field == "skill_items":
                 group["items"] = split_items(value)
+        elif str(block_type) == "list":
+            key = (page_index, int(block_index))
+            item = list_items.setdefault(key, {}).setdefault(int(item_index), {"text": ""})
+            if field == "list_item":
+                item["text"] = value
         else:
             key = (page_index, int(block_index))
-            item = section_items.setdefault(key, {}).setdefault(int(item_index), default_item())
+            item = section_items.setdefault(key, {}).setdefault(
+                int(item_index),
+                default_item(resume, page_index, int(block_index), int(item_index)),
+            )
             if str(field).startswith("bullet_"):
                 bullet_index = int(str(field).split("_", 1)[1])
                 while len(item["bullets"]) <= bullet_index:
@@ -81,6 +90,10 @@ def main() -> None:
     for (page_index, block_index), groups in skill_groups.items():
         block = resume["pages"][page_index]["blocks"][block_index]
         block["groups"] = [groups[index] for index in sorted(groups)]
+
+    for (page_index, block_index), items in list_items.items():
+        block = resume["pages"][page_index]["blocks"][block_index]
+        block["items"] = [items[index] for index in sorted(items)]
 
     data["resume"] = resume
     data["resume"]["excel_layout"] = excel_layout
@@ -112,14 +125,19 @@ def split_items(value: str) -> list[str]:
     return [part.strip() for part in separators if part.strip()]
 
 
-def default_item() -> dict:
-    return {
+def default_item(resume: dict, page_index: int, block_index: int, item_index: int) -> dict:
+    existing_items = resume["pages"][page_index]["blocks"][block_index].get("items", [])
+    existing = existing_items[item_index] if item_index < len(existing_items) else {}
+    item = {
         "role": "",
         "organization": "",
         "location": "",
         "dates": "",
         "bullets": [],
     }
+    if existing.get("id"):
+        item["id"] = existing["id"]
+    return item
 
 
 if __name__ == "__main__":
