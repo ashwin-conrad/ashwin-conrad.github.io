@@ -1,0 +1,84 @@
+{
+  "id": "spartan-controls",
+  "number": "04 / FEATURED ENGINEERING PROJECT",
+  "type": "MANUFACTURING / ELECTRICAL ASSEMBLY / QA",
+  "title": "Control panel builds and pre-delivery quality",
+  "subtitle": "Drawing interpretation, panel assembly, wiring, software loading, and quality checks in an industrial manufacturing environment.",
+  "image": {
+    "src": "assets/photos/spartan-panel-3.jpg",
+    "alt": "Open electrical control panel with internal wiring and industrial hardware"
+  },
+  "metadata": [
+    {
+      "label": "ROLE",
+      "value": "Control Panel Technician"
+    },
+    {
+      "label": "COMPANY",
+      "value": "Spartan Controls"
+    },
+    {
+      "label": "WORK",
+      "value": "Panel assembly and QA"
+    },
+    {
+      "label": "TERMS",
+      "value": "Summer 2023 & 2024"
+    }
+  ],
+  "objective": "Build, wire, load, and check industrial control panels from engineering drawings through pre-delivery quality assurance.",
+  "context": "The work required precision at the component level while maintaining the broader delivery context: documented designs, repeatable build processes, quality expectations, and technician teamwork.",
+  "contribution": "Interpreted panel designs and electrical schematics; assembled and wired control panels; loaded control-module software; completed pre-delivery QA; and resolved quality-control deficiencies before customer delivery.",
+  "constraints": [
+    "Drawing accuracy",
+    "Wiring quality",
+    "Repeatable assembly",
+    "Pre-delivery QA",
+    "Delivery schedule"
+  ],
+  "process": [
+    "Review drawings",
+    "Assemble hardware",
+    "Wire and label",
+    "Load software",
+    "Check quality",
+    "Resolve deficiencies"
+  ],
+  "decision": {
+    "label": "MANUFACTURING LESSON",
+    "title": "A panel is not complete when the last conductor is landed.",
+    "text": "The build also has to be checked against the documentation and prepared for the next person who will inspect, ship, install, or diagnose it. This perspective translates directly to serviceable product development."
+  },
+  "results": [
+    "Built, wired, loaded, and checked a sample of 30+ control panels across individual and team builds.",
+    "Processed 250+ PLC software updates in under half the allocated time while supporting panel production and QA."
+  ],
+  "tools": [
+    "Engineering drawings",
+    "Electrical schematics",
+    "Panel assembly",
+    "Wiring",
+    "QA",
+    "PLC software updates"
+  ],
+  "figures": [
+    {
+      "src": "assets/photos/spartan-panel-1.jpg",
+      "alt": "Electrical control panel with neatly routed and labelled wiring",
+      "caption": "Figure 04 â€” Panel build sample. Wiring, layout, labelling, and component placement must be executed consistently to support manufacturing quality and later inspection."
+    },
+    {
+      "src": "assets/photos/spartan-panel-4.jpg",
+      "alt": "Industrial electrical control panel during assembly or inspection",
+      "caption": "Figure 05 â€” Pre-delivery work is both a build task and a documentation task: the physical system has to match the intended design before it leaves the shop."
+    }
+  ],
+  "placeholders": [
+    "[ADD DETAIL: redacted drawing or wiring-schematic excerpt that shows how a panel build was interpreted]",
+    "[ADD PHOTO: QA or software-loading workflow]"
+  ],
+  "resume_ids": [
+    "spartan-controls-technician",
+    "spartan-control-panel-builds"
+  ]
+}

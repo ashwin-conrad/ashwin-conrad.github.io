@@ -49,7 +49,7 @@ OPTIONAL_TAGS = {"COMMUNITY2_TITLE", "COMMUNITY2_DETAIL"}
 # These limits are based on the supplied fixed cells and their default text:
 # the longest supplied profile is 264 characters, experience bullets 169, and
 # project descriptions 187. Values exceeding a documented limit must be edited
-# in content/site.json rather than silently shortened by the renderer.
+# in content/resume.json rather than silently shortened by the renderer.
 FIELD_LIMITS: dict[str, int] = {
     "PROFILE_SUMMARY": 300,
     "EXP*_BULLET*": 185,
@@ -118,7 +118,7 @@ def validate_pdf_page_count(pdf_path: Path, expected_pages: int = 2) -> None:
         raise ResumeValidationError(f"Could not read generated resume PDF {pdf_path}: {error}") from error
     if page_count != expected_pages:
         raise ResumeContentValidationError(
-            f"Resume PDF has {page_count} pages; expected {expected_pages}. Shorten content/site.json before rebuilding."
+            f"Resume PDF has {page_count} pages; expected {expected_pages}. Shorten content/resume.json before rebuilding."
         )
 
 

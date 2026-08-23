@@ -1,0 +1,20 @@
+{
+  "number": "01 / ENGINEERING PROFILE",
+  "heading": "Mechanical engineering first. Systems thinking in practice.",
+  "lead": "My work starts with the physical system: how it fits, how it is built, how it is accessed, how it behaves in use, and how the people around it can diagnose and improve it.",
+  "body": "Electrical integration, data tooling, and technical documentation extend that mechanical foundation. Across Formula EV, industrial controls, and asset-integrity work, I have worked where packaging, hardware, manufacturing, testing, data, and communication meet.",
+  "signals": [
+    {
+      "label": "DESIGN WITH THE BUILD IN MIND",
+      "text": "Vehicle packaging, panel drawings, physical assembly, and fabrication projects keep the practical constraints visible early."
+    },
+    {
+      "label": "CLOSE THE LOOP WITH TESTING",
+      "text": "QA checks, troubleshooting, inspection planning, and operating-data analysis turn observations into engineering decisions."
+    },
+    {
+      "label": "MAKE THE WORK TRANSFERABLE",
+      "text": "Diagrams, scope packages, dashboards, and repeatable tools help technicians, operations teams, and other engineers use the result."
+    }
+  ]
+}

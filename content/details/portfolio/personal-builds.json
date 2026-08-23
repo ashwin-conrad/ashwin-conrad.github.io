@@ -1,0 +1,24 @@
+{
+  "number": "09 / HANDS-ON LEARNING",
+  "heading": "Materials and fabrication beyond the job description.",
+  "items": [
+    {
+      "src": "assets/photos/knife-forging-blade.jpg",
+      "alt": "Forged knife blade being shaped in a workshop",
+      "title": "Knife forging",
+      "text": "A Father’s Day forging project focused on shaping, heat response, grinding, and finish work."
+    },
+    {
+      "src": "assets/photos/composite-skateboard-2.jpg",
+      "alt": "Green handmade composite skateboard deck",
+      "title": "Composite skateboard deck",
+      "text": "Hands-on learning in lamination and fiberglass layup, including a deck with sealed-in aluminum."
+    },
+    {
+      "src": "assets/photos/leather-tool-carrier-1.jpg",
+      "alt": "Handmade leather tool carrier used in a workshop",
+      "title": "Tool carrier",
+      "text": "A durable shop aid designed and built to keep common hand tools organised during repeated panel work."
+    }
+  ]
+}

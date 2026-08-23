@@ -1,4 +1,4 @@
-"""Import the editable Word resume's Content Controls into ``site.json``."""
+"""Import editable Word resume controls into independent ``resume.json`` content."""
 
 from __future__ import annotations
 
@@ -19,8 +19,8 @@ class WordResumeSyncError(RuntimeError):
     """Raised when an editable Word resume cannot be imported unambiguously."""
 
 
-def sync_word_values_into_site(site_data: dict[str, Any], values: dict[str, str]) -> dict[str, Any]:
-    """Return a canonical-data copy updated with values entered in Word.
+def sync_word_values_into_resume(resume_data: dict[str, Any], values: dict[str, str]) -> dict[str, Any]:
+    """Return a resume-data copy updated with values entered in Word.
 
     The retained document intentionally repeats the name and website on page
     two. The page-one header is authoritative, so a normal rebuild refreshes
@@ -33,47 +33,30 @@ def sync_word_values_into_site(site_data: dict[str, Any], values: dict[str, str]
     if missing:
         raise WordResumeSyncError("Word resume is missing value(s): " + ", ".join(missing))
 
-    data = deepcopy(site_data)
-    resume = data.get("resume")
-    if not isinstance(resume, dict):
-        raise WordResumeSyncError("content/site.json is missing its resume block")
+    resume = deepcopy(resume_data)
 
-    _sync_header(data, resume, values)
+    _sync_header(resume, values)
     _sync_education(resume, values)
     items = _resume_items_by_id(resume)
     _sync_experiences(items, values)
     _sync_leadership(resume, items, values)
     _sync_community(resume, values)
-    _sync_general_skills(data, values)
+    _sync_general_skills(resume, values)
     _sync_awards(resume, values)
     _sync_projects(items, values)
     _sync_technical_skills(resume, values)
-    return data
+    return resume
 
 
-def _sync_header(data: dict[str, Any], resume: dict[str, Any], values: dict[str, str]) -> None:
+def _sync_header(resume: dict[str, Any], values: dict[str, str]) -> None:
     resume["name"] = values["CONTACT_NAME"]
     resume["headline"] = values["PROFILE_SUMMARY"]
-    resume["contact"] = [
-        value
-        for value in (
-            values["CONTACT_LOCATION"],
-            values["CONTACT_PHONE"],
-            values["CONTACT_EMAIL"],
-            values["CONTACT_WEBSITE"],
-        )
-        if value
-    ]
-    data.setdefault("site", {})["name"] = values["CONTACT_NAME"]
-
-    contact = data.get("contact")
-    if isinstance(contact, dict):
-        links = contact.get("links", [])
-        for link in links:
-            if isinstance(link, dict) and str(link.get("href", "")).startswith("mailto:"):
-                link["label"] = values["CONTACT_EMAIL"]
-                link["href"] = f"mailto:{values['CONTACT_EMAIL']}"
-                break
+    resume["contact"] = {
+        "location": values["CONTACT_LOCATION"],
+        "phone": values["CONTACT_PHONE"],
+        "email": values["CONTACT_EMAIL"],
+        "website": values["CONTACT_WEBSITE"],
+    }
 
 
 def _sync_education(resume: dict[str, Any], values: dict[str, str]) -> None:
@@ -119,10 +102,8 @@ def _sync_community(resume: dict[str, Any], values: dict[str, str]) -> None:
         del community["items"][1:]
 
 
-def _sync_general_skills(data: dict[str, Any], values: dict[str, str]) -> None:
-    about = data.setdefault("about", {})
-    previous = list(about.get("skills", []))
-    about["skills"] = [values[f"GENERAL_SKILL_{index}"] for index in range(1, 7)] + previous[6:]
+def _sync_general_skills(resume: dict[str, Any], values: dict[str, str]) -> None:
+    resume["general_skills"] = [values[f"GENERAL_SKILL_{index}"] for index in range(1, 7)]
 
 
 def _sync_awards(resume: dict[str, Any], values: dict[str, str]) -> None:
@@ -170,7 +151,7 @@ def _list_block(resume: dict[str, Any], heading: str) -> dict[str, Any]:
         for block in page.get("blocks", []):
             if str(block.get("heading", "")).casefold() == heading.casefold():
                 return block
-    raise WordResumeSyncError(f"content/site.json is missing its {heading!r} resume block")
+    raise WordResumeSyncError(f"content/resume.json is missing its {heading!r} resume block")
 
 
 def _set_list_item(block: dict[str, Any], index: int, text: str) -> None:

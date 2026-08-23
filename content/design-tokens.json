@@ -1,0 +1,17 @@
+{
+  "$description": "Visual foundations for the portfolio. Figma can import this DTCG-style token file; scripts/portfolio.py build emits the same values as CSS variables.",
+  "color": {
+    "paper": { "$type": "color", "$value": "#f3f0e8" },
+    "paper_deep": { "$type": "color", "$value": "#e8e3d8" },
+    "ink": { "$type": "color", "$value": "#17201f" },
+    "ink_soft": { "$type": "color", "$value": "#36403d" },
+    "muted": { "$type": "color", "$value": "#5d6862" },
+    "line": { "$type": "color", "$value": "#c9c9bf" },
+    "line_dark": { "$type": "color", "$value": "#5f6963" },
+    "green": { "$type": "color", "$value": "#193d35" },
+    "green_light": { "$type": "color", "$value": "#dce8df" },
+    "orange": { "$type": "color", "$value": "#d8613f" },
+    "orange_dark": { "$type": "color", "$value": "#a94329" },
+    "white": { "$type": "color", "$value": "#fffdf8" }
+  }
+}

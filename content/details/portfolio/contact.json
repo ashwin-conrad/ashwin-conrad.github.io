@@ -1,0 +1,30 @@
+{
+  "number": "10 / CONTACT",
+  "heading": "Interested in automotive, mechanical design, vehicle systems, manufacturing, and product-development opportunities.",
+  "lead": "For engineering internships, co-ops, and early-career roles, I would be glad to share more context on the systems, decisions, and work shown here.",
+  "links": [
+    {
+      "label": "Email Ashwin",
+      "href": {
+        "$source": "identity.email",
+        "$template": "mailto:{value}"
+      },
+      "id": "contact-email"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/ashwin-conrad-17b6722a0/",
+      "external": true
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/ashwin-conrad",
+      "external": true
+    },
+    {
+      "label": "Download Resume (PDF)",
+      "href": "portfolio/resume.pdf",
+      "external": true
+    }
+  ]
+}

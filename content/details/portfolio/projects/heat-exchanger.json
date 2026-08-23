@@ -1,0 +1,76 @@
+{
+  "id": "heat-exchanger",
+  "number": "03 / FEATURED ENGINEERING PROJECT",
+  "type": "ASSET INTEGRITY / ENGINEERING ANALYSIS",
+  "title": "Brazed aluminum heat-exchanger lifecycle analysis",
+  "subtitle": "Operating data, OEM limits, and field context combined to support risk-based decisions on aging process equipment.",
+  "image": {
+    "src": "assets/photos/altagas-field-inspection-1.jpg",
+    "alt": "AltaGas field inspection team examining facility equipment"
+  },
+  "metadata": [
+    {
+      "label": "ROLE",
+      "value": "Engineering Co-op"
+    },
+    {
+      "label": "CONTEXT",
+      "value": "AltaGas asset integrity"
+    },
+    {
+      "label": "SCOPE",
+      "value": "12+ heat exchangers"
+    },
+    {
+      "label": "DATA WINDOW",
+      "value": "2+ years of operation"
+    }
+  ],
+  "objective": "Assess fatigue risk and monitoring gaps for brazed aluminum heat exchangers using historical operating data and OEM-prescribed operating limits.",
+  "context": "The equipment supports facility operations, so the analysis had to connect historical process behaviour with inspection planning and practical operational awareness.",
+  "contribution": "Extracted process data with the PI Historian Excel add-in and developed Python screening tools for thermal ramp rates, cyclic operation limits, and parting-sheet temperature distributions.",
+  "constraints": [
+    "Historical-data quality",
+    "OEM operating limits",
+    "Sensor coverage",
+    "Aging equipment",
+    "Operational practicality"
+  ],
+  "process": [
+    "Extract operating data",
+    "Screen against OEM limits",
+    "Identify monitoring gaps",
+    "Develop recommendations",
+    "Present lifecycle findings"
+  ],
+  "decision": {
+    "label": "ENGINEERING DECISION",
+    "title": "Use measured operating behaviour to focus the next action.",
+    "text": "The work connected process data with failure mechanisms and monitoring coverage. Recommendations included additional instrumentation where coverage was insufficient and reduced actuated-valve opening rates to limit turbulent flow and erosion on the inner pipe face."
+  },
+  "results": [
+    "Analyzed 2+ years of data across 12+ brazed aluminum heat exchangers.",
+    "Compiled lifecycle findings for leadership to support risk-based decision-making and inspection planning."
+  ],
+  "tools": [
+    "Python",
+    "PI Historian Excel add-in",
+    "Data analysis",
+    "Technical assessment",
+    "Engineering reporting"
+  ],
+  "figures": [
+    {
+      "src": "assets/photos/altagas-field-inspection-2.jpg",
+      "alt": "Field inspection activity around AltaGas equipment",
+      "caption": "Figure 03 â€” Field context for the asset data. Engineering analysis is stronger when it remains connected to the equipment, inspection work, and operating decisions it supports."
+    }
+  ],
+  "placeholders": [
+    "[ADD DIAGRAM: anonymized analysis workflow from historian data to screening result]",
+    "[ADD FIGURE: anonymized thermal-ramp or cycling trend with engineering annotation]"
+  ],
+  "resume_ids": [
+    "heat-exchanger-lifecycle-analysis"
+  ]
+}

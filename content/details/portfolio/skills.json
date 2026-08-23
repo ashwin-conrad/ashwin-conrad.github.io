@@ -1,0 +1,64 @@
+{
+  "number": "06 / TECHNICAL SKILLS",
+  "heading": "Skill context over self-ratings.",
+  "groups": [
+    {
+      "title": "Mechanical design & build",
+      "items": [
+        "SolidWorks",
+        "AutoCAD & 2D laser cutting",
+        "Engineering drawings",
+        "Mechanical prototyping",
+        "3D modelling and printing",
+        "Fabrication and materials",
+        "Packaging considerations"
+      ]
+    },
+    {
+      "title": "Vehicle & electrical systems",
+      "items": [
+        "Low-voltage systems",
+        "Power distribution",
+        "Sensor integration",
+        "Safety interfaces",
+        "Electrical schematics",
+        "Panel wiring"
+      ]
+    },
+    {
+      "title": "Manufacturing & test",
+      "items": [
+        "Panel assembly",
+        "Pre-delivery QA",
+        "Inspection planning",
+        "Troubleshooting",
+        "Process and equipment context"
+      ]
+    },
+    {
+      "title": "Data & engineering automation",
+      "items": [
+        "Python",
+        "Excel data analysis",
+        "Power BI",
+        "Microsoft Fabric",
+        "Power Query",
+        "openpyxl",
+        "python-docx",
+        "Aspen HYSYS",
+        "Maximo",
+        "JDE"
+      ]
+    },
+    {
+      "title": "Engineering communication",
+      "items": [
+        "Technical reporting",
+        "Scope generation",
+        "Engineering documentation",
+        "Cross-functional coordination",
+        "Leadership presentations"
+      ]
+    }
+  ]
+}

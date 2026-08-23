@@ -1,125 +1,106 @@
-# ashwin-conrad.github.io
-Ashwin Conrad's Github Portfolio Website
+# Ashwin Conrad portfolio
 
-## Repository layout
+A local-first static portfolio. The generated public files are `index.html`, `styles.css`, `script.js`, and `portfolio/resume.pdf`; edit the structured sources rather than those outputs.
 
-- `content/` - editable site, resume, gallery, project, and case-study source data.
-- `content/context/` - supporting notes used while maintaining content.
-- `assets/photos/` - optimized images referenced by the site.
-- `assets/brand/` - brand references and visual assets.
-- `scripts/` - build and content-editing tools; `site_renderer.py` contains the presentation layer and `project_paths.py` contains shared paths.
-- `portfolio/resume.docx` - retained editable Word resume, including the Content Controls used for Word-to-website synchronization.
-- `index.html`, `styles.css`, `script.js`, and `portfolio/resume.pdf` - generated GitHub Pages output.
-- `tmp/` - local-only previews, downloads, and cloned reference repositories.
+## Fast editing workflow
 
-## Editing workflow
-
-For a fresh local checkout, install the build dependencies first:
+Install the small Python dependency set once:
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-Edit structure, navigation, and resume high-level details in `content/site.json`. Edit the recruiter-facing engineering case studies, skills, figures, captions, gallery groups, and contact copy in `content/details.json` under `portfolio`. Then rebuild the generated files:
+Run the local content editor:
 
 ```powershell
-python scripts/build_site.py
+python scripts/portfolio.py editor
 ```
 
-The script regenerates `index.html`, `styles.css`, `script.js`, and `portfolio/resume.pdf`, while refreshing the editable fields in `portfolio/resume.docx`. The resume block in `content/site.json` remains the structured source for roles, organizations, locations, dates, bullets, leadership, and awards. The case-study copy is deliberately separate so longer descriptions and placeholders can be maintained without bloating the resume.
+Open `http://127.0.0.1:4173/editor/`. It groups fields by the part of the website where they appear, previews unsaved changes, supports item ordering and image import/selection, and saves with an on-disk revision check. It is local-only: no account, database, or remote dependency.
 
-## Shared resume and site links
+Use **Save all JSON**, then **Build website + resume**. The latter regenerates the HTML/CSS/JS, Word resume, and PDF.
 
-Use stable IDs to connect resume entries, work cards, and project cards:
+`scripts/portfolio.py` is the sole operational entry point in Codespaces and locally. Its commands are `editor`, `build`, `check`, `sync-shared`, `sync-word`, and `prepare-pages`; the other Python files in `scripts/` are reusable implementation modules.
 
-```json
-{
-  "id": "altagas-coop",
-  "resume_id": "altagas-coop"
-}
+## Source ownership
+
+| Source | Owns |
+| --- | --- |
+| `content/site.json` | Site-wide settings, metadata, identity facts, and navigation |
+| `content/details.json` + `content/details/` | Ordered website sections and individual case studies, including copy, images, captions, links, and contact content |
+| `content/resume.json` | Concise resume wording, chosen order, skills, bullets, awards, and Word-template slot selection |
+| `content/design-tokens.json` | Visual foundation colours used by CSS and available to import into Figma |
+
+`resume.json` is intentionally independent: editing a resume bullet does not replace a longer portfolio case study, and editing website copy does not alter the resume.
+
+`details.json` is a manifest, so day-to-day website edits follow the page hierarchy:
+
+```text
+content/details/portfolio/
+|- hero.json
+|- profile.json
+|- projects/
+|  |- formula-ev.json
+|  |- heat-exchanger.json
+|  `- spartan-controls.json
+|- experience.json
+|- skills.json
+|- documentation.json
+|- leadership.json
+|- personal-builds.json
+`- contact.json
 ```
 
-Longer body copy lives in `content/details.json` under the same ID:
+The local editor loads those files as one coherent page and writes changes back to the matching section or case-study file. Keep the manifest IDs and file paths stable; they preserve intentional page and project order.
 
-```json
-{
-  "experience": {
-    "altagas-coop": {
-      "description": "Longer website copy...",
-      "related": [
-        {
-          "label": "Corrosion Monitoring Dashboard",
-          "href": "#project-corrosion-monitoring-dashboard"
-        }
-      ]
-    }
-  }
-}
-```
+Stable IDs connect the files. Website experience cards have `id` and `resume_id`; case studies have `id` and `resume_ids`. The local editor locks existing IDs against accidental changes. The validators reject unknown or duplicate relationships.
 
-Resume bullets stay in the resume block and can be filled in later per organization or project.
+## Shared factual fields
 
-## Photos
-
-Keep original uploads in `assets/` if you want the source files preserved. The website should reference optimized copies in `assets/photos/` so the page stays fast.
-
-Project cards support an optional image:
-
-```json
-"image": {
-  "src": "assets/photos/project-photo.jpg",
-  "alt": "Short description of the project photo"
-}
-```
-
-The primary portfolio renderer also uses image objects in `content/details.json > portfolio`. Images in case studies and documentation figures open in a small dependency-free lightbox. Keep public images in `assets/photos/` and add any missing engineering evidence listed in `CONTENT_TODO.md`.
-
-The grouped gallery is defined in `content/details.json` under `photos.groups`:
-
-```json
-{
-  "heading": "Spartan Controls: Panels + Shop Systems",
-  "intro": "A short group overview.",
-  "items": [
-    {
-      "src": "assets/photos/spartan-panel-1.jpg",
-      "alt": "Open electrical control panel",
-      "title": "Panel Build Sample",
-      "caption": "Context for the photo.",
-      "related": [
-        {
-          "label": "Control Panel Builds",
-          "href": "#project-spartan-control-panel-builds"
-        }
-      ]
-    }
-  ]
-}
-```
-
-## Resume architecture
-
-`content/site.json` is the structured synchronization data behind the resume and website. `content/details.json` remains for longer website case studies and is not used to duplicate resume text.
-
-`portfolio/resume.docx` is both the public editable Word resume and the retained layout artifact. Its Content Controls are addressed by tag, not by Word's numeric `w:id`. Keep the controls intact when adjusting its layout; the build validates their complete tag inventory.
-
-`scripts/resume/mapper.py` adapts stable resume IDs to the template's fixed slots: AltaGas and Spartan Controls are the two page-one experience entries; Formula EV is leadership plus a page-two technical project; four explicitly selected stable-ID projects populate page two. This makes any intentional fixed-template selection clear without duplicating resume prose.
-
-Use `portfolio/resume.docx` as the only concise-resume editor. After making changes in Word, save and close it, then run `python scripts/sync_resume_from_word.py`. This imports its controls into `content/site.json` and rebuilds the PDF and website.
-
-Do not run the regular build after manual Word content changes without first running the Word sync command, because the regular build applies the structured JSON values back to the document. Technical-category labels and the portfolio callout are Word-only presentation copy, so direct edits to those controls remain in Word and are not copied into website JSON.
-
-Build only the resume:
+`content/resume.json > _meta.shared_fields` is an explicit allow-list for fields such as name, phone, and portfolio URL. Nothing else synchronizes.
 
 ```powershell
-python scripts/build_resume.py
+# Preview safe changes without writing
+python scripts/portfolio.py sync-shared
+
+# Pull only fields not independently edited in the resume
+python scripts/portfolio.py sync-shared --apply
+
+# Intentionally overwrite independent resume values
+python scripts/portfolio.py sync-shared --apply --force
 ```
 
-Useful validation/build variants:
+Each rule records `last_synced_value`. If a resume value differs from that value, it is reported as an override instead of being overwritten.
+
+## Resume and Word
+
+`portfolio/resume.docx` remains the editable layout artifact and has stable Word Content Control tags. JSON is the normal content source; Word is the layout surface.
 
 ```powershell
-python scripts/build_resume.py --validate-only
-python scripts/build_resume.py --docx-only
+python scripts/portfolio.py build                           # website + DOCX + PDF
+python scripts/portfolio.py build --resume-only --docx-only # DOCX only
+python scripts/portfolio.py sync-word                       # import Word edits, then rebuild
 ```
 
-The renderer validates Content Control tags, required values, configurable field-length limits, and the final two-page PDF. PDF export uses Microsoft Word automation when available, with LibreOffice headless as a local fallback. If neither is installed, the DOCX remains valid and the command reports how to proceed.
+The Word import updates only `content/resume.json`; it does not rewrite website copy. Before running a normal build after a manual Word edit, run the Word sync command first.
+
+## Validate before publishing
+
+```powershell
+python scripts/portfolio.py check
+python -m unittest discover -s tests
+```
+
+For the clean GitHub Pages artifact used in CI:
+
+```powershell
+python scripts/portfolio.py prepare-pages
+```
+
+## Figma workflow
+
+Use Figma for visual structure, responsive composition, components, and design tokens, not as the portfolio text database. The working agreement and Figma setup are in [docs/FIGMA_WORKFLOW.md](docs/FIGMA_WORKFLOW.md). The renderer remains the source of HTML semantics and responsive behaviour.
+
+## More detail
+
+See [docs/CONTENT_ARCHITECTURE.md](docs/CONTENT_ARCHITECTURE.md) for the data flow, relationships, and safe save behaviour.

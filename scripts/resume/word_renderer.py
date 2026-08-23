@@ -12,6 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
+import time
 from typing import Iterable
 from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -26,6 +27,10 @@ DOCUMENT_PART = "word/document.xml"
 
 class ContentControlNotFoundError(RuntimeError):
     """Raised when a requested Word Content Control tag cannot be found."""
+
+
+class DocumentReplaceError(RuntimeError):
+    """Raised when Windows prevents an updated DOCX from replacing its source."""
 
 
 @dataclass(frozen=True)
@@ -116,18 +121,21 @@ def render_word_template(template_path: Path, output_path: Path, values: dict[st
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     modified_parts = _populate_parts(template_path, values)
-    destination = output_path
     replace_in_place = template_path.resolve() == output_path.resolve()
+    destination = output_path
     if replace_in_place:
         with NamedTemporaryFile(prefix=f"{output_path.stem}-", suffix=".docx", dir=output_path.parent, delete=False) as handle:
             destination = Path(handle.name)
-
-    with ZipFile(template_path) as source, ZipFile(destination, "w", compression=ZIP_DEFLATED) as target:
-        for info in source.infolist():
-            payload = modified_parts.get(info.filename, source.read(info.filename))
-            target.writestr(info, payload, compress_type=info.compress_type)
-    if replace_in_place:
-        destination.replace(output_path)
+    try:
+        with ZipFile(template_path) as source, ZipFile(destination, "w", compression=ZIP_DEFLATED) as target:
+            for info in source.infolist():
+                payload = modified_parts.get(info.filename, source.read(info.filename))
+                target.writestr(info, payload, compress_type=info.compress_type)
+        if replace_in_place:
+            _replace_document(destination, output_path)
+    finally:
+        if replace_in_place and destination.exists():
+            destination.unlink()
     return sorted(values)
 
 
@@ -168,7 +176,36 @@ def replace_static_paragraph_text(docx_path: Path, old_text: str, new_text: str)
             for info in package.infolist():
                 payload = modified.get(info.filename, package.read(info.filename))
                 target.writestr(info, payload, compress_type=info.compress_type)
-    destination.replace(docx_path)
+    try:
+        _replace_document(destination, docx_path)
+    finally:
+        if destination.exists():
+            destination.unlink()
+
+
+def _replace_document(temporary_path: Path, output_path: Path) -> None:
+    """Replace an editable DOCX, allowing brief Windows lock-release delays.
+
+    Microsoft Word can remain as a background process after its window closes,
+    and Explorer's preview pane can briefly hold the same handle.  Retry a few
+    times for a transient release, then leave the original untouched and give a
+    direct recovery instruction.  The caller always removes the temporary file.
+    """
+
+    last_error: PermissionError | None = None
+    for attempt in range(5):
+        try:
+            temporary_path.replace(output_path)
+            return
+        except PermissionError as error:
+            last_error = error
+            if attempt < 4:
+                time.sleep(0.25)
+    raise DocumentReplaceError(
+        f"Could not update {output_path.name}; Windows still has it locked. "
+        "Close any Word document and File Explorer preview, then end any background WINWORD.EXE "
+        "process only after confirming it has no unsaved work."
+    ) from last_error
 
 
 def fix_page_two_project_layout(docx_path: Path) -> None:

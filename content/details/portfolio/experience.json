@@ -1,0 +1,48 @@
+{
+  "number": "05 / ENGINEERING EXPERIENCE",
+  "heading": "Experience that connects design intent to physical work.",
+  "items": [
+    {
+      "date": "Winter 2025 – Present",
+      "role": "Low Voltage Electronics Lead",
+      "organization": "Formula EV Racing · University of Alberta",
+      "text": "Leads planning and integration for Formula UA27 low-voltage systems, coordinating power distribution, sensors, board-level hardware, safety interfaces, and vehicle packaging with mechanical and software teammates.",
+      "tags": [
+        "Vehicle systems",
+        "Low-voltage integration",
+        "Packaging",
+        "Technical leadership"
+      ],
+      "id": "formula-ev-lv",
+      "resume_id": "formula-ev-lv"
+    },
+    {
+      "date": "2025 – 2026",
+      "role": "Integrity & Reliability Engineering Student",
+      "organization": "AltaGas · Calgary, AB",
+      "text": "Developed engineering data workflows for corrosion monitoring, inspection planning, and asset lifecycle management across multi-facility operations. Work connected historical data, field context, operating decisions, and technical deliverables.",
+      "tags": [
+        "Asset integrity",
+        "Python",
+        "Data analysis",
+        "Technical documentation"
+      ],
+      "id": "altagas-coop",
+      "resume_id": "altagas-coop"
+    },
+    {
+      "date": "Summer 2023 & 2024",
+      "role": "Control Panel Technician",
+      "organization": "Spartan Controls · Calgary, AB",
+      "text": "Built and quality-checked industrial control panels from drawings through assembly, wiring, software loading, and pre-delivery review. Worked in a production setting where safety, repeatability, documentation, and delivery mattered.",
+      "tags": [
+        "Manufacturing",
+        "Electrical assembly",
+        "QA",
+        "Troubleshooting"
+      ],
+      "id": "spartan-controls-technician",
+      "resume_id": "spartan-controls-technician"
+    }
+  ]
+}

@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from project_paths import RESUME_DOCX_OUTPUT_PATH, RESUME_OUTPUT_PATH, SITE_CONTENT_PATH  # noqa: E402
+from project_paths import RESUME_CONTENT_PATH, RESUME_DOCX_OUTPUT_PATH, RESUME_OUTPUT_PATH  # noqa: E402
 from resume.build import build_resume  # noqa: E402
 from resume.mapper import build_resume_record  # noqa: E402
 from resume.validation import (  # noqa: E402
@@ -33,13 +33,13 @@ from resume.word_renderer import (  # noqa: E402
     read_document_root,
     render_word_template,
 )
-from resume.word_sync import sync_word_values_into_site  # noqa: E402
+from resume.word_sync import sync_word_values_into_resume  # noqa: E402
 
 
 class ResumePipelineTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.site_data = json.loads(SITE_CONTENT_PATH.read_text(encoding="utf-8"))
+        cls.resume_data = json.loads(RESUME_CONTENT_PATH.read_text(encoding="utf-8"))
         cls.output_dir = ROOT / "tmp" / "resume-pipeline-tests"
         cls.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -63,7 +63,7 @@ class ResumePipelineTests(unittest.TestCase):
             self.assertIn(b"<w:sdt", package.read("word/document.xml"))
 
     def test_field_mapping_targets_expected_tags(self) -> None:
-        record = build_resume_record(self.site_data)
+        record = build_resume_record(self.resume_data)
         self.assertEqual(record.values["EXP1_COMPANY"], "AltaGas - Calgary, AB")
         self.assertEqual(record.values["PROJECT3_TITLE"], "Formula EV Electrical Systems")
         self.assertEqual(record.values["COMMUNITY1_TITLE"], "CYDC Basketball Coach")
@@ -78,7 +78,7 @@ class ResumePipelineTests(unittest.TestCase):
             validate_tag_inventory(["CONTACT_NAME", "CONTACT_NAME"], {"CONTACT_NAME"})
 
     def test_optional_blank_fields_render(self) -> None:
-        record = build_resume_record(self.site_data)
+        record = build_resume_record(self.resume_data)
         self.assertEqual(record.values["COMMUNITY2_TITLE"], "")
         output_path = self.output_dir / "blank-optional.docx"
         render_word_template(RESUME_DOCX_OUTPUT_PATH, output_path, record.values)
@@ -92,7 +92,7 @@ class ResumePipelineTests(unittest.TestCase):
     def test_generated_docx_builds_in_place(self) -> None:
         output_path = self.output_dir / "generated-resume.docx"
         shutil.copy2(RESUME_DOCX_OUTPUT_PATH, output_path)
-        result = build_resume(self.site_data, docx_path=output_path, pdf_path=None)
+        result = build_resume(self.resume_data, docx_path=output_path, pdf_path=None)
         self.assertEqual(result.docx_path, output_path)
         self.assertTrue(output_path.exists())
         validate_resume_document(output_path)
@@ -111,18 +111,17 @@ class ResumePipelineTests(unittest.TestCase):
         self.assertEqual(table.xpath("./w:tblPr/w:tblInd/@w:w", namespaces=NS), ["0"])
         self.assertEqual(table.xpath("./w:tblGrid/w:gridCol/@w:w", namespaces=NS), ["5000", "3300", "2356"])
 
-    def test_word_sync_updates_a_copy_of_the_json_model(self) -> None:
+    def test_word_sync_updates_a_copy_of_the_resume_model(self) -> None:
         values = read_content_control_values(RESUME_DOCX_OUTPUT_PATH)
         values.update({"CONTACT_NAME": "Word Edited Name", "GENERAL_SKILL_1": "Word Skill"})
-        updated = sync_word_values_into_site(self.site_data, values)
-        self.assertEqual(updated["resume"]["name"], "Word Edited Name")
-        self.assertEqual(updated["site"]["name"], "Word Edited Name")
-        self.assertEqual(updated["about"]["skills"][0], "Word Skill")
-        self.assertNotEqual(updated, self.site_data)
-        self.assertEqual(self.site_data["resume"]["name"], "Ashwin Conrad")
+        updated = sync_word_values_into_resume(self.resume_data, values)
+        self.assertEqual(updated["name"], "Word Edited Name")
+        self.assertEqual(updated["general_skills"][0], "Word Skill")
+        self.assertNotEqual(updated, self.resume_data)
+        self.assertEqual(self.resume_data["name"], "Ashwin Conrad")
 
     def test_website_renderer_still_loads(self) -> None:
-        from build_site import load_content
+        from portfolio_workflow import load_content
         from site_renderer import render_engineering_index
 
         self.assertIn("<html", render_engineering_index(load_content()).lower())

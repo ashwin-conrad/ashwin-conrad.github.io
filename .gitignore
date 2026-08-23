@@ -3,6 +3,7 @@
 
 # Temporary downloads, previews, and cloned references
 tmp/
+_site/
 
 # Python cache
 __pycache__/

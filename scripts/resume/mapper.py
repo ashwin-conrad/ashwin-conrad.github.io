@@ -2,8 +2,8 @@
 
 The Word template is deliberately fixed to two pages, so its presentation slots
 use a documented ID-based selection policy rather than mirroring every resume
-item automatically.  Content still comes from ``content/site.json``; these
-constants only decide which existing stable IDs occupy the fixed slots.
+item automatically. Content comes from ``content/resume.json``; these constants
+only decide which existing stable IDs occupy the fixed slots.
 """
 
 from __future__ import annotations
@@ -61,21 +61,11 @@ class ResumeRecord:
         self.sources[tag] = source
 
 
-def build_resume_record(
-    site_data: dict[str, Any],
-    details_data: dict[str, Any] | None = None,
-) -> ResumeRecord:
-    """Build a tag-addressed record from canonical concise resume content.
+def build_resume_record(resume: dict[str, Any]) -> ResumeRecord:
+    """Build a tag-addressed record from independent concise resume content."""
 
-    ``details_data`` is intentionally accepted but not used for normal fields:
-    it holds longer portfolio/case-study copy and must not become a second
-    resume source of truth.
-    """
-
-    del details_data
-    resume = site_data.get("resume", {})
     if not resume:
-        raise ResumeMappingError("content/site.json is missing its resume block")
+        raise ResumeMappingError("content/resume.json is empty")
 
     record = ResumeRecord()
     contact = _contact_parts(resume.get("contact", []))
@@ -113,25 +103,25 @@ def build_resume_record(
 
     leadership_items = _list_items(resume, "Leadership")
     if not leadership_items:
-        raise ResumeMappingError("The Word template requires one Leadership list item in content/site.json")
+        raise ResumeMappingError("The Word template requires one Leadership list item in content/resume.json")
     lead2_title, lead2_dates = _split_trailing_dates(leadership_items[0])
     record.add("LEAD2_TITLE", lead2_title, "resume.pages[0].Leadership[0]")
     record.add("LEAD2_DATES", lead2_dates, "resume.pages[0].Leadership[0]")
 
     community_items = _list_items(resume, "Community")
     if not community_items:
-        raise ResumeMappingError("The Word template requires a Community list item (CYDC Basketball Coach) in content/site.json")
+        raise ResumeMappingError("The Word template requires a Community list item (CYDC Basketball Coach) in content/resume.json")
     community_title, community_detail = _split_title_and_detail(community_items[0])
     record.add("COMMUNITY1_TITLE", community_title, "resume.pages[0].Community[0]")
     record.add("COMMUNITY1_DETAIL", community_detail, "resume.pages[0].Community[0]")
     record.add("COMMUNITY2_TITLE", "", "optional community slot")
     record.add("COMMUNITY2_DETAIL", "", "optional community slot")
 
-    general_skills = list(site_data.get("about", {}).get("skills", []))[:6]
+    general_skills = list(resume.get("general_skills", []))[:6]
     if len(general_skills) < 6:
-        raise ResumeMappingError("The Word template requires at least six entries in about.skills")
+        raise ResumeMappingError("The Word template requires at least six entries in resume.general_skills")
     for index, skill in enumerate(general_skills, start=1):
-        record.add(f"GENERAL_SKILL_{index}", skill, f"about.skills[{index - 1}]")
+        record.add(f"GENERAL_SKILL_{index}", skill, f"general_skills[{index - 1}]")
 
     awards = _list_items(resume, "Awards")
     if len(awards) > 3:
@@ -158,6 +148,8 @@ def build_resume_record(
 
 
 def _contact_parts(contact: object) -> dict[str, str]:
+    if isinstance(contact, dict):
+        return {key: str(contact.get(key, "")).strip() for key in ("location", "phone", "email", "website")}
     values = [str(value).strip() for value in contact if str(value).strip()] if isinstance(contact, list) else []
     email = next((value for value in values if "@" in value), "")
     phone = next((value for value in values if sum(char.isdigit() for char in value) >= 7), "")

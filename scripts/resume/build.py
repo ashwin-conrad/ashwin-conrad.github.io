@@ -35,11 +35,10 @@ class ResumeBuildResult:
 
 
 def build_resume(
-    site_data: dict[str, Any],
+    resume_data: dict[str, Any],
     *,
     docx_path: Path,
     pdf_path: Path | None,
-    details_data: dict[str, Any] | None = None,
     validate_only: bool = False,
 ) -> ResumeBuildResult:
     """Validate, refresh, and optionally convert the editable Word resume.
@@ -50,7 +49,7 @@ def build_resume(
     """
 
     validate_resume_document(docx_path)
-    record = build_resume_record(site_data, details_data)
+    record = build_resume_record(resume_data)
     validate_record(record)
     if validate_only:
         return ResumeBuildResult(record=record, docx_path=None, pdf_path=None, pdf_backend=None)
@@ -91,7 +90,7 @@ def convert_docx_to_pdf(input_path: Path, output_path: Path) -> str:
     detail = f" Last conversion error: {word_error}" if word_error else ""
     raise PdfConversionUnavailableError(
         "No supported local DOCX-to-PDF converter is available. Install Microsoft Word or LibreOffice, "
-        "or run `python scripts/build_resume.py --docx-only`." + detail
+        "or run `python scripts/portfolio.py build --resume-only --docx-only`." + detail
     )
 
 

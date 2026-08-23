@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Content Editor</title>
+  <link rel="stylesheet" href="editor.css">
+  <script src="editor.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div><p class="eyebrow">LOCAL CONTENT EDITOR</p><h1>Portfolio workspace</h1></div>
+    <div class="top-actions">
+      <button id="refresh" class="quiet">Refresh from disk</button>
+      <button id="save" class="primary">Save all JSON</button>
+      <button id="build" class="dark">Build website + résumé</button>
+    </div>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar">
+      <p class="sidebar-label">WEBSITE CONTENT</p>
+      <nav id="sections" aria-label="Content sections"></nav>
+      <p class="sidebar-label">RÉSUMÉ CONTENT</p>
+      <nav id="resume-sections" aria-label="Résumé content sections"></nav>
+      <div class="sidebar-note"><strong>Stable IDs are locked.</strong> Reorder cards freely; linked IDs remain intact so website and résumé relationships stay reliable.</div>
+    </aside>
+    <main class="editor-panel">
+      <div class="section-heading"><div><p id="source-label" class="eyebrow"></p><h2 id="section-title"></h2><p id="section-help"></p></div><a id="site-link" href="/" target="_blank" rel="noreferrer">Open saved site ↗</a></div>
+      <div id="status" role="status"></div>
+      <div id="form" class="form"></div>
+    </main>
+    <aside class="preview-panel">
+      <div class="preview-heading"><div><p class="eyebrow">UNSAVED VISUAL PREVIEW</p><h2>Website context</h2></div><button id="preview" class="quiet">Refresh preview</button></div>
+      <iframe id="preview-frame" title="Live website preview"></iframe>
+      <div class="sync-card"><p class="eyebrow">SHARED FACTS</p><p>Website and résumé wording stay independent. Only the fields listed in <code>resume._meta.shared_fields</code> are eligible to sync.</p><button id="sync" class="quiet">Sync safe fields to résumé</button><button id="force-sync" class="link-button">Force shared facts into résumé</button></div>
+      <pre id="build-output" hidden></pre>
+    </aside>
+  </div>
+</body>
+</html>
