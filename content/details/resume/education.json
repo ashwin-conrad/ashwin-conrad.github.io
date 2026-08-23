@@ -1,0 +1,29 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "column": "main",
+      "heading": "Education",
+      "items": [
+        {
+          "id": "education_1",
+          "include": true,
+          "role": {"$source": "facts.education.education_1.program"},
+          "organization": {"$source": "facts.education.education_1.institution"},
+          "location": {"$source": "facts.education.education_1.location"},
+          "dates": {"$source": "facts.education.education_1.dates"},
+          "bullets": ["Mechanical Engineering student; Formula EV Low Voltage Electronics Lead and Engineering Student Engagement Leader."]
+        },
+        {
+          "id": "education_2",
+          "include": true,
+          "role": {"$source": "facts.education.education_2.program"},
+          "organization": {"$source": "facts.education.education_2.institution"},
+          "location": {"$source": "facts.education.education_2.location"},
+          "dates": {"$source": "facts.education.education_2.dates"},
+          "bullets": ["Played on the Basketball, Track, and Rugby teams along side Club Basketball and volunteer coaching. Also an active member in the Diversity Equity and Inclusion Club at school supporting a multicultural community. "]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "experience_1",
+  "include": true,
+  "date": {"$source": "facts.experiences.experience_1.dates"},
+  "role": {"$source": "facts.experiences.experience_1.role"},
+  "organization": {"$source": "facts.experiences.experience_1.organization"},
+  "text": "Leads planning and integration for Formula UA27 low-voltage systems, coordinating power distribution, sensors, board-level hardware, safety interfaces, and vehicle packaging with mechanical and software teammates.",
+  "tags": ["Vehicle systems", "Low-voltage integration", "Packaging", "Technical leadership"],
+  "resume_id": "experience_1"
+}

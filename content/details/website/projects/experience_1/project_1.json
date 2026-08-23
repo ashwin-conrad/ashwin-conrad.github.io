@@ -1,0 +1,52 @@
+{
+  "id": "project_1",
+  "include": true,
+  "number": "02 / FEATURED ENGINEERING PROJECT",
+  "type": "FORMULA SAE / VEHICLE INTEGRATION",
+  "title": {"$source": "facts.projects.project_1.case_study_title"},
+  "subtitle": "Vehicle electrical integration shaped by packaging, safety interfaces, accessibility, and team coordination.",
+  "image": {
+    "src": {"$source": "assets.images.image_07.src"},
+    "alt": {"$source": "assets.images.image_07.alt"},
+    "title": {"$source": "assets.images.image_07.title"},
+    "display": {"$source": "assets.images.image_07.display"}
+  },
+  "metadata": [
+    {"label": "ROLE", "value": {"$source": "facts.experiences.experience_1.role"}},
+    {"label": "TEAM", "value": {"$source": "facts.organizations.organization_1.name"}},
+    {"label": "SYSTEM", "value": {"$source": "facts.projects.project_1.system"}},
+    {"label": "TIMEFRAME", "value": {"$source": "facts.experiences.experience_1.dates"}}
+  ],
+  "objective": "Plan and integrate the low-voltage system for Formula UA27 around the vehicle package, including power distribution, control hardware, sensors, and safety interfaces.",
+  "context": "Formula EV work requires electrical decisions to coexist with the chassis, vehicle packaging, team schedule, and the practical need to inspect and service the car.",
+  "contribution": "Lead low-voltage electrical system planning and integration; coordinate board-level hardware, safety interfaces, sensor integration, and power-distribution work with mechanical and software teammates.",
+  "constraints": ["Vehicle packaging", "Safety interfaces", "Sensor and control integration", "Accessibility and serviceability", "Cross-team coordination"],
+  "process": ["System planning", "Vehicle packaging coordination", "Hardware and safety-interface integration", "Build support", "Inspection and iteration"],
+  "decision": {
+    "label": "ENGINEERING FOCUS",
+    "title": "Treat the electrical system as part of the vehicle package.",
+    "text": "Low-voltage work is not isolated from the mechanical system. Component placement, access, and integration are considered alongside the electrical function so the team can build, inspect, and troubleshoot the vehicle as a complete system."
+  },
+  "results": [
+    "Leads the current Formula UA27 low-voltage systems integration effort.",
+    "Coordinates power distribution, sensors, safety interfaces, board-level hardware, and vehicle packaging as one system."
+  ],
+  "tools": {"$source": "facts.projects.project_1.tools"},
+  "figures": [
+    {
+      "src": {"$source": "assets.images.image_01.src"},
+      "alt": {"$source": "assets.images.image_01.alt"},
+      "title": {"$source": "assets.images.image_01.title"},
+      "display": {"$source": "assets.images.image_01.display"},
+      "caption": "Figure 01 — Low-voltage enclosure in the competition environment. The work is evaluated in the context of the vehicle, access, inspection, and team readiness—not only at the bench."
+    },
+    {
+      "src": {"$source": "assets.images.image_08.src"},
+      "alt": {"$source": "assets.images.image_08.alt"},
+      "title": {"$source": "assets.images.image_08.title"},
+      "display": {"$source": "assets.images.image_08.display"},
+      "caption": "Figure 02 — Chassis progress provides the packaging context for subsystem placement, routing, and service access."
+    }
+  ],
+  "resume_ids": ["experience_1", "project_1"]
+}

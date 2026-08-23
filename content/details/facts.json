@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "name": "Ashwin Conrad",
+    "initials": "AC.",
+    "location": "Calgary, AB",
+    "phone": "(403) 826-9320",
+    "email": "conrad.ashwin@gmail.com",
+    "website": "ashwin-conrad.github.io",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/ashwin-conrad-17b6722a0/",
+      "github": "https://github.com/ashwin-conrad"
+    }
+  },
+  "organizations": {
+    "organization_1": {"name": "Formula EV Racing", "location": "University of Alberta"},
+    "organization_2": {"name": "AltaGas", "location": "Calgary, AB"},
+    "organization_3": {"name": "Spartan Controls", "location": "Calgary, AB"},
+    "organization_4": {"name": "Personal Project", "location": ""}
+  },
+  "hero_facts": [
+    "Mechanical Engineering · University of Alberta",
+    "Low Voltage Electronics Lead · Formula EV Racing",
+    "Integrity & Reliability Engineering Student · AltaGas"
+  ],
+  "audience_profiles": {
+    "automotive_product": {
+      "label": "Automotive and product-development engineering",
+      "focus": ["Vehicle systems", "Packaging", "Manufacturing", "Testing"]
+    },
+    "manufacturing_test": {
+      "label": "Manufacturing and test engineering",
+      "focus": ["Engineering drawings", "Assembly", "QA", "Troubleshooting"]
+    },
+    "reliability_data": {
+      "label": "Reliability and engineering-data roles",
+      "focus": ["Asset integrity", "Inspection planning", "Python", "Technical reporting"]
+    }
+  },
+  "hero_proof_points": [
+    {
+      "label": "FORMULA UA27",
+      "value": "Low-voltage systems integration",
+      "detail": "Packaging, sensors, power distribution, and safety interfaces"
+    },
+    {
+      "label": "ALTAGAS",
+      "value": "12+ heat exchangers analyzed",
+      "detail": "2+ years of operating history screened against OEM limits"
+    },
+    {
+      "label": "SPARTAN CONTROLS",
+      "value": "30+ panels and 250+ PLC updates",
+      "detail": "Assembly, pre-delivery QA, and production support"
+    }
+  ],
+  "achievements": {
+    "formula_ua27_integration": {
+      "claim": "Leads Formula UA27 low-voltage planning and integration across hardware, safety interfaces, sensors, power distribution, and vehicle packaging.",
+      "status": "current",
+      "audiences": ["automotive_product", "manufacturing_test"]
+    },
+    "altagas_heat_exchanger_analysis": {
+      "claim": "Analyzed 2+ years of operating data across 12+ brazed aluminum heat exchangers and screened results against OEM limits.",
+      "status": "verified",
+      "audiences": ["reliability_data", "automotive_product"]
+    },
+    "spartan_panel_execution": {
+      "claim": "Built and quality-checked 30+ industrial control panels and processed 250+ PLC software updates in under half the allocated time.",
+      "status": "verified",
+      "audiences": ["manufacturing_test", "automotive_product"]
+    }
+  },
+  "experiences": {
+    "experience_1": {
+      "role": "Low Voltage Electronics Lead",
+      "organization_id": "organization_1",
+      "organization": "Formula EV Racing · University of Alberta",
+      "location": "University of Alberta",
+      "dates": "Winter 2025 – Present"
+    },
+    "experience_2": {
+      "role": "Integrity & Reliability Engineering Student",
+      "organization_id": "organization_2",
+      "organization": "AltaGas · Calgary, AB",
+      "location": "Calgary, AB",
+      "dates": "2025 – 2026"
+    },
+    "experience_3": {
+      "role": "Control Panel Technician",
+      "organization_id": "organization_3",
+      "organization": "Spartan Controls · Calgary, AB",
+      "location": "Calgary, AB",
+      "dates": "Summer 2023 & 2024",
+      "website_dates": "Summer 2023 & 2024"
+    }
+  },
+  "projects": {
+    "project_1": {
+      "title": "Formula EV Electrical Systems",
+      "case_study_title": "Formula UA27 low-voltage systems",
+      "system": "Vehicle low-voltage systems",
+      "experience_id": "experience_1",
+      "organization_id": "organization_1",
+      "dates": "Winter 2025 – Present",
+      "tools_text": "Low-voltage electrical systems",
+      "tools": ["Low-voltage systems", "Power distribution", "Sensor integration", "Vehicle packaging", "Technical coordination"]
+    },
+    "project_2": {
+      "title": "Brazed Aluminum Heat-Exchanger Lifecycle Analysis",
+      "case_study_title": "Brazed aluminum heat-exchanger lifecycle analysis",
+      "role": "Engineering Co-op",
+      "experience_id": "experience_2",
+      "organization_id": "organization_2",
+      "dates": "2025 – 2026",
+      "tools_text": "Python, PI Historian Excel add-in",
+      "tools": ["Python", "PI Historian Excel add-in", "Data analysis", "Technical assessment", "Engineering reporting"],
+      "metrics": {"operating_years": "2+", "heat_exchanger_count": "12+"}
+    },
+    "project_3": {
+      "title": "Inspection Scope Generation Tool",
+      "experience_id": "experience_2",
+      "organization_id": "organization_2",
+      "dates": "2025 – 2026",
+      "tools_text": "Python, openpyxl, python-docx",
+      "tools": ["Python", "openpyxl", "python-docx"],
+      "metrics": {"inspection_scope_count": "500+"}
+    },
+    "project_4": {
+      "title": "Corrosion Monitoring Dashboard",
+      "experience_id": "experience_2",
+      "organization_id": "organization_2",
+      "dates": "2025 – 2026",
+      "tools_text": "Microsoft Fabric, Power BI, Python",
+      "tools": ["Microsoft Fabric", "Power BI", "Python"],
+      "metrics": {"facility_count": "12", "monitored_asset_count": "100+"}
+    },
+    "project_5": {
+      "title": "Control Panel Builds",
+      "case_study_title": "Control panel builds and pre-delivery quality",
+      "role": "Control Panel Technician",
+      "work": "Panel assembly and QA",
+      "experience_id": "experience_3",
+      "organization_id": "organization_3",
+      "dates": "Summer Terms, '23, '24",
+      "tools_text": "Industrial controls and panel QA",
+      "tools": ["Engineering drawings", "Electrical schematics", "Panel assembly", "Wiring", "QA", "PLC software updates"],
+      "metrics": {"panel_count": "30+", "plc_update_count": "250+"}
+    },
+    "project_6": {
+      "title": "Tool carrier",
+      "resume_title": "Leather Tool Carrier",
+      "experience_id": "experience_3",
+      "organization_id": "organization_3",
+      "dates": "2024",
+      "tools_text": "Shop workflow tooling"
+    },
+    "project_7": {
+      "title": "Composite skateboard deck",
+      "resume_title": "Composite Skateboard Decks",
+      "organization_id": "organization_4",
+      "dates": "Earlier build series",
+      "tools_text": "Lamination, fiberglass layups, embedded aluminum"
+    },
+    "project_8": {
+      "title": "Knife forging",
+      "resume_title": "Father's Day Knife Forging",
+      "organization_id": "organization_4",
+      "dates": "2024",
+      "tools_text": "Forging, heat, grinding, finishing"
+    }
+  },
+  "education": {
+    "education_1": {
+      "institution": "University of Alberta",
+      "program": "Mechanical Engineering",
+      "location": "Edmonton, AB",
+      "dates": "2023 - Present"
+    },
+    "education_2": {
+      "institution": "West Island College",
+      "program": "High School",
+      "location": "Calgary",
+      "dates": "2020-2023"
+    }
+  },
+  "skills": {
+    "mechanical_design": [
+      "SolidWorks", "AutoCAD & 2D laser cutting", "Engineering drawings", "Mechanical prototyping",
+      "3D modelling and printing", "Fabrication and materials", "Packaging considerations"
+    ],
+    "vehicle_electrical": [
+      "Low-voltage systems", "Power distribution", "Sensor integration", "Safety interfaces",
+      "Electrical schematics", "Panel wiring"
+    ],
+    "manufacturing_test": [
+      "Panel assembly", "Pre-delivery QA", "Inspection planning", "Troubleshooting",
+      "Process and equipment context"
+    ],
+    "data_automation": [
+      "Python", "Excel data analysis", "Power BI", "Microsoft Fabric", "Power Query",
+      "openpyxl", "python-docx", "Aspen HYSYS", "Maximo", "JDE"
+    ],
+    "engineering_communication": [
+      "Technical reporting", "Scope generation", "Engineering documentation",
+      "Cross-functional coordination", "Leadership presentations"
+    ]
+  },
+  "leadership": {
+    "leadership_1": {
+      "title": "Engineering Student Engagement Leader",
+      "organization": "University of Alberta",
+      "location": "Edmonton, AB",
+      "dates": "2024-2025"
+    },
+    "leadership_2": {
+      "title": "Low Voltage Electronics Lead",
+      "organization_id": "organization_1",
+      "organization": "Formula EV Racing",
+      "location": "University of Alberta",
+      "dates": "Winter 2025 - Present",
+      "experience_id": "experience_1"
+    }
+  },
+  "community": {
+    "community_1": {
+      "title": "Basketball Coach",
+      "organization": "CYDC",
+      "location": "",
+      "dates": "",
+      "detail": "Youth coaching and team development."
+    }
+  },
+  "recognitions": {
+    "recognition_1": {
+      "title": "Undergraduate Student Leadership Award",
+      "organization": "",
+      "location": "",
+      "dates": "2024-2025"
+    },
+    "recognition_2": {
+      "title": "Leadership in Engineering Scholarship",
+      "organization": "",
+      "location": "",
+      "dates": "2023-2024"
+    },
+    "recognition_3": {
+      "title": "APEGA Science Olympics Medalist: Silver",
+      "organization": "",
+      "location": "",
+      "dates": "2021-2023"
+    }
+  },
+  "resume_sidebar": {
+    "skills_summary": "Mechanical design - vehicle systems - engineering drawings - electrical assembly - manufacturing QA - Python automation - technical documentation",
+    "hands_on_work": "Metal, leather, composite, and small mechanical build projects",
+    "community": {}
+  },
+  "resume_general_skills": [
+    "Vehicle Systems Integration",
+    "Control Panel Assembly & QA",
+    "Manufacturing & Test",
+    "CAD & Engineering Drawings",
+    "Python & Engineering Data",
+    "Cross-functional Coordination"
+  ]
+}

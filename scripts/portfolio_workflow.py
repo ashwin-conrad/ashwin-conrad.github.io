@@ -19,18 +19,25 @@ from content_model import (
     compose_site_content,
     get_path,
     load_details_content,
+    load_resume_content,
     read_json,
+    resolve_fact_references,
+    restore_fact_references,
     set_path,
     validate_content_model,
     write_json_atomic,
+    write_resume_content,
 )
 from design_tokens import load_design_tokens
 from project_paths import (
     ASSETS_DIR,
+    ASSET_RECORD_PATH,
     DESIGN_TOKENS_PATH,
     DETAILS_CONTENT_PATH,
+    FACTS_CONTENT_PATH,
     RESUME_CONTENT_PATH,
     RESUME_DOCX_OUTPUT_PATH,
+    RESUME_WORKING_DOCX_PATH,
     RESUME_OUTPUT_PATH,
     ROOT,
     SCRIPT_OUTPUT_PATH,
@@ -39,8 +46,11 @@ from project_paths import (
     STYLES_OUTPUT_PATH,
 )
 from resume.build import ResumeBuildResult, build_resume
-from resume.validation import ResumeValidationError, validate_pdf_page_count, validate_resume_document
-from resume.word_renderer import read_content_control_values
+from resume.mapper import build_resume_record
+from resume.template_builder import create_resume_template
+from resume.theme import apply_resume_theme
+from resume.validation import ResumeValidationError, validate_pdf_page_count, validate_record, validate_resume_document
+from resume.word_renderer import read_content_control_values, render_word_template
 from resume.word_sync import sync_word_values_into_resume
 from site_renderer import render_engineering_index, render_engineering_styles, render_site_script
 
@@ -53,20 +63,27 @@ class SiteBuildResult:
 
 
 def load_content() -> dict[str, Any]:
-    return compose_site_content(read_json(SITE_CONTENT_PATH), load_details_content())
+    return compose_site_content(
+        read_json(SITE_CONTENT_PATH), load_details_content(), read_json(FACTS_CONTENT_PATH), read_json(ASSET_RECORD_PATH)
+    )
 
 
 def build_site() -> SiteBuildResult:
     """Regenerate the public website plus the editable Word resume and PDF."""
 
     data = load_content()
-    resume_data = read_json(RESUME_CONTENT_PATH)
+    resume_data = resolve_fact_references(load_resume_content(), read_json(FACTS_CONTENT_PATH))
+    design_tokens = load_design_tokens(DESIGN_TOKENS_PATH)
     SITE_OUTPUT_PATH.write_text(render_engineering_index(data), encoding="utf-8", newline="\n")
-    STYLES_OUTPUT_PATH.write_text(
-        render_engineering_styles(load_design_tokens(DESIGN_TOKENS_PATH)), encoding="utf-8", newline="\n"
-    )
+    STYLES_OUTPUT_PATH.write_text(render_engineering_styles(design_tokens), encoding="utf-8", newline="\n")
     SCRIPT_OUTPUT_PATH.write_text(render_site_script(), encoding="utf-8", newline="\n")
-    resume = build_resume(resume_data, docx_path=RESUME_DOCX_OUTPUT_PATH, pdf_path=RESUME_OUTPUT_PATH)
+    resume = build_resume(
+        resume_data,
+        template_path=RESUME_WORKING_DOCX_PATH,
+        output_path=RESUME_DOCX_OUTPUT_PATH,
+        pdf_path=RESUME_OUTPUT_PATH,
+        design_tokens=design_tokens,
+    )
     return SiteBuildResult(resume=resume)
 
 
@@ -74,15 +91,35 @@ def build_resume_artifacts(*, validate_only: bool = False, docx_only: bool = Fal
     """Build or validate just the resume artifact pair."""
 
     return build_resume(
-        read_json(RESUME_CONTENT_PATH),
-        docx_path=RESUME_DOCX_OUTPUT_PATH,
+        resolve_fact_references(load_resume_content(), read_json(FACTS_CONTENT_PATH)),
+        template_path=RESUME_WORKING_DOCX_PATH,
+        output_path=RESUME_DOCX_OUTPUT_PATH,
         pdf_path=None if validate_only or docx_only else RESUME_OUTPUT_PATH,
         validate_only=validate_only,
+        design_tokens=load_design_tokens(DESIGN_TOKENS_PATH),
     )
 
 
-def sync_shared_fields(site_data: dict, resume_data: dict, *, force: bool = False) -> tuple[dict, list[str]]:
-    """Safely copy the resume's explicitly shared factual fields from the site."""
+def create_working_resume() -> None:
+    """Create a populated, editable Word resume from the current JSON content.
+
+    The working document keeps every control, including optional empty fields,
+    so it remains a valid source for later Word-to-JSON synchronization.
+    """
+
+    resume_data = resolve_fact_references(load_resume_content(), read_json(FACTS_CONTENT_PATH))
+    record = build_resume_record(resume_data)
+    validate_record(record)
+    create_resume_template(RESUME_WORKING_DOCX_PATH)
+    render_word_template(RESUME_WORKING_DOCX_PATH, RESUME_WORKING_DOCX_PATH, record.values)
+    apply_resume_theme(RESUME_WORKING_DOCX_PATH, load_design_tokens(DESIGN_TOKENS_PATH))
+    validate_resume_document(RESUME_WORKING_DOCX_PATH)
+
+
+def sync_shared_fields(
+    site_data: dict, resume_data: dict, facts_data: dict | None = None, *, force: bool = False
+) -> tuple[dict, list[str]]:
+    """Safely copy the resume's explicitly shared factual fields from facts."""
 
     updated = deepcopy(resume_data)
     meta = updated.get("_meta", {})
@@ -98,8 +135,17 @@ def sync_shared_fields(site_data: dict, resume_data: dict, *, force: bool = Fals
         label = field.get("label", target_path)
         if not isinstance(source_path, str) or not isinstance(target_path, str):
             raise ContentModelError("Every resume shared field needs source and target paths")
-        source_value = get_path(site_data, source_path)
-        target_value = get_path(updated, target_path)
+        source_data = facts_data if source_path.startswith("facts.") else site_data
+        source_key = source_path.removeprefix("facts.") if source_path.startswith("facts.") else source_path
+        if source_data is None:
+            raise ContentModelError("content/details/facts.json is required for facts shared fields")
+        source_value = get_path(source_data, source_key)
+        target_node = get_path(updated, target_path)
+        target_value = (
+            resolve_fact_references(target_node, facts_data)
+            if isinstance(target_node, dict) and "$source" in target_node and facts_data is not None
+            else target_node
+        )
         previous_value = field.get("last_synced_value")
         if target_value == source_value:
             field["last_synced_value"] = source_value
@@ -112,15 +158,16 @@ def sync_shared_fields(site_data: dict, resume_data: dict, *, force: bool = Fals
             report.append(f"Kept resume override: {label}")
     return updated, report
 
-
 def sync_word_resume() -> SiteBuildResult:
     """Import intentional Word Content Control edits and refresh public output."""
 
-    validate_resume_document(RESUME_DOCX_OUTPUT_PATH)
+    validate_resume_document(RESUME_WORKING_DOCX_PATH)
+    original = load_resume_content()
+    facts = read_json(FACTS_CONTENT_PATH)
     updated = sync_word_values_into_resume(
-        read_json(RESUME_CONTENT_PATH), read_content_control_values(RESUME_DOCX_OUTPUT_PATH)
+        resolve_fact_references(original, facts), read_content_control_values(RESUME_WORKING_DOCX_PATH)
     )
-    write_json_atomic(RESUME_CONTENT_PATH, updated)
+    write_resume_content(restore_fact_references(original, updated, facts))
     return build_site()
 
 
@@ -138,7 +185,13 @@ def validate_site() -> list[str]:
 
     errors: list[str] = []
     site_data = _load_json(SITE_CONTENT_PATH, errors)
-    resume_data = _load_json(RESUME_CONTENT_PATH, errors)
+    facts_data = _load_json(FACTS_CONTENT_PATH, errors)
+    asset_data = _load_json(ASSET_RECORD_PATH, errors)
+    try:
+        resume_data = load_resume_content()
+    except ContentModelError as error:
+        errors.append(str(error))
+        resume_data = None
     try:
         details_data = load_details_content()
     except ContentModelError as error:
@@ -148,18 +201,20 @@ def validate_site() -> list[str]:
         return errors
 
     _require_mapping(site_data, SITE_CONTENT_PATH, errors)
+    _require_mapping(facts_data, FACTS_CONTENT_PATH, errors)
+    _require_mapping(asset_data, ASSET_RECORD_PATH, errors)
     _require_mapping(details_data, DETAILS_CONTENT_PATH, errors)
     _require_mapping(resume_data, RESUME_CONTENT_PATH, errors)
     if errors:
         return errors
 
     _require_keys(site_data, ("site", "identity", "navigation"), "content/site.json", errors)
-    portfolio = details_data.get("portfolio")
-    if not isinstance(portfolio, dict):
-        errors.append("the details collection must contain a portfolio object")
+    website = details_data.get("website")
+    if not isinstance(website, dict):
+        errors.append("the details collection must contain a website object")
     else:
         _require_keys(
-            portfolio,
+            website,
             (
                 "hero",
                 "profile",
@@ -171,14 +226,20 @@ def validate_site() -> list[str]:
                 "personal_builds",
                 "contact",
             ),
-            "details.portfolio",
+            "details.website",
             errors,
         )
 
-    errors.extend(validate_content_model(site_data, details_data, resume_data))
+    errors.extend(validate_content_model(site_data, details_data, resume_data, facts_data))
+    try:
+        composed_site = compose_site_content(site_data, details_data, facts_data, asset_data)
+    except ContentModelError as error:
+        errors.append(str(error))
+        composed_site = None
     referenced_photos: set[str] = set()
-    _validate_content_paths(site_data, "content/site.json", referenced_photos, errors)
-    _validate_content_paths(details_data, "content/details", referenced_photos, errors)
+    if composed_site is not None:
+        _validate_content_paths(composed_site, "composed content", referenced_photos, errors)
+    _validate_content_paths(asset_data, "assets/asset-record.json", referenced_photos, errors)
     _validate_photo_inventory(referenced_photos, errors)
 
     try:
@@ -291,6 +352,19 @@ def _validate_rendered_html(html: str, errors: list[str]) -> None:
     parser = _HtmlCollector()
     parser.feed(html)
     ids = {attrs["id"] for _, attrs in parser.elements if attrs.get("id")}
+    metadata = {
+        attrs.get("property") or attrs.get("name"): attrs.get("content", "")
+        for tag, attrs in parser.elements
+        if tag == "meta" and (attrs.get("property") or attrs.get("name"))
+    }
+    canonical_urls = [attrs.get("href", "") for tag, attrs in parser.elements if tag == "link" and attrs.get("rel") == "canonical"]
+    for key in ("og:url", "og:image", "twitter:card", "twitter:image"):
+        if not metadata.get(key):
+            errors.append(f"rendered page is missing required sharing metadata: {key}")
+    if not metadata.get("og:image", "").startswith("https://"):
+        errors.append("rendered og:image must use an absolute https URL")
+    if len(canonical_urls) != 1 or not canonical_urls[0].startswith("https://"):
+        errors.append("rendered page must contain one absolute canonical URL")
     for tag, attrs in parser.elements:
         if tag == "a":
             _validate_anchor(attrs, ids, errors)

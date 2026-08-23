@@ -1,0 +1,26 @@
+{
+  "number": "06 / TECHNICAL SKILLS",
+  "heading": "Skill context over self-ratings.",
+  "groups": [
+    {
+      "title": "Mechanical design & build",
+      "items": {"$source": "facts.skills.mechanical_design"}
+    },
+    {
+      "title": "Vehicle & electrical systems",
+      "items": {"$source": "facts.skills.vehicle_electrical"}
+    },
+    {
+      "title": "Manufacturing & test",
+      "items": {"$source": "facts.skills.manufacturing_test"}
+    },
+    {
+      "title": "Data & engineering automation",
+      "items": {"$source": "facts.skills.data_automation"}
+    },
+    {
+      "title": "Engineering communication",
+      "items": {"$source": "facts.skills.engineering_communication"}
+    }
+  ]
+}

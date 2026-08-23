@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "images": {
+    "image_01": {
+      "src": "assets/photos/formula-ua27-lv-ac.jpg",
+      "alt": "Formula EV low-voltage enclosure held at competition",
+      "title": "Low-voltage hardware",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_02": {
+      "src": "assets/photos/formula-ua26-competition.jpg",
+      "alt": "Formula vehicle at competition",
+      "title": "Competition context",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_03": {
+      "src": "assets/photos/spartan-panel-2.jpg",
+      "alt": "Industrial control panel interior with organised wiring",
+      "title": "Panel execution",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_04": {
+      "src": "assets/photos/mec260-prototype.jpg",
+      "alt": "Small mechanical vehicle prototype with wheels and linkage",
+      "title": "Mechanical prototype",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_05": {
+      "src": "assets/photos/composite-skateboard-3.jpg",
+      "alt": "Handmade composite skateboard deck",
+      "title": "Composite layup",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_06": {
+      "src": "assets/photos/altagas-field-inspection-2.jpg",
+      "alt": "Inspection activity around industrial facility equipment",
+      "title": "Field context",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_07": {
+      "src": "assets/photos/formula-ua27-unveiling.jpg",
+      "alt": "Formula UA27 at its unveiling, showing the full vehicle context for low-voltage electrical integration",
+      "title": "Formula UA27 unveiling",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_08": {
+      "src": "assets/photos/formula-ua27-frame-progress.jpg",
+      "alt": "Formula vehicle chassis progressing through fabrication",
+      "title": "Vehicle chassis progress",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_09": {
+      "src": "assets/photos/altagas-field-inspection-1.jpg",
+      "alt": "AltaGas field inspection team examining facility equipment",
+      "title": "Field inspection",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_10": {
+      "src": "assets/photos/spartan-panel-3.jpg",
+      "alt": "Open electrical control panel with internal wiring and industrial hardware",
+      "title": "Control panel assembly",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_11": {
+      "src": "assets/photos/spartan-panel-1.jpg",
+      "alt": "Electrical control panel with neatly routed and labelled wiring",
+      "title": "Panel build",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_12": {
+      "src": "assets/photos/spartan-panel-4.jpg",
+      "alt": "Industrial electrical control panel during assembly or inspection",
+      "title": "Pre-delivery inspection",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_13": {
+      "src": "assets/photos/knife-forging-blade.jpg",
+      "alt": "Forged knife blade being shaped in a workshop",
+      "title": "Knife forging",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_14": {
+      "src": "assets/photos/composite-skateboard-2.jpg",
+      "alt": "Green handmade composite skateboard deck",
+      "title": "Composite skateboard deck",
+      "display": {"figure": true, "title": true, "caption": true}
+    },
+    "image_15": {
+      "src": "assets/photos/leather-tool-carrier-1.jpg",
+      "alt": "Handmade leather tool carrier used in a workshop",
+      "title": "Tool carrier",
+      "display": {"figure": true, "title": true, "caption": true}
+    }
+  }
+}

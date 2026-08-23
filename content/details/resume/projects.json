@@ -1,0 +1,80 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "heading": "Selected Project Portfolio",
+      "items": [
+        {
+          "id": "project_2",
+          "include": true,
+          "role": {"$source": "facts.projects.project_2.title"},
+          "organization": {"$source": "facts.organizations.organization_2.name"},
+          "location": {"$source": "facts.projects.project_2.tools_text"},
+          "dates": {"$source": "facts.projects.project_2.dates"},
+          "bullets": [
+            "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers.",
+            "Assessed fatigue risk and monitoring gaps against available operating history.",
+            "Screened lifecycle evidence against OEM thermal and cycling limits.",
+            "Summarized findings into inspection and operating-awareness recommendations."
+          ]
+        },
+        {
+          "id": "project_3",
+          "include": true,
+          "role": {"$source": "facts.projects.project_3.title"},
+          "organization": {"$source": "facts.organizations.organization_2.name"},
+          "location": {"$source": "facts.projects.project_3.tools_text"},
+          "dates": {"$source": "facts.projects.project_3.dates"},
+          "bullets": [
+            "Developed a Python tool for equipment-specific inspection-scope generation.",
+            "Generated 500+ scopes from database exports.",
+            "Used openpyxl and python-docx to standardize Excel-to-Word output.",
+            "Replaced a manual Power Query and Power BI export workflow."
+          ]
+        },
+        {
+          "id": "project_1",
+          "include": true,
+          "role": {"$source": "facts.projects.project_1.title"},
+          "organization": {"$source": "facts.organizations.organization_1.name"},
+          "location": {"$source": "facts.projects.project_1.tools_text"},
+          "dates": {"$source": "facts.projects.project_1.dates"},
+          "bullets": [
+            "Planned the Formula UA27 low-voltage system around the vehicle package.",
+            "Coordinated power distribution and sensor integration work.",
+            "Supported safety-interface planning with mechanical and software teammates.",
+            "Considered accessibility and serviceability alongside electrical function."
+          ]
+        },
+        {
+          "id": "project_6",
+          "include": true,
+          "role": {"$source": "facts.projects.project_6.resume_title"},
+          "organization": {"$source": "facts.organizations.organization_3.name"},
+          "location": {"$source": "facts.projects.project_6.tools_text"},
+          "dates": {"$source": "facts.projects.project_6.dates"},
+          "bullets": [
+            "Designed a leather tool carrier for common hand tools used during panel assembly.",
+            "Built the carrier as a durable, hands-on shop aid.",
+            "Kept frequently used tools organized and accessible.",
+            "Turned a personal workflow problem into support for faster repeated work."
+          ]
+        },
+        {
+          "id": "project_5",
+          "include": false,
+          "role": {"$source": "facts.projects.project_5.title"},
+          "organization": {"$source": "facts.organizations.organization_3.name"},
+          "location": {"$source": "facts.projects.project_5.tools_text"},
+          "dates": {"$source": "facts.projects.project_5.dates"},
+          "bullets": [
+            "Built, wired, loaded, and checked 30+ industrial control panels.",
+            "Read engineering drawings and electrical schematics during assembly.",
+            "Completed pre-delivery quality checks before panels left the shop.",
+            "Processed 250+ PLC software updates with the project team."
+          ]
+        }
+      ]
+    }
+  ]
+}

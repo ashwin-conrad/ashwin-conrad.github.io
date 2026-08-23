@@ -1,0 +1,56 @@
+{
+  "number": "07 / ENGINEERING EVIDENCE",
+  "heading": "Evidence from the vehicle, shop, field, and prototype bench.",
+  "intro": "These figures show the physical context behind the work. Open an image to inspect it at a larger size.",
+  "items": [
+    {
+      "src": {"$source": "assets.images.image_02.src"},
+      "alt": {"$source": "assets.images.image_02.alt"},
+      "title": {"$source": "assets.images.image_02.title"},
+      "display": {"$source": "assets.images.image_02.display"},
+      "figure": "Figure 06",
+      "caption": "Vehicle systems are built for inspection, track-side troubleshooting, and team execution—not just for a desk review.",
+      "wide": true
+    },
+    {
+      "src": {"$source": "assets.images.image_01.src"},
+      "alt": {"$source": "assets.images.image_01.alt"},
+      "title": {"$source": "assets.images.image_01.title"},
+      "display": {"$source": "assets.images.image_01.display"},
+      "figure": "Figure 07",
+      "caption": "A real subsystem is evaluated alongside the car, its interfaces, and the people who need to service it."
+    },
+    {
+      "src": {"$source": "assets.images.image_03.src"},
+      "alt": {"$source": "assets.images.image_03.alt"},
+      "title": {"$source": "assets.images.image_03.title"},
+      "display": {"$source": "assets.images.image_03.display"},
+      "figure": "Figure 08",
+      "caption": "Industrial panel assembly reinforced the importance of drawings, wire routing, labelling, and quality checks."
+    },
+    {
+      "src": {"$source": "assets.images.image_04.src"},
+      "alt": {"$source": "assets.images.image_04.alt"},
+      "title": {"$source": "assets.images.image_04.title"},
+      "display": {"$source": "assets.images.image_04.display"},
+      "figure": "Figure 09",
+      "caption": "Small-format course prototyping: physical packaging and iteration make design decisions visible quickly."
+    },
+    {
+      "src": {"$source": "assets.images.image_05.src"},
+      "alt": {"$source": "assets.images.image_05.alt"},
+      "title": {"$source": "assets.images.image_05.title"},
+      "display": {"$source": "assets.images.image_05.display"},
+      "figure": "Figure 10",
+      "caption": "Early hands-on learning with lamination and fiberglass layups through a built composite deck."
+    },
+    {
+      "src": {"$source": "assets.images.image_06.src"},
+      "alt": {"$source": "assets.images.image_06.alt"},
+      "title": {"$source": "assets.images.image_06.title"},
+      "display": {"$source": "assets.images.image_06.display"},
+      "figure": "Figure 11",
+      "caption": "Asset data and documentation are useful only when they support equipment, inspections, and operating decisions."
+    }
+  ]
+}

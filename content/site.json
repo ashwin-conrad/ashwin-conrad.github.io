@@ -2,19 +2,21 @@
   "site": {
     "title": "Ashwin Conrad | Engineering Portfolio",
     "year": "2026",
+    "url": "https://ashwin-conrad.github.io/",
     "resume_path": "portfolio/resume.pdf",
-    "meta_description": "Ashwin Conrad is a mechanical engineering student with hands-on experience in automotive vehicle systems, manufacturing, testing, and engineering design, and automation.",
-    "social_title": "Ashwin Conrad | Mechanical Engineering Student",
-    "social_description": "Mechanical engineering, vehicle systems, manufacturing, and practical engineering work.",
-    "social_image": "assets/photos/formula-ua27-lv-ac.jpg"
+    "meta_description": "Ashwin Conrad is a mechanical engineering student focused on vehicle systems, manufacturing, testing, and build-ready engineering design.",
+    "social_title": "Ashwin Conrad | Vehicle Systems & Mechanical Engineering",
+    "social_description": "Vehicle systems integration, manufacturing QA, engineering analysis, and build-ready design.",
+    "social_image": {"$source": "assets.images.image_07.src"},
+    "social_image_alt": "Formula UA27 race car at its unveiling"
   },
   "identity": {
-    "location": "Calgary, AB",
-    "phone": "(403) 826-9320",
-    "email": "conrad.ashwin@gmail.com",
-    "website": "ashwin-conrad.github.io",
-    "name": "Ashwin Conrad",
-    "initials": "AC."
+    "location": {"$source": "facts.identity.location"},
+    "phone": {"$source": "facts.identity.phone"},
+    "email": {"$source": "facts.identity.email"},
+    "website": {"$source": "facts.identity.website"},
+    "name": {"$source": "facts.identity.name"},
+    "initials": {"$source": "facts.identity.initials"}
   },
   "navigation": [
     {
@@ -30,11 +32,11 @@
       "href": "#experience"
     },
     {
-      "label": "Documentation",
+      "label": "Evidence",
       "href": "#documentation"
     },
     {
-      "label": "Résumé",
+      "label": "Resume",
       "href": "#resume"
     },
     {

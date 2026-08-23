@@ -1,0 +1,9 @@
+{
+  "id": "build_2",
+  "include": true,
+  "src": {"$source": "assets.images.image_14.src"},
+  "alt": {"$source": "assets.images.image_14.alt"},
+  "title": {"$source": "assets.images.image_14.title"},
+  "display": {"$source": "assets.images.image_14.display"},
+  "text": "Hands-on learning in lamination and fiberglass layup, including a deck with sealed-in aluminum."
+}

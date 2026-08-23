@@ -1,0 +1,19 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "heading": "Community Involvement",
+      "items": [
+        {
+          "id": "community_1",
+          "include": true,
+          "role": {"$source": "facts.community.community_1.title"},
+          "organization": {"$source": "facts.community.community_1.organization"},
+          "location": {"$source": "facts.community.community_1.location"},
+          "dates": {"$source": "facts.community.community_1.dates"},
+          "bullets": [{"$source": "facts.community.community_1.detail"}]
+        }
+      ]
+    }
+  ]
+}

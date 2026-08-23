@@ -1,8 +1,8 @@
 {
   "number": "01 / ENGINEERING PROFILE",
-  "heading": "Mechanical engineering first. Systems thinking in practice.",
-  "lead": "My work starts with the physical system: how it fits, how it is built, how it is accessed, how it behaves in use, and how the people around it can diagnose and improve it.",
-  "body": "Electrical integration, data tooling, and technical documentation extend that mechanical foundation. Across Formula EV, industrial controls, and asset-integrity work, I have worked where packaging, hardware, manufacturing, testing, data, and communication meet.",
+  "heading": "Mechanical engineering for systems that must be built, tested, and used.",
+  "lead": "My work starts with the physical system: how it fits, how it is built, how it is accessed, and how it behaves in use.",
+  "body": "Vehicle electrical integration, manufacturing work, and engineering data tooling support that foundation. Across Formula EV, industrial controls, and asset-integrity work, I have contributed where packaging, hardware, testing, process, and communication meet.",
   "signals": [
     {
       "label": "DESIGN WITH THE BUILD IN MIND",

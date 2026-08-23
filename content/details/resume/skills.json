@@ -1,0 +1,16 @@
+{
+  "blocks": [
+    {
+      "type": "skills",
+      "column": "main",
+      "heading": "Technical Skills",
+      "groups": [
+        {"label": "Mechanical design", "items": {"$source": "facts.skills.mechanical_design"}},
+        {"label": "Vehicle and electrical systems", "items": {"$source": "facts.skills.vehicle_electrical"}},
+        {"label": "Manufacturing and test", "items": {"$source": "facts.skills.manufacturing_test"}},
+        {"label": "Data and automation", "items": {"$source": "facts.skills.data_automation"}},
+        {"label": "Engineering communication", "items": {"$source": "facts.skills.engineering_communication"}}
+      ]
+    }
+  ]
+}

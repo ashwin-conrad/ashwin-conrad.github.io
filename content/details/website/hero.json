@@ -1,0 +1,13 @@
+{
+  "eyebrow": "MECHANICAL ENGINEERING / VEHICLE SYSTEMS / BUILD-READY DESIGN",
+  "title": "Vehicle systems, testing, and build-ready engineering design.",
+  "description": "Mechanical engineering student focused on vehicle systems, manufacturing, testing, and practical product development. I integrate low-voltage hardware around vehicle packaging, turn drawings into production-ready assemblies, and use operating data to support engineering decisions.",
+  "image": {
+    "src": {"$source": "assets.images.image_01.src"},
+    "alt": {"$source": "assets.images.image_01.alt"},
+    "title": {"$source": "assets.images.image_01.title"},
+    "display": {"$source": "assets.images.image_01.display"}
+  },
+  "facts": {"$source": "facts.hero_facts"},
+  "proof_points": {"$source": "facts.hero_proof_points"}
+}

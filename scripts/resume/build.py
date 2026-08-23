@@ -12,7 +12,9 @@ from tempfile import TemporaryDirectory
 from typing import Any
 
 from .mapper import ResumeRecord, build_resume_record
+from .theme import apply_resume_theme
 from .validation import (
+    ALL_RESUME_TAGS,
     validate_pdf_page_count,
     validate_record,
     validate_resume_document,
@@ -37,9 +39,11 @@ class ResumeBuildResult:
 def build_resume(
     resume_data: dict[str, Any],
     *,
-    docx_path: Path,
+    template_path: Path,
+    output_path: Path,
     pdf_path: Path | None,
     validate_only: bool = False,
+    design_tokens: dict[str, str] | None = None,
 ) -> ResumeBuildResult:
     """Validate, refresh, and optionally convert the editable Word resume.
 
@@ -48,7 +52,7 @@ def build_resume(
     corrupt the retained editable document.
     """
 
-    validate_resume_document(docx_path)
+    validate_resume_document(template_path)
     record = build_resume_record(resume_data)
     validate_record(record)
     if validate_only:
@@ -56,14 +60,23 @@ def build_resume(
 
     # The public .docx contains the formatting and controls. Updating it
     # in-place preserves any intentional Word-only layout edits.
-    render_word_template(docx_path, docx_path, record.values)
-    validate_resume_document(docx_path)
+    removed_tags = render_word_template(
+        template_path,
+        output_path,
+        record.values,
+        remove_blank_tags={
+            tag for tag, value in record.values.items() if not value and (tag.endswith("_META") or "_BULLET" in tag)
+        },
+    )
+    if design_tokens is not None:
+        apply_resume_theme(output_path, design_tokens)
+    validate_resume_document(output_path, expected_tags=set(ALL_RESUME_TAGS) - set(removed_tags))
     if pdf_path is None:
-        return ResumeBuildResult(record=record, docx_path=docx_path, pdf_path=None, pdf_backend=None)
+        return ResumeBuildResult(record=record, docx_path=output_path, pdf_path=None, pdf_backend=None)
 
-    backend = convert_docx_to_pdf(docx_path, pdf_path)
+    backend = convert_docx_to_pdf(output_path, pdf_path)
     validate_pdf_page_count(pdf_path)
-    return ResumeBuildResult(record=record, docx_path=docx_path, pdf_path=pdf_path, pdf_backend=backend)
+    return ResumeBuildResult(record=record, docx_path=output_path, pdf_path=pdf_path, pdf_backend=backend)
 
 
 def convert_docx_to_pdf(input_path: Path, output_path: Path) -> str:

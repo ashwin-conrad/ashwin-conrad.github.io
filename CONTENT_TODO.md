@@ -23,7 +23,7 @@ The current site only makes claims supported by the repository. The following ad
 - [ ] **Redacted drawing or schematic excerpt** — show how a drawing is translated into a physical panel build without exposing customer information.
 - [ ] **Build-process image** — photos of component layout, wire routing, labelling, software loading, or QA work would make the manufacturing process more visible.
 - [ ] **QA artifact** — a redacted checklist, defect example, or process note that illustrates how quality was checked and a deficiency was resolved.
-- [ ] **Clarify project count** — confirm whether “30+ panels” is the preferred public figure; update the website and résumé if a different count is more accurate.
+- [ ] **Clarify project count** — confirm whether “30+ panels” is the preferred public figure; update the website and resume if a different count is more accurate.
 
 ## Mechanical design and manufacturing evidence
 
@@ -32,11 +32,11 @@ The current site only makes claims supported by the repository. The following ad
 - [ ] **Prototype sequence** — capture concept, first build, test setup, issue found, and revision for one mechanical project.
 - [ ] **Manufactured component or assembly photo** — use a scale reference and a caption that explains material, process, and key constraint.
 
-## Résumé and recruiting details
+## Resume and recruiting details
 
-- [ ] **Confirm current school year and expected graduation date** — the current résumé safely says “2023–Present” rather than guessing.
+- [ ] **Confirm current school year and expected graduation date** — the current resume safely says “2023–Present” rather than guessing.
 - [ ] **Add a LinkedIn custom URL** if one is available; the current external link is already connected.
-- [ ] **Review public contact details** — the résumé now lists Calgary rather than a street address, but confirm the phone number and email you want public.
+- [ ] **Review public contact details** — the resume now lists Calgary rather than a street address, but confirm the phone number and email you want public.
 - [ ] **Add role-specific results** only where they can be verified. Good examples: a measured test result, number of parts/systems, a delivery milestone, or a documented improvement.
 
 ## Image preparation

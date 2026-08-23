@@ -1,0 +1,9 @@
+{
+  "id": "build_3",
+  "include": true,
+  "src": {"$source": "assets.images.image_15.src"},
+  "alt": {"$source": "assets.images.image_15.alt"},
+  "title": {"$source": "assets.images.image_15.title"},
+  "display": {"$source": "assets.images.image_15.display"},
+  "text": "A durable shop aid designed and built to keep common hand tools organised during repeated panel work."
+}

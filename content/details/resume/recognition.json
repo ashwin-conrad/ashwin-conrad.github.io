@@ -1,0 +1,37 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "heading": "Recognition",
+      "items": [
+        {
+          "id": "recognition_1",
+          "include": true,
+          "role": {"$source": "facts.recognitions.recognition_1.title"},
+          "organization": {"$source": "facts.recognitions.recognition_1.organization"},
+          "location": {"$source": "facts.recognitions.recognition_1.location"},
+          "dates": {"$source": "facts.recognitions.recognition_1.dates"},
+          "bullets": ["Received the Undergraduate Student Leadership Award during the 2024-2025 academic year."]
+        },
+        {
+          "id": "recognition_2",
+          "include": true,
+          "role": {"$source": "facts.recognitions.recognition_2.title"},
+          "organization": {"$source": "facts.recognitions.recognition_2.organization"},
+          "location": {"$source": "facts.recognitions.recognition_2.location"},
+          "dates": {"$source": "facts.recognitions.recognition_2.dates"},
+          "bullets": ["Recipient of the Leadership in Engineering Scholarship for 2023-2024."]
+        },
+        {
+          "id": "recognition_3",
+          "include": true,
+          "role": {"$source": "facts.recognitions.recognition_3.title"},
+          "organization": {"$source": "facts.recognitions.recognition_3.organization"},
+          "location": {"$source": "facts.recognitions.recognition_3.location"},
+          "dates": {"$source": "facts.recognitions.recognition_3.dates"},
+          "bullets": ["Silver medalist in APEGA Science Olympics during 2021-2023."]
+        }
+      ]
+    }
+  ]
+}

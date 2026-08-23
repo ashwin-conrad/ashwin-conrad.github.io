@@ -1,55 +1,64 @@
 {
   "schema_version": 1,
-  "portfolio": {
+  "website": {
     "sections": [
       {
         "id": "hero",
-        "file": "details/portfolio/hero.json"
+        "file": "details/website/hero.json"
       },
       {
         "id": "profile",
-        "file": "details/portfolio/profile.json"
+        "file": "details/website/profile.json"
       },
       {
         "id": "case_studies",
         "items": [
-          {
-            "id": "formula-ev",
-            "file": "details/portfolio/projects/formula-ev.json"
-          },
-          {
-            "id": "heat-exchanger",
-            "file": "details/portfolio/projects/heat-exchanger.json"
-          },
-          {
-            "id": "spartan-controls",
-            "file": "details/portfolio/projects/spartan-controls.json"
-          }
+          {"id": "project_1", "file": "details/website/projects/experience_1/project_1.json"},
+          {"id": "project_2", "file": "details/website/projects/experience_2/project_2.json"},
+          {"id": "project_5", "file": "details/website/projects/experience_3/project_5.json"}
         ]
       },
       {
         "id": "experience",
-        "file": "details/portfolio/experience.json"
+        "number": "05 / ENGINEERING EXPERIENCE",
+        "heading": "Experience that connects design intent to physical work.",
+        "items": [
+          {"id": "experience_1", "file": "details/website/experience/experience_1.json"},
+          {"id": "experience_2", "file": "details/website/experience/experience_2.json"},
+          {"id": "experience_3", "file": "details/website/experience/experience_3.json"}
+        ]
       },
       {
         "id": "skills",
-        "file": "details/portfolio/skills.json"
+        "file": "details/website/skills.json"
       },
       {
         "id": "documentation",
-        "file": "details/portfolio/documentation.json"
+        "file": "details/website/documentation.json"
       },
       {
         "id": "leadership",
-        "file": "details/portfolio/leadership.json"
+        "number": "08 / LEADERSHIP & COMMUNICATION",
+        "heading": "Technical work becomes more useful when the team can act on it.",
+        "items": [
+          {"id": "leadership_1", "file": "details/website/leadership/leadership_1.json"},
+          {"id": "leadership_2", "file": "details/website/leadership/leadership_2.json"},
+          {"id": "leadership_3", "file": "details/website/leadership/leadership_3.json"}
+        ]
       },
       {
         "id": "personal_builds",
-        "file": "details/portfolio/personal-builds.json"
+        "number": "09 / HANDS-ON LEARNING",
+        "heading": "Materials and fabrication beyond the job description.",
+        "items": [
+          {"id": "build_1", "file": "details/website/personal-builds/build_1.json"},
+          {"id": "build_2", "file": "details/website/personal-builds/build_2.json"},
+          {"id": "build_3", "file": "details/website/personal-builds/build_3.json"}
+        ]
       },
       {
         "id": "contact",
-        "file": "details/portfolio/contact.json"
+        "file": "details/website/contact.json"
       }
     ]
   }

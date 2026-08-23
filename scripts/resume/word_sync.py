@@ -6,13 +6,11 @@ from copy import deepcopy
 from typing import Any
 
 from .mapper import (
-    WORD_EXPERIENCE_ORDER,
-    WORD_LEADERSHIP_EXPERIENCE_ID,
-    WORD_PROJECT_ORDER,
-    _first_section_item,
     _resume_items_by_id,
+    education_slot_order,
+    word_slot_order,
 )
-from .validation import ALL_RESUME_TAGS
+from .validation import ALL_RESUME_TAGS, OPTIONAL_TAGS
 
 
 class WordResumeSyncError(RuntimeError):
@@ -29,21 +27,23 @@ def sync_word_values_into_resume(resume_data: dict[str, Any], values: dict[str, 
     the document and are not copied into website JSON.
     """
 
-    missing = sorted(ALL_RESUME_TAGS - set(values))
+    missing = sorted((ALL_RESUME_TAGS - OPTIONAL_TAGS) - set(values))
     if missing:
         raise WordResumeSyncError("Word resume is missing value(s): " + ", ".join(missing))
+    values = {**{tag: "" for tag in OPTIONAL_TAGS}, **values}
 
     resume = deepcopy(resume_data)
 
     _sync_header(resume, values)
-    _sync_education(resume, values)
     items = _resume_items_by_id(resume)
-    _sync_experiences(items, values)
-    _sync_leadership(resume, items, values)
-    _sync_community(resume, values)
+    _sync_education(items, education_slot_order(resume), values)
+    experience_ids, leadership_ids, community_ids, recognition_ids, project_ids = word_slot_order(resume)
+    _sync_entries(items, "EXP", experience_ids, 4, values)
+    _sync_entries(items, "LEAD", leadership_ids, 1, values)
+    _sync_entries(items, "COMM", community_ids, 1, values)
+    _sync_entries(items, "RECOG", recognition_ids, 1, values)
     _sync_general_skills(resume, values)
-    _sync_awards(resume, values)
-    _sync_projects(items, values)
+    _sync_entries(items, "PROJECT", project_ids, 4, values)
     _sync_technical_skills(resume, values)
     return resume
 
@@ -59,66 +59,34 @@ def _sync_header(resume: dict[str, Any], values: dict[str, str]) -> None:
     }
 
 
-def _sync_education(resume: dict[str, Any], values: dict[str, str]) -> None:
-    education = _first_section_item(resume, "Education")
-    education["organization"] = values["EDU_INSTITUTION"]
-    education["role"], education["location"] = _split_with_fallback(
-        values["EDU_DEGREE"], education.get("role", ""), education.get("location", "")
-    )
-    education["dates"] = values["EDU_DATES"]
+def _sync_education(
+    items: dict[str, dict[str, Any]], education_ids: tuple[str, str], values: dict[str, str]
+) -> None:
+    for tag_prefix, item_id in zip(("EDU", "EDU2"), education_ids, strict=True):
+        education = _item(items, item_id)
+        education["organization"] = values[f"{tag_prefix}_INSTITUTION"]
+        education["role"], education["location"] = _split_with_fallback(
+            values[f"{tag_prefix}_DEGREE"], education.get("role", ""), education.get("location", "")
+        )
+        education["dates"] = values[f"{tag_prefix}_DATES"]
+        education["bullets"] = [values[f"{tag_prefix}_BULLET1"]]
 
 
-def _sync_experiences(items: dict[str, dict[str, Any]], values: dict[str, str]) -> None:
-    for index, item_id in enumerate(WORD_EXPERIENCE_ORDER, start=1):
+def _sync_entries(
+    items: dict[str, dict[str, Any]], prefix: str, item_ids: tuple[str, ...], bullet_count: int, values: dict[str, str]
+) -> None:
+    for index, item_id in enumerate(item_ids, start=1):
         item = _item(items, item_id)
         item["organization"], item["location"] = _split_with_fallback(
-            values[f"EXP{index}_COMPANY"], item.get("organization", ""), item.get("location", "")
+            values[f"{prefix}{index}_META"], item.get("organization", ""), item.get("location", "")
         )
-        item["role"] = values[f"EXP{index}_TITLE"]
-        item["dates"] = values[f"EXP{index}_DATES"]
-        item["bullets"] = _nonempty(values[f"EXP{index}_BULLET1"], values[f"EXP{index}_BULLET2"])
-
-
-def _sync_leadership(resume: dict[str, Any], items: dict[str, dict[str, Any]], values: dict[str, str]) -> None:
-    formula = _item(items, WORD_LEADERSHIP_EXPERIENCE_ID)
-    formula["organization"], formula["role"] = _split_with_fallback(
-        values["LEAD1_TITLE"], formula.get("organization", ""), formula.get("role", "")
-    )
-    formula["bullets"] = _nonempty(values["LEAD1_DETAIL"])
-
-    leadership = _list_block(resume, "Leadership")
-    title = values["LEAD2_TITLE"]
-    dates = values["LEAD2_DATES"]
-    _set_list_item(leadership, 0, f"{title}, {dates}" if dates else title)
-
-
-def _sync_community(resume: dict[str, Any], values: dict[str, str]) -> None:
-    community = _list_block(resume, "Community")
-    _set_list_item(community, 0, _join_title_detail(values["COMMUNITY1_TITLE"], values["COMMUNITY1_DETAIL"]))
-    optional = _join_title_detail(values["COMMUNITY2_TITLE"], values["COMMUNITY2_DETAIL"])
-    if optional:
-        _set_list_item(community, 1, optional)
-    elif len(community.get("items", [])) > 1:
-        del community["items"][1:]
+        item["role"] = values[f"{prefix}{index}_TITLE"]
+        item["dates"] = values[f"{prefix}{index}_DATES"]
+        item["bullets"] = [values[f"{prefix}{index}_BULLET{bullet_index}"] for bullet_index in range(1, bullet_count + 1)]
 
 
 def _sync_general_skills(resume: dict[str, Any], values: dict[str, str]) -> None:
     resume["general_skills"] = [values[f"GENERAL_SKILL_{index}"] for index in range(1, 7)]
-
-
-def _sync_awards(resume: dict[str, Any], values: dict[str, str]) -> None:
-    awards = _list_block(resume, "Awards")
-    awards["items"] = [{"text": value} for value in _nonempty(*(values[f"AWARD_{index}"] for index in range(1, 4)))]
-
-
-def _sync_projects(items: dict[str, dict[str, Any]], values: dict[str, str]) -> None:
-    for index, item_id in enumerate(WORD_PROJECT_ORDER, start=1):
-        project = _item(items, item_id)
-        project["role"] = values[f"PROJECT{index}_TITLE"]
-        project["organization"] = values[f"PROJECT{index}_CONTEXT"]
-        project["location"] = values[f"PROJECT{index}_TOOLS"]
-        project["dates"] = values[f"PROJECT{index}_DATES"]
-        project["bullets"] = _nonempty(values[f"PROJECT{index}_DESCRIPTION"])
 
 
 def _sync_technical_skills(resume: dict[str, Any], values: dict[str, str]) -> None:
@@ -135,8 +103,6 @@ def _sync_technical_skills(resume: dict[str, Any], values: dict[str, str]) -> No
         values["TECH_ENGINEERING_SOFTWARE"],
     )
 
-    hands_on = _list_block(resume, "Hands-on Work")
-    _set_list_item(hands_on, 0, values["TECH_FABRICATION"])
 
 
 def _item(items: dict[str, dict[str, Any]], item_id: str) -> dict[str, Any]:
@@ -151,7 +117,7 @@ def _list_block(resume: dict[str, Any], heading: str) -> dict[str, Any]:
         for block in page.get("blocks", []):
             if str(block.get("heading", "")).casefold() == heading.casefold():
                 return block
-    raise WordResumeSyncError(f"content/resume.json is missing its {heading!r} resume block")
+    raise WordResumeSyncError(f"content/details/resume.json is missing its {heading!r} resume block")
 
 
 def _set_list_item(block: dict[str, Any], index: int, text: str) -> None:

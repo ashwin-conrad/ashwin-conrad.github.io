@@ -1,0 +1,9 @@
+{
+  "id": "build_1",
+  "include": true,
+  "src": {"$source": "assets.images.image_13.src"},
+  "alt": {"$source": "assets.images.image_13.alt"},
+  "title": {"$source": "assets.images.image_13.title"},
+  "display": {"$source": "assets.images.image_13.display"},
+  "text": "A Father’s Day forging project focused on shaping, heat response, grinding, and finish work."
+}

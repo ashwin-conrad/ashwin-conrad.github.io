@@ -92,7 +92,7 @@ def read_content_control_values(docx_path: Path) -> dict[str, str]:
     """Read unique tag values from an editable resume document.
 
     This is the reverse half of the resume workflow: users edit the retained
-    ``portfolio/resume.docx`` in Word, then the sync command reads its content
+    ``portfolio/resume-working.docx`` in Word, then the sync command reads its content
     controls back into the canonical JSON data.
     """
 
@@ -103,7 +103,9 @@ def read_content_control_values(docx_path: Path) -> dict[str, str]:
     return {tag: control_text(controls[0].element).strip() for tag, controls in controls_by_tag.items()}
 
 
-def render_word_template(template_path: Path, output_path: Path, values: dict[str, str]) -> list[str]:
+def render_word_template(
+    template_path: Path, output_path: Path, values: dict[str, str], remove_blank_tags: set[str] | None = None
+) -> list[str]:
     """Populate a DOCX template by SDT tag while preserving its layout package.
 
     Every source package entry is copied unchanged except XML parts containing a
@@ -120,7 +122,7 @@ def render_word_template(template_path: Path, output_path: Path, values: dict[st
         raise ContentControlNotFoundError("Content Control tag is duplicated: " + ", ".join(duplicate))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    modified_parts = _populate_parts(template_path, values)
+    modified_parts, removed_tags = _populate_parts(template_path, values, remove_blank_tags or set())
     replace_in_place = template_path.resolve() == output_path.resolve()
     destination = output_path
     if replace_in_place:
@@ -136,7 +138,7 @@ def render_word_template(template_path: Path, output_path: Path, values: dict[st
     finally:
         if replace_in_place and destination.exists():
             destination.unlink()
-    return sorted(values)
+    return sorted(removed_tags)
 
 
 def replace_static_paragraph_text(docx_path: Path, old_text: str, new_text: str) -> None:
@@ -287,8 +289,11 @@ def _controls_by_tag(docx_path: Path) -> dict[str, list[ContentControl]]:
     return controls
 
 
-def _populate_parts(template_path: Path, values: dict[str, str]) -> dict[str, bytes]:
+def _populate_parts(
+    template_path: Path, values: dict[str, str], remove_blank_tags: set[str]
+) -> tuple[dict[str, bytes], set[str]]:
     modified: dict[str, bytes] = {}
+    removed: set[str] = set()
     with ZipFile(template_path) as package:
         for part_name in _word_xml_parts(package.namelist()):
             payload = package.read(part_name)
@@ -300,11 +305,19 @@ def _populate_parts(template_path: Path, values: dict[str, str]) -> dict[str, by
                 tag = control.tag
                 if tag not in values:
                     continue
+                if tag in remove_blank_tags and not values[tag]:
+                    removable = control.element.getparent()
+                    while removable is not None and removable.tag not in {qn("tr"), qn("p")}:
+                        removable = removable.getparent()
+                    if removable is not None and removable.getparent() is not None:
+                        removable.getparent().remove(removable)
+                        removed.add(tag)
+                    continue
                 replace_control_text(control.element, values[tag])
                 changed = True
             if changed:
                 modified[part_name] = etree.tostring(root, encoding="UTF-8", xml_declaration=True, standalone=True)
-    return modified
+    return modified, removed
 
 
 def replace_control_text(control: etree._Element, value: str) -> None:

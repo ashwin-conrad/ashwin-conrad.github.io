@@ -1,0 +1,10 @@
+{
+  "id": "experience_3",
+  "include": true,
+  "date": {"$source": "facts.experiences.experience_3.dates"},
+  "role": {"$source": "facts.experiences.experience_3.role"},
+  "organization": {"$source": "facts.experiences.experience_3.organization"},
+  "text": "Built and quality-checked industrial control panels from drawings through assembly, wiring, software loading, and pre-delivery review. Worked in a production setting where safety, repeatability, documentation, and delivery mattered.",
+  "tags": ["Manufacturing", "Electrical assembly", "QA", "Troubleshooting"],
+  "resume_id": "experience_3"
+}
