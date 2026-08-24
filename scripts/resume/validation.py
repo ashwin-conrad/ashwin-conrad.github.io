@@ -22,7 +22,7 @@ _BULLET_TAG_PATTERN = re.compile(r"^(EDU\d*|(?:EXP|LEAD|COMM|RECOG|PROJECT)\d+)_
 # in content/details/resume.json rather than silently shortened by the renderer.
 FIELD_LIMITS: dict[str, int] = {
     "PROFILE_SUMMARY": 300,
-    "EXP*_BULLET*": 165,
+    "EXP*_BULLET*": 300,
     "PROJECT*_BULLET*": 165,
     "PROJECT*_TITLE": 90,
     "PROJECT*_CATEGORY": 40,

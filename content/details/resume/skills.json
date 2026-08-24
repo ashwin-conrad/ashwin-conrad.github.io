@@ -11,14 +11,13 @@
             "SolidWorks",
             "AutoCAD & 2D laser cutting",
             "Engineering drawings",
-            "Mechanical prototyping",
+            "Prototyping",
             "3D modelling and printing",
             "Low-voltage systems",
             "Power distribution",
             "Sensor integration",
             "Electrical schematics",
             "Panel assembly",
-            "Pre-delivery QA",
             "Python",
             "Excel data analysis",
             "Power BI",
@@ -28,7 +27,9 @@
             "python-docx",
             "Aspen HYSYS",
             "Maximo",
-            "JDE"
+            "JDE",
+            "Pinnacle IDMS",
+            "AVEVA Pi Systems"
           ]
         },
         {

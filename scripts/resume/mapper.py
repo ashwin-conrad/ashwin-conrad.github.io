@@ -25,14 +25,16 @@ TECHNICAL_SKILL_RULES = (
         "TECH_ELECTRICAL",
         ("low-voltage", "power distribution", "sensor integration", "electrical schematics", "panel assembly", "qa"),
     ),
-    (
-        "TECH_DATA",
-        ("python", "openpyxl", "python-docx", "excel data analysis", "power query", "power bi", "microsoft fabric"),
-    ),
-    (
-        "TECH_ENGINEERING_SOFTWARE",
-        ("aspen hysys", "maximo", "jde"),
-    ),
+)
+
+DATA_AUTOMATION_PRIMARY_KEYWORDS = (
+    "python",
+    "openpyxl",
+    "python-docx",
+    "excel data analysis",
+    "power query",
+    "power bi",
+    "microsoft fabric",
 )
 
 DEFAULT_ENTRY_BULLET_CAPACITY = {
@@ -157,6 +159,19 @@ def build_resume_record(resume: dict[str, Any], *, include_working_blanks: bool 
     skill_sources = _skill_sources(resume)
     for value_tag, keywords in TECHNICAL_SKILL_RULES:
         record.add(value_tag, _select_skill_text(skill_sources, keywords), "resume skills and project tools")
+    data_skills = _skill_group_items(resume, "Data and automation")
+    primary_data_skills = [
+        skill
+        for skill in data_skills
+        if any(keyword in skill.casefold() for keyword in DATA_AUTOMATION_PRIMARY_KEYWORDS)
+    ]
+    engineering_software = [skill for skill in data_skills if skill not in primary_data_skills]
+    record.add("TECH_DATA", ", ".join(primary_data_skills), "resume Data and automation skills")
+    record.add(
+        "TECH_ENGINEERING_SOFTWARE",
+        ", ".join(engineering_software),
+        "resume Data and automation skills",
+    )
     record.add(
         "TECH_FABRICATION",
         _select_skill_text(skill_sources, ("fabrication", "panel assembly", "mechanical prototyping", "engineering drawings")),
@@ -320,6 +335,25 @@ def _skill_sources(resume: dict[str, Any]) -> list[str]:
     for source in sources:
         pieces.extend(piece.strip() for piece in source.split(",") if piece.strip())
     return pieces
+
+
+def _skill_group_items(resume: dict[str, Any], label: str) -> list[str]:
+    """Return every distinct item from one resolved resume skill group."""
+
+    selected: list[str] = []
+    for page in resume.get("pages", []):
+        for block in page.get("blocks", []):
+            for group in block.get("groups", []):
+                if not isinstance(group, dict) or str(group.get("label", "")).casefold() != label.casefold():
+                    continue
+                items = group.get("items", [])
+                if not isinstance(items, list):
+                    raise ResumeMappingError(f"Resume skill group {label!r} must resolve to a list")
+                for item in items:
+                    value = str(item).strip()
+                    if value and value not in selected:
+                        selected.append(value)
+    return selected
 
 
 def _select_skill_text(sources: list[str], keywords: tuple[str, ...]) -> str:

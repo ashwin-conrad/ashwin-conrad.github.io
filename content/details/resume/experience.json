@@ -43,10 +43,11 @@
             "$source": "facts.experiences.experience_2.dates"
           },
           "bullets": [
-            "Built Python, Microsoft Fabric, and Power BI workflows for corrosion monitoring and inspection planning.",
-            "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers.",
-            "Screened results against OEM limits to identify monitoring gaps and support risk-based recommendations.",
-            "Supported asset-lifecycle work across multi-facility operations."
+            "Worked with the Asset Integrity, and Reliability teams to provide technical support to facilities in maintaining fixed and rotating equipment.",
+            "Developed a Power Bi with a Microsoft Fabric data pipeline to visualize and monitor vendor corrosion data for over 200 coupons.",
+            "Leveraged python to screen and model operating data gathered by the Pi Historian to provide context for engineering decisions.",
+            "Coordinated the tracking of over 10,000 assets flagged as safety critical elements based on criticality mapped from facility shutdown keys.",
+            "Developed a vessel flare volume blowdown calculator to provide operators with an estimate to compare metered volumes against"
           ]
         },
         {
@@ -65,10 +66,11 @@
             "$source": "facts.experiences.experience_3.dates"
           },
           "bullets": [
-            "Built, wired, loaded, and checked 30+ industrial control panels from drawings and electrical schematics.",
-            "Performed pre-delivery quality checks and documented deficiency resolution before customer delivery.",
-            "Processed 250+ PLC software updates in under half the allocated time while supporting production.",
-            "Supported repeatable assembly, quality, and delivery work in a production environment."
+            "Gained hands-on experience in industrial controls working in two departments: Electronics and Remote Transmission Units, and gained exposure to MCCs, VFDs, and the industrial manufacturing process consistently ranked top 50 best managed private companies.",
+            "Assembled, wired, loaded, and performed quality reviews on 30+ industrial control panels from drawings to ready for delivery.",
+            "Loaded software updates on 250+ PLC in under half the allocated time; this was completed while shadowing the Test-Bench team where I supported function checks, and hydrostatic pressure tests on metering panels.",
+            "Supported a safe working environment while completing repeatable assemblies and quality reviews in a fast-paced environment.",
+            "Completed projects in individual, partner-based, and group setups, consistently exceeding expectations and identifying ways to make the process more efficient, ensuring completion under strict deadlines."
           ]
         }
       ]

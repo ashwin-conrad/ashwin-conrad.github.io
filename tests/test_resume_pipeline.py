@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -112,6 +113,38 @@ class ResumePipelineTests(unittest.TestCase):
         self.assertEqual(record.values["PROJECT6_CATEGORY"], "Personal Projects")
         self.assertEqual(record.values["COMM1_TITLE"], "Youth Basketball Coach")
         validate_record(record)
+
+    def test_linked_data_automation_skills_are_never_silently_dropped(self) -> None:
+        record = build_resume_record(self.resume_data)
+        mapped = f'{record.values["TECH_DATA"]}, {record.values["TECH_ENGINEERING_SOFTWARE"]}'
+        skills_block = next(
+            block
+            for block in self.resume_data["pages"][0]["blocks"]
+            if block.get("heading") == "Technical Skills"
+        )
+        source_items = next(
+            group["items"]
+            for group in skills_block["groups"]
+            if group.get("label") == "Data and automation"
+        )
+        self.assertTrue(all(skill in mapped for skill in source_items))
+        self.assertIn("Pinnacle IDMS", record.values["TECH_ENGINEERING_SOFTWARE"])
+        self.assertIn("AVEVA Pi Systems", record.values["TECH_ENGINEERING_SOFTWARE"])
+
+        updated = deepcopy(self.resume_data)
+        updated_block = next(
+            block
+            for block in updated["pages"][0]["blocks"]
+            if block.get("heading") == "Technical Skills"
+        )
+        updated_group = next(
+            group
+            for group in updated_block["groups"]
+            if group.get("label") == "Data and automation"
+        )
+        updated_group["items"].append("Future Data Platform")
+        updated_record = build_resume_record(updated)
+        self.assertIn("Future Data Platform", updated_record.values["TECH_ENGINEERING_SOFTWARE"])
 
     def test_word_slot_order_is_content_configured_with_generic_ids(self) -> None:
         self.assertEqual(education_slot_order(self.resume_data), ("education_1", "education_2"))

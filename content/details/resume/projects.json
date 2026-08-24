@@ -56,21 +56,19 @@
           "category": {
             "$source": "facts.projects.project_9.category"
           },
-          "role": {
-            "$source": "facts.projects.project_9.title"
-          },
+          "role": "ENG 160 Engineering Design Project",
           "organization": {
             "$source": "facts.organizations.organization_5.name"
           },
           "location": {
             "$source": "facts.projects.project_9.tools_text"
           },
-          "dates": {
-            "$source": "facts.projects.project_9.dates"
-          },
+          "dates": "First Year Project",
           "bullets": [
-            "Completed a mechanical design project as part of ENG 160 coursework.",
-            "Developed the design through concept work, evaluation, and technical documentation."
+            "Lead a five-man team to develop an educational device to model the scientific principles behind a pendulum.",
+            "The device was designed to be assembled by elementary age children and is stored flat to minimize storage space.",
+            "Designed and manufactured a custom needle bearing from wooden dowel, PVC pipe, and stainless-steel pins to minimize friction.",
+            "Our efforts were acknowledged as the project was nominated for top first year engineering project."
           ]
         },
         {
@@ -88,12 +86,12 @@
           "location": {
             "$source": "facts.projects.project_10.tools_text"
           },
-          "dates": {
-            "$source": "facts.projects.project_10.dates"
-          },
+          "dates": "Second Year Project",
           "bullets": [
-            "Designed and built a small mechanical vehicle prototype with wheels and linkage.",
-            "Iterated on physical packaging and mechanism performance through hands-on prototyping."
+            "Lead a team of six mechanical engineering students through development of a prototype fruit picking and delivery vehicle.",
+            "Iterated physical packaging and mechanism performance through CAD and a linkage motion generator before any physical model.",
+            "Developed team and leadership skills as challenges were identified",
+            "Reinforced the importance of testing and validation in the engineering process as issues were identified to late in the design cycle."
           ]
         },
         {
@@ -139,7 +137,7 @@
           },
           "bullets": [
             "Designed a leather tool carrier for common hand tools used during panel assembly.",
-            "Built a durable shop aid that kept frequently used tools organized and accessible."
+            "Built a durable shop aid that kept frequently used tools organized and accessible improving the efficiency of the assembly process."
           ]
         },
         {

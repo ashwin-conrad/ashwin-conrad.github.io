@@ -318,7 +318,9 @@
       "python-docx",
       "Aspen HYSYS",
       "Maximo",
-      "JDE"
+      "JDE",
+      "Pinnacle IDMS",
+      "AVEVA Pi Systems"
     ],
     "engineering_communication": [
       "Technical reporting",
