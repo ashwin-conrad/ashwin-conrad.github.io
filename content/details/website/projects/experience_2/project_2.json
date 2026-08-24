@@ -3,25 +3,70 @@
   "include": true,
   "number": "03 / FEATURED ENGINEERING PROJECT",
   "type": "ASSET INTEGRITY / ENGINEERING ANALYSIS",
-  "title": {"$source": "facts.projects.project_2.case_study_title"},
+  "title": {
+    "$source": "facts.projects.project_2.case_study_title"
+  },
   "subtitle": "Operating data, OEM limits, and field context combined to support risk-based decisions on aging process equipment.",
   "image": {
-    "src": {"$source": "assets.images.image_09.src"},
-    "alt": {"$source": "assets.images.image_09.alt"},
-    "title": {"$source": "assets.images.image_09.title"},
-    "display": {"$source": "assets.images.image_09.display"}
+    "src": {
+      "$source": "assets.images.image_09.src"
+    },
+    "alt": {
+      "$source": "assets.images.image_09.alt"
+    },
+    "title": {
+      "$source": "assets.images.image_09.title"
+    },
+    "display": {
+      "$source": "assets.images.image_09.display"
+    }
   },
   "metadata": [
-    {"label": "ROLE", "value": {"$source": "facts.projects.project_2.role"}},
-    {"label": "CONTEXT", "value": {"$source": "facts.organizations.organization_2.name", "$template": "{value} asset integrity"}},
-    {"label": "SCOPE", "value": {"$source": "facts.projects.project_2.metrics.heat_exchanger_count", "$template": "{value} heat exchangers"}},
-    {"label": "DATA WINDOW", "value": {"$source": "facts.projects.project_2.metrics.operating_years", "$template": "{value} years of operation"}}
+    {
+      "label": "ROLE",
+      "value": {
+        "$source": "facts.projects.project_2.role"
+      }
+    },
+    {
+      "label": "CONTEXT",
+      "value": {
+        "$source": "facts.organizations.organization_2.name",
+        "$template": "{value} asset integrity"
+      }
+    },
+    {
+      "label": "SCOPE",
+      "value": {
+        "$source": "facts.projects.project_2.metrics.heat_exchanger_count",
+        "$template": "{value} heat exchangers"
+      }
+    },
+    {
+      "label": "DATA WINDOW",
+      "value": {
+        "$source": "facts.projects.project_2.metrics.operating_years",
+        "$template": "{value} years of operation"
+      }
+    }
   ],
   "objective": "Assess fatigue risk and monitoring gaps for brazed aluminum heat exchangers using historical operating data and OEM-prescribed operating limits.",
   "context": "The equipment supports facility operations, so the analysis had to connect historical process behaviour with inspection planning and practical operational awareness.",
   "contribution": "Extracted process data with the PI Historian Excel add-in and developed Python screening tools for thermal ramp rates, cyclic operation limits, and parting-sheet temperature distributions.",
-  "constraints": ["Historical-data quality", "OEM operating limits", "Sensor coverage", "Aging equipment", "Operational practicality"],
-  "process": ["Extract operating data", "Screen against OEM limits", "Identify monitoring gaps", "Develop recommendations", "Present lifecycle findings"],
+  "constraints": [
+    "Historical-data quality",
+    "OEM operating limits",
+    "Sensor coverage",
+    "Aging equipment",
+    "Operational practicality"
+  ],
+  "process": [
+    "Extract operating data",
+    "Screen against OEM limits",
+    "Identify monitoring gaps",
+    "Develop recommendations",
+    "Present lifecycle findings"
+  ],
   "decision": {
     "label": "ENGINEERING DECISION",
     "title": "Use measured operating behaviour to focus the next action.",
@@ -31,15 +76,27 @@
     "Analyzed 2+ years of operating data across 12+ brazed aluminum heat exchangers.",
     "Compiled lifecycle findings to support risk-based decisions, inspection planning, and operating awareness."
   ],
-  "tools": {"$source": "facts.projects.project_2.tools"},
+  "tools": {
+    "$source": "facts.projects.project_2.tools"
+  },
   "figures": [
     {
-      "src": {"$source": "assets.images.image_06.src"},
-      "alt": {"$source": "assets.images.image_06.alt"},
-      "title": {"$source": "assets.images.image_06.title"},
-      "display": {"$source": "assets.images.image_06.display"},
+      "src": {
+        "$source": "assets.images.image_06.src"
+      },
+      "alt": {
+        "$source": "assets.images.image_06.alt"
+      },
+      "title": {
+        "$source": "assets.images.image_06.title"
+      },
+      "display": {
+        "$source": "assets.images.image_06.display"
+      },
       "caption": "Figure 03 — Field context for the asset data. Engineering analysis is stronger when it remains connected to the equipment, inspection work, and operating decisions it supports."
     }
   ],
-  "resume_ids": ["project_2"]
+  "resume_ids": [
+    "project_2"
+  ]
 }

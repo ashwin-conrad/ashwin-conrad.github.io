@@ -26,9 +26,10 @@ class PortfolioCliTests(unittest.TestCase):
         menu_text = "\n".join(output)
         self.assertEqual(result, 0)
         self.assertIn("1. Build & release", menu_text)
-        self.assertIn("2. Resume", menu_text)
-        self.assertIn("3. Quality checks", menu_text)
-        self.assertIn("Enter a number from 0 to 3.", menu_text)
+        self.assertIn("2. Working content", menu_text)
+        self.assertIn("3. Resume", menu_text)
+        self.assertIn("4. Quality checks", menu_text)
+        self.assertIn("Enter a number from 0 to 4.", menu_text)
         self.assertIn("1. Rebuild everything", menu_text)
 
     def test_working_resume_creation_requires_force_outside_the_menu(self) -> None:
@@ -46,13 +47,22 @@ class PortfolioCliTests(unittest.TestCase):
                 create_resume.assert_called_once_with()
 
     def test_working_resume_menu_action_forwards_force_after_confirmation(self) -> None:
-        action = portfolio.MENU_GROUPS[1].actions[0]
+        action = portfolio.MENU_GROUPS[1].actions[4]
         with (
-            patch.object(portfolio, "_confirm_working_resume_replacement", return_value=True),
+            patch.object(portfolio, "_confirm_working_replacement", return_value=True),
             patch.object(portfolio, "main", return_value=0) as run_command,
         ):
             self.assertEqual(portfolio._run_menu_action(action, input, print), 0)
         run_command.assert_called_once_with(["new-working-resume", "--force"])
+
+    def test_shared_working_menu_action_creates_both_documents(self) -> None:
+        action = portfolio.MENU_GROUPS[1].actions[0]
+        with (
+            patch.object(portfolio, "_confirm_working_replacement", return_value=True),
+            patch.object(portfolio, "main", return_value=0) as run_command,
+        ):
+            self.assertEqual(portfolio._run_menu_action(action, input, print), 0)
+        run_command.assert_called_once_with(["new-working", "--force"])
 
     def test_new_working_resume_is_populated_from_json(self) -> None:
         with TemporaryDirectory() as temporary:
@@ -81,6 +91,26 @@ class PortfolioCliTests(unittest.TestCase):
             self.assertIs(portfolio_workflow.sync_word_resume(), sentinel)
 
         read_values.assert_called_once_with(portfolio_workflow.RESUME_WORKING_DOCX_PATH)
+
+    def test_shared_word_sync_stages_both_documents_before_writing(self) -> None:
+        sentinel = object()
+        progress: list[str] = []
+        with (
+            patch.object(portfolio_workflow, "_read_working_resume_update", return_value={}) as read_resume,
+            patch.object(portfolio_workflow, "read_working_website_updates", return_value=[]) as read_website,
+            patch.object(portfolio_workflow, "write_resume_content") as write_resume,
+            patch.object(portfolio_workflow, "write_website_updates") as write_website,
+            patch.object(portfolio_workflow, "build_site", return_value=sentinel) as build,
+        ):
+            self.assertIs(portfolio_workflow.sync_working_documents(progress=progress.append), sentinel)
+
+        read_resume.assert_called_once_with(progress=progress.append)
+        read_website.assert_called_once_with(portfolio_workflow.WEBSITE_WORKING_DOCX_PATH)
+        write_resume.assert_called_once_with({})
+        write_website.assert_called_once_with([])
+        build.assert_called_once_with(progress=progress.append)
+        self.assertTrue(any("Reading and validating" in message for message in progress))
+        self.assertTrue(any("Rebuilding public" in message for message in progress))
 
 
 if __name__ == "__main__":

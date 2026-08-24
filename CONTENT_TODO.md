@@ -42,6 +42,6 @@ The current site only makes claims supported by the repository. The following ad
 ## Image preparation
 
 - [ ] Export diagrams and CAD images at a readable desktop width (at least 1600 px wide where practical).
-- [ ] Keep the original image plus a web copy in `assets/photos/`.
+- [ ] Keep the original image plus a web copy in `content/assets/photos/`.
 - [ ] Use filenames that state the system and view, for example `ua27-lv-architecture-v1.png` or `spartan-panel-qa-check.jpg`.
 - [ ] Before publishing, check each photo for confidential drawings, customer information, vehicle identifiers, and safety-sensitive details.

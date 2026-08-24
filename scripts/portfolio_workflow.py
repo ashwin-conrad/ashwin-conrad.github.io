@@ -6,6 +6,7 @@ leaving the renderer, editor, and resume package independently testable.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from copy import deepcopy
 from dataclasses import dataclass
 from html.parser import HTMLParser
@@ -33,7 +34,6 @@ from project_paths import (
     ASSETS_DIR,
     ASSET_RECORD_PATH,
     DESIGN_TOKENS_PATH,
-    DETAILS_CONTENT_PATH,
     FACTS_CONTENT_PATH,
     RESUME_CONTENT_PATH,
     RESUME_DOCX_OUTPUT_PATH,
@@ -44,6 +44,7 @@ from project_paths import (
     SITE_CONTENT_PATH,
     SITE_OUTPUT_PATH,
     STYLES_OUTPUT_PATH,
+    WEBSITE_WORKING_DOCX_PATH,
 )
 from resume.build import ResumeBuildResult, build_resume
 from resume.mapper import build_resume_record
@@ -53,6 +54,11 @@ from resume.validation import ResumeValidationError, validate_pdf_page_count, va
 from resume.word_renderer import read_content_control_values, render_word_template
 from resume.word_sync import sync_word_values_into_resume
 from site_renderer import render_engineering_index, render_engineering_styles, render_site_script
+from website_working import (
+    create_working_website,
+    read_working_website_updates,
+    write_website_updates,
+)
 
 
 @dataclass(frozen=True)
@@ -62,15 +68,19 @@ class SiteBuildResult:
     resume: ResumeBuildResult
 
 
+ProgressCallback = Callable[[str], None]
+
+
 def load_content() -> dict[str, Any]:
     return compose_site_content(
         read_json(SITE_CONTENT_PATH), load_details_content(), read_json(FACTS_CONTENT_PATH), read_json(ASSET_RECORD_PATH)
     )
 
 
-def build_site() -> SiteBuildResult:
+def build_site(*, progress: ProgressCallback | None = None) -> SiteBuildResult:
     """Regenerate the public website plus the editable Word resume and PDF."""
 
+    _report(progress, "Loading and rendering website content...")
     data = load_content()
     resume_data = resolve_fact_references(load_resume_content(), read_json(FACTS_CONTENT_PATH))
     design_tokens = load_design_tokens(DESIGN_TOKENS_PATH)
@@ -83,11 +93,17 @@ def build_site() -> SiteBuildResult:
         output_path=RESUME_DOCX_OUTPUT_PATH,
         pdf_path=RESUME_OUTPUT_PATH,
         design_tokens=design_tokens,
+        progress=progress,
     )
     return SiteBuildResult(resume=resume)
 
 
-def build_resume_artifacts(*, validate_only: bool = False, docx_only: bool = False) -> ResumeBuildResult:
+def build_resume_artifacts(
+    *,
+    validate_only: bool = False,
+    docx_only: bool = False,
+    progress: ProgressCallback | None = None,
+) -> ResumeBuildResult:
     """Build or validate just the resume artifact pair."""
 
     return build_resume(
@@ -97,6 +113,7 @@ def build_resume_artifacts(*, validate_only: bool = False, docx_only: bool = Fal
         pdf_path=None if validate_only or docx_only else RESUME_OUTPUT_PATH,
         validate_only=validate_only,
         design_tokens=load_design_tokens(DESIGN_TOKENS_PATH),
+        progress=progress,
     )
 
 
@@ -114,6 +131,13 @@ def create_working_resume() -> None:
     render_word_template(RESUME_WORKING_DOCX_PATH, RESUME_WORKING_DOCX_PATH, record.values)
     apply_resume_theme(RESUME_WORKING_DOCX_PATH, load_design_tokens(DESIGN_TOKENS_PATH))
     validate_resume_document(RESUME_WORKING_DOCX_PATH)
+
+
+def create_working_documents() -> None:
+    """Refresh both editable Word projections from canonical JSON."""
+
+    create_working_resume()
+    create_working_website(WEBSITE_WORKING_DOCX_PATH)
 
 
 def sync_shared_fields(
@@ -158,17 +182,53 @@ def sync_shared_fields(
             report.append(f"Kept resume override: {label}")
     return updated, report
 
-def sync_word_resume() -> SiteBuildResult:
-    """Import intentional Word Content Control edits and refresh public output."""
 
+def _read_working_resume_update(*, progress: ProgressCallback | None = None) -> dict[str, Any]:
+    """Stage the working resume import without writing or rebuilding."""
+
+    _report(progress, "Reading and validating content/working/resume-working.docx...")
     validate_resume_document(RESUME_WORKING_DOCX_PATH)
     original = load_resume_content()
     facts = read_json(FACTS_CONTENT_PATH)
     updated = sync_word_values_into_resume(
         resolve_fact_references(original, facts), read_content_control_values(RESUME_WORKING_DOCX_PATH)
     )
-    write_resume_content(restore_fact_references(original, updated, facts))
-    return build_site()
+    return restore_fact_references(original, updated, facts)
+
+
+def sync_word_resume(*, progress: ProgressCallback | None = None) -> SiteBuildResult:
+    """Import intentional resume Word edits and refresh public output."""
+
+    resume_update = _read_working_resume_update(progress=progress)
+    _report(progress, "Writing resume edits to canonical JSON...")
+    write_resume_content(resume_update)
+    _report(progress, "Rebuilding public website and resume artifacts...")
+    return build_site(progress=progress)
+
+
+def sync_word_website(*, progress: ProgressCallback | None = None) -> SiteBuildResult:
+    """Import intentional website Word edits and refresh public output."""
+
+    _report(progress, "Reading and validating content/working/website-working.docx...")
+    updates = read_working_website_updates(WEBSITE_WORKING_DOCX_PATH)
+    _report(progress, "Writing website edits to canonical JSON...")
+    write_website_updates(updates)
+    _report(progress, "Rebuilding public website and resume artifacts...")
+    return build_site(progress=progress)
+
+
+def sync_working_documents(*, progress: ProgressCallback | None = None) -> SiteBuildResult:
+    """Import both working Word files, then rebuild all public artifacts once."""
+
+    # Stage and validate both projections before changing any canonical source.
+    resume_update = _read_working_resume_update(progress=progress)
+    _report(progress, "Reading and validating content/working/website-working.docx...")
+    website_updates = read_working_website_updates(WEBSITE_WORKING_DOCX_PATH)
+    _report(progress, "Writing both Word projections to canonical JSON...")
+    write_resume_content(resume_update)
+    write_website_updates(website_updates)
+    _report(progress, "Rebuilding public website and resume artifacts...")
+    return build_site(progress=progress)
 
 
 class _HtmlCollector(HTMLParser):
@@ -203,7 +263,6 @@ def validate_site() -> list[str]:
     _require_mapping(site_data, SITE_CONTENT_PATH, errors)
     _require_mapping(facts_data, FACTS_CONTENT_PATH, errors)
     _require_mapping(asset_data, ASSET_RECORD_PATH, errors)
-    _require_mapping(details_data, DETAILS_CONTENT_PATH, errors)
     _require_mapping(resume_data, RESUME_CONTENT_PATH, errors)
     if errors:
         return errors
@@ -211,7 +270,7 @@ def validate_site() -> list[str]:
     _require_keys(site_data, ("site", "identity", "navigation"), "content/site.json", errors)
     website = details_data.get("website")
     if not isinstance(website, dict):
-        errors.append("the details collection must contain a website object")
+        errors.append("content/site.json must contain a website object")
     else:
         _require_keys(
             website,
@@ -226,7 +285,7 @@ def validate_site() -> list[str]:
                 "personal_builds",
                 "contact",
             ),
-            "details.website",
+            "website",
             errors,
         )
 
@@ -239,7 +298,7 @@ def validate_site() -> list[str]:
     referenced_photos: set[str] = set()
     if composed_site is not None:
         _validate_content_paths(composed_site, "composed content", referenced_photos, errors)
-    _validate_content_paths(asset_data, "assets/asset-record.json", referenced_photos, errors)
+    _validate_content_paths(asset_data, "content/assets/asset-record.json", referenced_photos, errors)
     _validate_photo_inventory(referenced_photos, errors)
 
     try:
@@ -337,10 +396,10 @@ def _validate_content_paths(value: Any, location: str, referenced_photos: set[st
 def _validate_photo_inventory(referenced_photos: set[str], errors: list[str]) -> None:
     photo_dir = ASSETS_DIR / "photos"
     if not photo_dir.exists():
-        errors.append("assets/photos directory is missing")
+        errors.append("content/assets/photos directory is missing")
         return
     existing = {
-        path.relative_to(ROOT).as_posix()
+        (Path("assets") / path.relative_to(ASSETS_DIR)).as_posix()
         for path in photo_dir.iterdir()
         if path.is_file() and path.name != ".gitkeep"
     }
@@ -392,7 +451,8 @@ def _validate_local_reference(value: str, location: str, errors: list[str]) -> N
     if not value or value.startswith(("#", "data:", "mailto:", "http://", "https://")):
         return
     path_part = value.split("#", 1)[0].split("?", 1)[0]
-    if path_part and not (ROOT / path_part).exists():
+    source_path = ASSETS_DIR / path_part.removeprefix("assets/") if path_part.startswith("assets/") else ROOT / path_part
+    if path_part and not source_path.exists():
         errors.append(f"{location} references missing local file: {value}")
 
 
@@ -407,3 +467,8 @@ def _copy_file(source: Path, destination: Path) -> None:
         raise FileNotFoundError(f"Required deploy file is missing: {source.relative_to(ROOT)}")
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, destination)
+
+
+def _report(progress: ProgressCallback | None, message: str) -> None:
+    if progress is not None:
+        progress(message)

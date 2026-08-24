@@ -1,5 +1,5 @@
 {
-  "$description": "VW paint palette and the semantic colours emitted as CSS variables by scripts/portfolio.py build.",
+  "$description": "VW paint palette with a Canadian-inspired semantic theme: maple reds over layered white, silver-grey, and beige neutrals. Emitted as CSS variables by scripts/portfolio.py build.",
   "color": {
     "palette": {
       "mars_red": { "$type": "color", "$value": "#B8242B", "$description": "Mars Red 80 (LA3A)" },
@@ -33,22 +33,22 @@
       "black": { "$type": "color", "$value": "#141414", "$description": "Black (L041)" },
       "brilliant_black_metallic": { "$type": "color", "$value": "#1D1D21", "$description": "Brilliant Black Metallic (LA9V)" }
     },
-    "paper": { "$type": "color", "$value": "{color.palette.alpine_white}" },
-    "paper_deep": { "$type": "color", "$value": "{color.palette.diamond_silver_metallic}" },
-    "ink": { "$type": "color", "$value": "{color.palette.black}" },
+    "paper": { "$type": "color", "$value": "{color.palette.diamond_silver_metallic}", "$description": "Cool silver-grey base surface" },
+    "paper_deep": { "$type": "color", "$value": "{color.palette.nevada_beige}", "$description": "Warm beige surface for deeper section contrast" },
+    "ink": { "$type": "color", "$value": "{color.palette.brilliant_black_metallic}" },
     "ink_soft": { "$type": "color", "$value": "{color.palette.atlas_grey_metallic}" },
     "muted": { "$type": "color", "$value": "{color.palette.quartz_grey_metallic}" },
     "line": { "$type": "color", "$value": "{color.palette.flash_silver_metallic}" },
-    "line_dark": { "$type": "color", "$value": "{color.palette.atlas_grey_metallic}" },
-    "green": { "$type": "color", "$value": "{color.palette.mars_red}" },
-    "green_light": { "$type": "color", "$value": "{color.palette.titian_red_metallic}" },
-    "accent": { "$type": "color", "$value": "{color.palette.marine_blue}" },
-    "accent_dark": { "$type": "color", "$value": "{color.palette.royal_blue_metallic}" },
-    "accent_hover": { "$type": "color", "$value": "{color.palette.tornado_red}" },
+    "line_dark": { "$type": "color", "$value": "{color.palette.quartz_grey_metallic}" },
+    "green": { "$type": "color", "$value": "{color.palette.gambia_red}", "$description": "Legacy semantic name retained for the deep maple-red section colour" },
+    "green_light": { "$type": "color", "$value": "{color.palette.nevada_beige}", "$description": "Legacy semantic name retained for warm beige callout surfaces" },
+    "accent": { "$type": "color", "$value": "{color.palette.tornado_red}", "$description": "Primary Canadian red" },
+    "accent_dark": { "$type": "color", "$value": "{color.palette.cherry_red}", "$description": "Deep red for text and restrained accents" },
+    "accent_hover": { "$type": "color", "$value": "{color.palette.mars_red}", "$description": "Brighter maple-red interaction state" },
     "white": { "$type": "color", "$value": "{color.palette.alpine_white}" },
     "on_dark": { "$type": "color", "$value": "{color.palette.diamond_silver_metallic}" },
     "on_dark_muted": { "$type": "color", "$value": "{color.palette.polar_silver_metallic}" },
-    "dark_line": { "$type": "color", "$value": "{color.palette.titian_red_metallic}" }
+    "dark_line": { "$type": "color", "$value": "{color.palette.titian_red_metallic}", "$description": "Muted red divider on dark and red surfaces" }
   },
   "font": {
     "$description": "Font stacks shared by named text styles. The resume deliberately uses an installed, portable font.",

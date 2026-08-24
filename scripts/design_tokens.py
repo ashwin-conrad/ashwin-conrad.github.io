@@ -72,7 +72,7 @@ def load_design_tokens(path: Path) -> DesignTokens:
 def _resolve_colors(data: dict[str, Any]) -> dict[str, str]:
     colors = data.get("color", {})
     if not isinstance(colors, dict):
-        raise ValueError("content/details/design-tokens.json must contain a color object")
+        raise ValueError("content/styles.json must contain a color object")
 
     raw_values: dict[str, str] = {}
 

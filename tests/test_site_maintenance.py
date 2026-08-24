@@ -45,7 +45,7 @@ class SiteMaintenanceTests(unittest.TestCase):
         tokens = load_design_tokens(DESIGN_TOKENS_PATH)
         title = tokens.text_styles["site.title"]
         self.assertEqual(title.font_weight, "600")
-        self.assertEqual(title.color, "#141414")
+        self.assertEqual(title.color, tokens.colors["ink"])
         styles = render_engineering_styles(tokens)
         self.assertIn("--text-site-title-font-size: clamp(2.5rem, 4.6vw, 5.1rem);", styles)
         self.assertIn("font-size: var(--text-site-title-font-size);", styles)

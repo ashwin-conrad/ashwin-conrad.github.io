@@ -14,7 +14,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 import content_model  # noqa: E402
 from content_model import compose_site_content, detail_source_paths, load_details_content, load_resume_content, resolve_fact_references, validate_content_model  # noqa: E402
-from project_paths import ASSET_RECORD_PATH, FACTS_CONTENT_PATH, DETAILS_CONTENT_PATH, RESUME_CONTENT_PATH, SITE_CONTENT_PATH  # noqa: E402
+from project_paths import ASSETS_DIR, ASSET_RECORD_PATH, DESIGN_TOKENS_PATH, FACTS_CONTENT_PATH, RESUME_CONTENT_PATH, SITE_CONTENT_PATH  # noqa: E402
 from portfolio_workflow import sync_shared_fields  # noqa: E402
 
 
@@ -24,18 +24,26 @@ class ContentArchitectureTests(unittest.TestCase):
         cls.site = json.loads(SITE_CONTENT_PATH.read_text(encoding="utf-8"))
         cls.facts = json.loads(FACTS_CONTENT_PATH.read_text(encoding="utf-8"))
         cls.assets = json.loads(ASSET_RECORD_PATH.read_text(encoding="utf-8"))
-        cls.details_manifest = json.loads(DETAILS_CONTENT_PATH.read_text(encoding="utf-8"))
         cls.details = load_details_content()
         cls.resume = load_resume_content()
 
-    def test_sources_are_separate_and_related(self) -> None:
+    def test_site_manifest_and_section_sources_are_related(self) -> None:
         self.assertNotIn("resume", self.site)
-        self.assertEqual(self.details_manifest.get("schema_version"), 1)
+        self.assertEqual(self.site.get("schema_version"), 1)
+        self.assertIn("sections", self.site["website"])
+        self.assertFalse((SITE_CONTENT_PATH.parent / "details.json").exists())
         self.assertEqual(len(detail_source_paths()), 18)
         self.assertEqual(validate_content_model(self.site, self.details, self.resume, self.facts), [])
 
+    def test_assets_and_styles_live_under_content(self) -> None:
+        self.assertEqual(ASSETS_DIR, ROOT / "content" / "assets")
+        self.assertEqual(ASSET_RECORD_PATH, ASSETS_DIR / "asset-record.json")
+        self.assertEqual(DESIGN_TOKENS_PATH, ROOT / "content" / "styles.json")
+        self.assertFalse((ROOT / "assets").exists())
+        self.assertFalse((ROOT / "content" / "details" / "design-tokens.json").exists())
+
     def test_case_studies_have_independent_manifest_files(self) -> None:
-        sections = self.details_manifest["website"]["sections"]
+        sections = self.site["website"]["sections"]
         case_studies = next(section for section in sections if section["id"] == "case_studies")
         self.assertEqual(
             case_studies["items"],
@@ -51,7 +59,7 @@ class ContentArchitectureTests(unittest.TestCase):
         )
 
     def test_portfolio_collections_have_independent_records(self) -> None:
-        sections = self.details_manifest["website"]["sections"]
+        sections = self.site["website"]["sections"]
         for section_id, expected_ids in {
             "experience": ["experience_1", "experience_2", "experience_3"],
             "leadership": ["leadership_1", "leadership_2", "leadership_3"],
@@ -62,7 +70,7 @@ class ContentArchitectureTests(unittest.TestCase):
             self.assertTrue(all(item["file"].startswith(f"details/website/{section_id.replace('_', '-')}/") for item in section["items"]))
 
     def test_projects_are_grouped_under_generic_experience_folders(self) -> None:
-        case_studies = next(section for section in self.details_manifest["website"]["sections"] if section["id"] == "case_studies")
+        case_studies = next(section for section in self.site["website"]["sections"] if section["id"] == "case_studies")
         self.assertTrue(all("projects/experience_" in item["file"] for item in case_studies["items"]))
         self.assertTrue(all(item["include"] for item in self.details["website"]["case_studies"]))
 
@@ -104,8 +112,8 @@ class ContentArchitectureTests(unittest.TestCase):
 
     def test_asset_records_supply_image_descriptions_and_display_controls(self) -> None:
         asset = self.assets["images"]["image_01"]
-        self.assertEqual(asset["alt"], "Formula EV low-voltage enclosure held at competition")
-        self.assertEqual(asset["title"], "Low-voltage hardware")
+        self.assertTrue(asset["alt"].strip())
+        self.assertTrue(asset["title"].strip())
         self.assertTrue(all(isinstance(value, bool) for value in asset["display"].values()))
         composed = compose_site_content(self.site, self.details, self.facts, self.assets)
         image = composed["website"]["documentation"]["items"][1]

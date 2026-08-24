@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 import os
 from pathlib import Path
@@ -26,6 +27,12 @@ class PdfConversionUnavailableError(RuntimeError):
     """Raised after the DOCX exists but no local PDF converter is available."""
 
 
+ProgressCallback = Callable[[str], None]
+WORD_PDF_TIMEOUT_SECONDS = 30
+LIBREOFFICE_PDF_TIMEOUT_SECONDS = 120
+WORD_PDF_WORKER_PATH = Path(__file__).with_name("word_pdf_worker.py")
+
+
 @dataclass(frozen=True)
 class ResumeBuildResult:
     """Artifacts and validation information from a resume build."""
@@ -44,6 +51,7 @@ def build_resume(
     pdf_path: Path | None,
     validate_only: bool = False,
     design_tokens: dict[str, str] | None = None,
+    progress: ProgressCallback | None = None,
 ) -> ResumeBuildResult:
     """Validate, refresh, and optionally convert the editable Word resume.
 
@@ -52,6 +60,7 @@ def build_resume(
     corrupt the retained editable document.
     """
 
+    _report(progress, "Validating the working resume and content mappings...")
     validate_resume_document(template_path)
     record = build_resume_record(resume_data)
     validate_record(record)
@@ -60,6 +69,7 @@ def build_resume(
 
     # The public .docx contains the formatting and controls. Updating it
     # in-place preserves any intentional Word-only layout edits.
+    _report(progress, "Generating portfolio/resume.docx...")
     removed_tags = render_word_template(
         template_path,
         output_path,
@@ -74,59 +84,80 @@ def build_resume(
     if pdf_path is None:
         return ResumeBuildResult(record=record, docx_path=output_path, pdf_path=None, pdf_backend=None)
 
-    backend = convert_docx_to_pdf(output_path, pdf_path)
+    backend = convert_docx_to_pdf(output_path, pdf_path, progress=progress)
+    _report(progress, f"Validating portfolio/resume.pdf created via {backend}...")
     validate_pdf_page_count(pdf_path)
     return ResumeBuildResult(record=record, docx_path=output_path, pdf_path=pdf_path, pdf_backend=backend)
 
 
-def convert_docx_to_pdf(input_path: Path, output_path: Path) -> str:
-    """Convert with Word COM on Windows, falling back to LibreOffice headless."""
+def convert_docx_to_pdf(
+    input_path: Path, output_path: Path, *, progress: ProgressCallback | None = None
+) -> str:
+    """Convert with bounded backends, preferring isolated LibreOffice."""
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    word_error: Exception | None = None
-    if sys.platform == "win32":
-        try:
-            _convert_with_word(input_path, output_path)
-            return "Microsoft Word COM"
-        except Exception as error:  # pragma: no cover - environment-specific fallback
-            word_error = error
-
+    errors: list[str] = []
     soffice = _find_soffice()
     if soffice:
+        _report(progress, "Converting the resume to PDF with isolated LibreOffice...")
         try:
-            _convert_with_libreoffice(input_path, output_path, soffice)
+            _convert_with_libreoffice(
+                input_path,
+                output_path,
+                soffice,
+                timeout=LIBREOFFICE_PDF_TIMEOUT_SECONDS,
+            )
             return "LibreOffice headless"
         except Exception as error:
-            if word_error is None:
-                word_error = error
+            errors.append(str(error))
+            _report(progress, f"LibreOffice conversion failed: {error}")
 
-    detail = f" Last conversion error: {word_error}" if word_error else ""
+    if sys.platform == "win32":
+        _report(
+            progress,
+            f"Trying Microsoft Word PDF export with a {WORD_PDF_TIMEOUT_SECONDS}-second limit...",
+        )
+        try:
+            _convert_with_word(input_path, output_path, timeout=WORD_PDF_TIMEOUT_SECONDS)
+            return "Microsoft Word COM"
+        except Exception as error:
+            errors.append(str(error))
+            _report(progress, f"Microsoft Word conversion failed: {error}")
+
+    detail = " Conversion attempts: " + " | ".join(errors) if errors else ""
     raise PdfConversionUnavailableError(
         "No supported local DOCX-to-PDF converter is available. Install Microsoft Word or LibreOffice, "
         "or run `python scripts/portfolio.py build --resume-only --docx-only`." + detail
     )
 
 
-def _convert_with_word(input_path: Path, output_path: Path) -> None:
-    """Export a read-only DOCX through Word without ever saving the template."""
-
-    import win32com.client  # type: ignore[import-not-found]
+def _convert_with_word(input_path: Path, output_path: Path, *, timeout: float) -> None:
+    """Run Word automation out of process so a blocked export can be stopped."""
 
     temporary_path = output_path.with_name(f"{output_path.stem}.word-tmp.pdf")
-    word = win32com.client.DispatchEx("Word.Application")
-    document = None
+    _remove_temporary_file(temporary_path)
     try:
-        word.Visible = False
-        word.DisplayAlerts = 0
-        document = word.Documents.Open(str(input_path.resolve()), ReadOnly=True, AddToRecentFiles=False)
-        document.ExportAsFixedFormat(str(temporary_path.resolve()), 17)  # 17 = wdExportFormatPDF
-        if not temporary_path.exists():
-            raise RuntimeError("Word finished without creating a PDF")
-        temporary_path.replace(output_path)
-    finally:
-        if document is not None:
-            document.Close(SaveChanges=0)
-        word.Quit(SaveChanges=0)
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(WORD_PDF_WORKER_PATH),
+                str(input_path.resolve()),
+                str(temporary_path.resolve()),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=timeout,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+        )
+    except subprocess.TimeoutExpired as error:
+        _remove_temporary_file(temporary_path)
+        raise RuntimeError(f"Microsoft Word PDF conversion timed out after {timeout:g} seconds") from error
+    if completed.returncode != 0 or not temporary_path.exists():
+        output = (completed.stdout + "\n" + completed.stderr).strip()
+        _remove_temporary_file(temporary_path)
+        raise RuntimeError(f"Microsoft Word PDF conversion failed: {output or 'no PDF produced'}")
+    temporary_path.replace(output_path)
 
 
 def _find_soffice() -> Path | None:
@@ -140,7 +171,9 @@ def _find_soffice() -> Path | None:
     return next((candidate for candidate in candidates if candidate and candidate.exists()), None)
 
 
-def _convert_with_libreoffice(input_path: Path, output_path: Path, soffice: Path) -> None:
+def _convert_with_libreoffice(
+    input_path: Path, output_path: Path, soffice: Path, *, timeout: float
+) -> None:
     """Use an isolated profile so local LibreOffice state cannot affect builds."""
 
     with TemporaryDirectory(prefix="resume-pdf-", dir=output_path.parent) as temporary_dir:
@@ -148,21 +181,25 @@ def _convert_with_libreoffice(input_path: Path, output_path: Path, soffice: Path
         profile = temporary / "profile"
         profile.mkdir()
         profile_uri = "file:///" + profile.resolve().as_posix()
-        completed = subprocess.run(
-            [
-                str(soffice),
-                "--headless",
-                f"-env:UserInstallation={profile_uri}",
-                "--convert-to",
-                "pdf",
-                "--outdir",
-                str(temporary),
-                str(input_path.resolve()),
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        try:
+            completed = subprocess.run(
+                [
+                    str(soffice),
+                    "--headless",
+                    f"-env:UserInstallation={profile_uri}",
+                    "--convert-to",
+                    "pdf",
+                    "--outdir",
+                    str(temporary),
+                    str(input_path.resolve()),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=timeout,
+            )
+        except subprocess.TimeoutExpired as error:
+            raise RuntimeError(f"LibreOffice PDF conversion timed out after {timeout:g} seconds") from error
         converted = temporary / f"{input_path.stem}.pdf"
         if completed.returncode != 0 or not converted.exists():
             output = (completed.stdout + "\n" + completed.stderr).strip()
@@ -170,3 +207,15 @@ def _convert_with_libreoffice(input_path: Path, output_path: Path, soffice: Path
         temporary_output = output_path.with_name(f"{output_path.stem}.libreoffice-tmp.pdf")
         shutil.copy2(converted, temporary_output)
         temporary_output.replace(output_path)
+
+
+def _remove_temporary_file(path: Path) -> None:
+    try:
+        path.unlink(missing_ok=True)
+    except OSError:
+        pass
+
+
+def _report(progress: ProgressCallback | None, message: str) -> None:
+    if progress is not None:
+        progress(message)

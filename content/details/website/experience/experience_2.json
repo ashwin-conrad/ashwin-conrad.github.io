@@ -1,10 +1,21 @@
 {
   "id": "experience_2",
   "include": true,
-  "date": {"$source": "facts.experiences.experience_2.dates"},
-  "role": {"$source": "facts.experiences.experience_2.role"},
-  "organization": {"$source": "facts.experiences.experience_2.organization"},
+  "date": {
+    "$source": "facts.experiences.experience_2.dates"
+  },
+  "role": {
+    "$source": "facts.experiences.experience_2.role"
+  },
+  "organization": {
+    "$source": "facts.experiences.experience_2.organization"
+  },
   "text": "Developed engineering data workflows for corrosion monitoring, inspection planning, and asset lifecycle management across multi-facility operations. Work connected historical data, field context, operating decisions, and technical deliverables.",
-  "tags": ["Asset integrity", "Python", "Data analysis", "Technical documentation"],
+  "tags": [
+    "Asset integrity",
+    "Python",
+    "Data analysis",
+    "Technical documentation"
+  ],
   "resume_id": "experience_2"
 }

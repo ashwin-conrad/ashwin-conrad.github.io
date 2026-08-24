@@ -4,25 +4,27 @@
 
 ```text
 Structured JSON sources --> facts.json ----------------+
-                      site.json ----------------------+
-                      details.json + section files ---+--> HTML / CSS / JS website
-                      asset-record.json -------------+
+                      site.json + section files ------+--> HTML / CSS / JS website
+                      content/assets/asset-record.json +
+                           ^
+                           `---- website-working.docx (editable projection)
                                                         |
                       resume.json <-------------------+  selected factual-field sync only
                            |
-                           `--> Word Content Controls --> DOCX / PDF
+                           `--> resume-working.docx --> DOCX / PDF
 
-Design tokens --> website CSS + generated resume text theme
+styles.json --> website CSS + generated resume text theme
 ```
 
 The separation is deliberate:
 
 - `details/facts.json` is the canonical home for durable facts that are reused by more than one editing surface. It owns identity, organizations, education, experience facts, project metadata and metrics, skills, leadership, community involvement, recognition, and personal-project labels. Website and resume wording can still be tailored independently.
-- `site.json` has durable global facts and navigation, rather than section prose.
-- `details.json` is the ordered manifest for the reader-facing website story. Each section owns a smaller file below `content/details/website/`; the case-studies section is an ordered collection whose generic records live beneath the experience folder they support. The renderer composes both levels in manifest order.
+- `site.json` has durable global facts and navigation plus the ordered manifest for the reader-facing website story. Each section owns a smaller file below `content/details/website/`; the case-studies section is an ordered collection whose generic records live beneath the experience folder they support. The renderer composes both levels in manifest order.
 - `resume.json` is the résumé manifest and Word-slot configuration; its section files under `details/resume/` contain short, recruiter-facing material and an independent order. It does not import website descriptions or case-study copy automatically.
-- `design-tokens.json` contains the colour, font, and named text-style values emitted as CSS custom properties and applied to the generated Word resume theme. Every text style has font family, size, weight, style, line height, letter spacing, colour, and text transform; `text.resume` covers every visible resume text treatment. It is not a content source or an editing surface.
-- `assets/asset-record.json` owns each image's path, alt text, title, and optional display flags. Content records reference these values with `assets.images.image_N.*`; contextual captions remain beside the page record that uses them.
+- `content/styles.json` contains the colour, font, and named text-style values emitted as CSS custom properties and applied to the generated Word resume theme. Every text style has font family, size, weight, style, line height, letter spacing, colour, and text transform; `text.resume` covers every visible resume text treatment. It is not a prose source or a Word editing surface.
+- `content/assets/asset-record.json` owns each image's path, alt text, title, and optional display flags, with the image files under `content/assets/photos/`. Content records reference these values with `assets.images.image_N.*`; contextual captions remain beside the page record that uses them. Pages publishes this source directory at the stable public `/assets/` path.
+- `content/working/website-working.docx` is one tagged editing surface for website strings. Each row identifies its owning JSON path and exact `text.site.*` typography token; referenced facts and asset descriptions sync to the canonical owner without flattening `$source` objects.
+- `content/working/resume-working.docx` is the retained, tagged resume layout. Both Word files use the same CLI refresh-and-sync workflow, while their public outputs remain independent.
 
 ## Details hierarchy
 
@@ -56,7 +58,7 @@ content/details/website/
 `- contact.json
 ```
 
-`content/details.json` stores the ordered section IDs and paths. Its case-studies record stores the ordered project IDs and paths. It is deliberately not a second copy of the content. The renderer loads that manifest into a composed `details.website` object and resolves references before rendering.
+`content/site.json > website.sections` stores the ordered section IDs and paths. Its case-studies record stores the ordered project IDs and paths. It is deliberately not a second copy of the content. The renderer loads that manifest into a composed `website` object and resolves references before rendering.
 
 ## Relationships and ordering
 
@@ -94,6 +96,10 @@ The Word template itself is fixed at two pages. Its explicit ID-based slot polic
 
 If the resume still has its last-synced value, a changed source can be pulled in safely. If the resume differs, the resume wins and the command reports an override. `--force` is required to replace that override. No summaries, project descriptions, experience bullets, skills, captions, or ordering are shared unless a future rule explicitly says so.
 
-## Resume working workflow
+## Shared Word working workflow
 
-`content/resume.json` is a manifest plus the neutral slot selection for the fixed Word layout. Its section files under `content/details/resume/` are recombined before the résumé mapper runs. `portfolio/resume-working.docx` is an editable projection populated from the current JSON; generated `portfolio/resume.docx` is a clean public projection. The interactive CLI creates the working resume, imports its Word Content Control edits back to the resume JSON, and then rebuilds the public outputs. Experience and selected-project slots each require four bullets; leadership, community involvement, and recognition slots use the same title, organization, location, and dates fields with one detail bullet. The first-page order is Experience, Leadership, Community Involvement, then Recognition. Run the CLI quality check after source edits.
+`content/working/website-working.docx` and `content/working/resume-working.docx` are editable projections populated from current JSON. The interactive **Working content** menu can recreate both, sync both, or operate on either document independently. The shared sync stages and validates both imports before writing, then rebuilds all public outputs once.
+
+The website editor follows manifest order and exposes direct authored text plus referenced canonical text. IDs, relationship keys, include switches, file paths, image paths, and link destinations remain JSON-only structural data. Every editable row shows the source file and JSON path, typography token, font stack, responsive CSS size, weight, style, line height, tracking, and transform. The right column uses the closest Word representation, with an explicit preview-size cap for unusually large responsive headings while retaining the exact CSS value in the context column.
+
+`content/resume.json` remains the manifest plus neutral slot selection for the fixed Word layout. Its section files under `content/details/resume/` are recombined before the resume mapper runs. Generated `portfolio/resume.docx` is a clean public projection. Experience and selected-project slots each require four bullets; leadership, community involvement, and recognition slots use the same title, organization, location, and dates fields with one detail bullet. The first-page order is Experience, Leadership, Community Involvement, then Recognition. Run the CLI quality check after source edits.

@@ -13,12 +13,16 @@
     },
     {
       "label": "LinkedIn",
-      "href": {"$source": "facts.identity.links.linkedin"},
+      "href": {
+        "$source": "facts.identity.links.linkedin"
+      },
       "external": true
     },
     {
       "label": "GitHub",
-      "href": {"$source": "facts.identity.links.github"},
+      "href": {
+        "$source": "facts.identity.links.github"
+      },
       "external": true
     },
     {

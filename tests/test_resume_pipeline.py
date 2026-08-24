@@ -4,8 +4,10 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 import zipfile
 
 from lxml import etree
@@ -17,6 +19,7 @@ sys.path.insert(0, str(SCRIPTS))
 from content_model import load_resume_content, resolve_fact_references  # noqa: E402
 from design_tokens import load_design_tokens  # noqa: E402
 from project_paths import DESIGN_TOKENS_PATH, FACTS_CONTENT_PATH, RESUME_CONTENT_PATH, RESUME_DOCX_OUTPUT_PATH, RESUME_OUTPUT_PATH, RESUME_WORKING_DOCX_PATH  # noqa: E402
+import resume.build as resume_build  # noqa: E402
 from resume.build import build_resume  # noqa: E402
 from resume.mapper import build_resume_record, education_slot_order, word_slot_order  # noqa: E402
 from resume.validation import (  # noqa: E402
@@ -146,27 +149,99 @@ class ResumePipelineTests(unittest.TestCase):
             expected_tags=set(ALL_RESUME_TAGS) - {"RECOG1_META", "RECOG2_META", "RECOG3_META"},
         )
 
+    def test_pdf_conversion_prefers_isolated_libreoffice(self) -> None:
+        input_path = self.output_dir / "converter-input.docx"
+        output_path = self.output_dir / "converter-output.pdf"
+        soffice = Path("soffice")
+        with (
+            patch.object(resume_build, "_find_soffice", return_value=soffice),
+            patch.object(resume_build, "_convert_with_libreoffice") as libreoffice,
+            patch.object(resume_build, "_convert_with_word") as word,
+        ):
+            backend = resume_build.convert_docx_to_pdf(input_path, output_path)
+
+        self.assertEqual(backend, "LibreOffice headless")
+        libreoffice.assert_called_once_with(
+            input_path,
+            output_path,
+            soffice,
+            timeout=resume_build.LIBREOFFICE_PDF_TIMEOUT_SECONDS,
+        )
+        word.assert_not_called()
+
+    def test_pdf_conversion_falls_back_to_bounded_word_worker(self) -> None:
+        input_path = self.output_dir / "fallback-input.docx"
+        output_path = self.output_dir / "fallback-output.pdf"
+        progress: list[str] = []
+        with (
+            patch.object(resume_build, "_find_soffice", return_value=Path("soffice")),
+            patch.object(resume_build, "_convert_with_libreoffice", side_effect=RuntimeError("timed out")),
+            patch.object(resume_build, "_convert_with_word") as word,
+            patch.object(resume_build.sys, "platform", "win32"),
+        ):
+            backend = resume_build.convert_docx_to_pdf(input_path, output_path, progress=progress.append)
+
+        self.assertEqual(backend, "Microsoft Word COM")
+        word.assert_called_once_with(
+            input_path,
+            output_path,
+            timeout=resume_build.WORD_PDF_TIMEOUT_SECONDS,
+        )
+        self.assertTrue(any("LibreOffice conversion failed" in message for message in progress))
+        self.assertTrue(any("30-second limit" in message for message in progress))
+
+    def test_word_worker_timeout_is_reported_instead_of_hanging(self) -> None:
+        input_path = self.output_dir / "word-timeout-input.docx"
+        output_path = self.output_dir / "word-timeout-output.pdf"
+        with patch.object(
+            resume_build.subprocess,
+            "run",
+            side_effect=subprocess.TimeoutExpired(cmd="word worker", timeout=0.01),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "timed out after 0.01 seconds"):
+                resume_build._convert_with_word(input_path, output_path, timeout=0.01)
+
+    def test_libreoffice_timeout_is_reported_instead_of_hanging(self) -> None:
+        input_path = self.output_dir / "libreoffice-timeout-input.docx"
+        output_path = self.output_dir / "libreoffice-timeout-output.pdf"
+        with patch.object(
+            resume_build.subprocess,
+            "run",
+            side_effect=subprocess.TimeoutExpired(cmd="soffice", timeout=0.01),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "timed out after 0.01 seconds"):
+                resume_build._convert_with_libreoffice(
+                    input_path,
+                    output_path,
+                    Path("soffice"),
+                    timeout=0.01,
+                )
+
     def test_generated_resume_theme_uses_site_design_tokens(self) -> None:
         output_path = self.output_dir / "theme-linked-resume.docx"
+        tokens = load_design_tokens(DESIGN_TOKENS_PATH)
         shutil.copy2(RESUME_DOCX_OUTPUT_PATH, output_path)
-        apply_resume_theme(output_path, load_design_tokens(DESIGN_TOKENS_PATH))
+        apply_resume_theme(output_path, tokens)
         with zipfile.ZipFile(output_path) as package:
             document = etree.fromstring(package.read("word/document.xml"))
             theme = etree.fromstring(package.read("word/theme/theme1.xml"))
 
-        self.assertIn("264A36", document.xpath(".//w:shd/@w:fill", namespaces=NS))
-        self.assertIn("E6E8EA", document.xpath(".//w:color/@w:val", namespaces=NS))
+        self.assertIn(tokens.colors["green"].removeprefix("#").upper(), document.xpath(".//w:shd/@w:fill", namespaces=NS))
+        self.assertIn(tokens.colors["white"].removeprefix("#").upper(), document.xpath(".//w:color/@w:val", namespaces=NS))
         self.assertEqual(
             theme.xpath(
                 "string(.//a:clrScheme/a:accent1/a:srgbClr/@val)",
                 namespaces={"a": "http://schemas.openxmlformats.org/drawingml/2006/main"},
             ),
-            "E3C878",
+            tokens.colors["accent"].removeprefix("#").upper(),
         )
         name_run = document.xpath(".//w:sdt[w:sdtPr/w:tag/@w:val='CONTACT_NAME']//w:r[1]", namespaces=NS)[0]
         self.assertEqual(name_run.xpath("string(w:rPr/w:rFonts/@w:ascii)", namespaces=NS), "Arial")
         self.assertEqual(name_run.xpath("string(w:rPr/w:sz/@w:val)", namespaces=NS), "38")
-        self.assertEqual(name_run.xpath("string(w:rPr/w:color/@w:val)", namespaces=NS), "264A36")
+        self.assertEqual(
+            name_run.xpath("string(w:rPr/w:color/@w:val)", namespaces=NS),
+            tokens.colors["green"].removeprefix("#").upper(),
+        )
         self.assertTrue(name_run.xpath("boolean(w:rPr/w:b)", namespaces=NS))
 
     def test_resume_text_styles_cover_every_editable_and_static_treatment(self) -> None:

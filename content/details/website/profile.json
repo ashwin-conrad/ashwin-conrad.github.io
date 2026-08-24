@@ -1,15 +1,15 @@
 {
   "number": "01 / ENGINEERING PROFILE",
-  "heading": "Mechanical engineering for systems that must be built, tested, and used.",
-  "lead": "My work starts with the physical system: how it fits, how it is built, how it is accessed, and how it behaves in use.",
+  "heading": "Mechanical engineering for systems across industrial applications.",
+  "lead": "My design process starts with the physical system: how it fits, how it’s built, how it’s accessed, and how it behaves in use.",
   "body": "Vehicle electrical integration, manufacturing work, and engineering data tooling support that foundation. Across Formula EV, industrial controls, and asset-integrity work, I have contributed where packaging, hardware, testing, process, and communication meet.",
   "signals": [
     {
-      "label": "DESIGN WITH THE BUILD IN MIND",
-      "text": "Vehicle packaging, panel drawings, physical assembly, and fabrication projects keep the practical constraints visible early."
+      "label": "DESIGN WITH THE USER IN MIND",
+      "text": "Vehicle packaging, panel drawings, physical assembly, and preliminary fabrication keeps the practical constraints visible early."
     },
     {
-      "label": "CLOSE THE LOOP WITH TESTING",
+      "label": "CLOSE THE LOOP WITH TESTING AND ITERATION",
       "text": "QA checks, troubleshooting, inspection planning, and operating-data analysis turn observations into engineering decisions."
     },
     {

@@ -23,6 +23,11 @@ THEME_PART = "word/theme/theme1.xml"
 # the same semantic palette as the website.
 DIRECT_COLOUR_TOKENS = {
     "18324A": "green",
+    # Retained working documents may already carry the prior token-resolved
+    # palette. Accept those values as semantic inputs so a later token change
+    # can re-theme the public projection without recreating the editor first.
+    "264A36": "green",
+    "B8242B": "green",
     "1F2933": "ink",
     "5E6C78": "muted",
     "7A8793": "line_dark",
@@ -30,7 +35,11 @@ DIRECT_COLOUR_TOKENS = {
 }
 DIRECT_FILL_TOKENS = {
     "18324A": "green",
+    "264A36": "green",
+    "B8242B": "green",
     "F7F9FB": "paper",
+    "E6E8EA": "paper",
+    "E9EEF2": "paper_deep",
 }
 THEME_COLOUR_TOKENS = {
     "dk1": "ink",

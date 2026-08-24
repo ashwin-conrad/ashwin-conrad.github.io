@@ -1,9 +1,9 @@
 """Content loading, safe field references, and relationship validation.
 
-The website has two authored sources: ``site.json`` for site-wide facts and
-navigation, and ``details.json`` for the visible page sections.  The resume is
-intentionally a third source; it can share selected factual fields through its
-own explicit ``_meta.shared_fields`` list without inheriting website prose.
+``site.json`` owns the site-wide settings, navigation, and ordered website
+section manifest. The section records stay in small files below
+``content/details/website/``. The resume remains independent and can share
+selected factual fields through its explicit ``_meta.shared_fields`` list.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ from pathlib import Path
 import re
 from typing import Any, Iterator
 
-from project_paths import ASSET_RECORD_PATH, CONTENT_DIR, DETAILS_CONTENT_PATH, FACTS_CONTENT_PATH, RESUME_CONTENT_PATH, RESUME_DIR
+from project_paths import ASSET_RECORD_PATH, CONTENT_DIR, FACTS_CONTENT_PATH, RESUME_CONTENT_PATH, RESUME_DIR, SITE_CONTENT_PATH
 
 
 class ContentModelError(ValueError):
@@ -108,14 +108,14 @@ class DetailSection:
 
 
 def load_details_content() -> dict[str, Any]:
-    """Load the details manifest and compose its section files for renderers."""
+    """Load the website manifest from site.json and compose its section files."""
 
-    manifest = read_json(DETAILS_CONTENT_PATH)
+    manifest = read_json(SITE_CONTENT_PATH)
     sections = _detail_section_records(manifest)
     website: dict[str, Any] = {}
     for section in sections:
         if section.id in website:
-            raise ContentModelError(f"content/details.json contains duplicate section id: {section.id}")
+            raise ContentModelError(f"content/site.json contains duplicate section id: {section.id}")
         if section.path:
             value = read_json_value(section.path)
             if not isinstance(value, (dict, list)):
@@ -145,8 +145,8 @@ def load_details_content() -> dict[str, Any]:
 def detail_source_paths() -> list[Path]:
     """Return the manifest and every file it currently owns, in stable order."""
 
-    manifest = read_json(DETAILS_CONTENT_PATH)
-    paths = [DETAILS_CONTENT_PATH]
+    manifest = read_json(SITE_CONTENT_PATH)
+    paths = [SITE_CONTENT_PATH]
     for section in _detail_section_records(manifest):
         if section.path:
             paths.append(section.path)
@@ -159,8 +159,8 @@ def write_details_content(details_data: dict[str, Any]) -> None:
 
     website = details_data.get("website")
     if not isinstance(website, dict):
-        raise ContentModelError("details.website must be an object")
-    manifest = read_json(DETAILS_CONTENT_PATH)
+        raise ContentModelError("website content must be an object")
+    manifest = read_json(SITE_CONTENT_PATH)
     sections = _detail_section_records(manifest)
     expected_ids = {section.id for section in sections}
     supplied_ids = set(website)
@@ -172,7 +172,7 @@ def write_details_content(details_data: dict[str, Any]) -> None:
             parts.append("missing " + ", ".join(missing))
         if extra:
             parts.append("unexpected " + ", ".join(extra))
-        raise ContentModelError("Details section manifest mismatch: " + "; ".join(parts))
+        raise ContentModelError("Website section manifest mismatch: " + "; ".join(parts))
     manifest_changed = False
     for section in sections:
         value = website[section.id]
@@ -183,27 +183,27 @@ def write_details_content(details_data: dict[str, Any]) -> None:
             continue
         manifest_changed = _write_collection_section(manifest, section, value) or manifest_changed
     if manifest_changed:
-        write_json_atomic(DETAILS_CONTENT_PATH, manifest)
+        write_json_atomic(SITE_CONTENT_PATH, manifest)
 
 
 def _write_collection_section(manifest: dict[str, Any], section: DetailSection, value: Any) -> bool:
     if section.metadata:
         if not isinstance(value, dict) or not isinstance(value.get("items"), list):
-            raise ContentModelError(f"details collection {section.id!r} must contain an items list")
+            raise ContentModelError(f"website collection {section.id!r} must contain an items list")
         value = value["items"]
     elif not isinstance(value, list):
-        raise ContentModelError(f"details collection {section.id!r} must be a list")
+        raise ContentModelError(f"website collection {section.id!r} must be a list")
     known_paths = {item.id: item.relative_path for item in section.items}
     records: list[dict[str, str]] = []
     seen_ids: set[str] = set()
     for index, item in enumerate(value):
         if not isinstance(item, dict):
-            raise ContentModelError(f"details collection {section.id}[{index}] must be an object")
+            raise ContentModelError(f"website collection {section.id}[{index}] must be an object")
         item_id = item.get("id")
         if not isinstance(item_id, str) or not _SAFE_DETAIL_ID.fullmatch(item_id):
-            raise ContentModelError(f"details collection {section.id}[{index}] needs a safe stable id")
+            raise ContentModelError(f"website collection {section.id}[{index}] needs a safe stable id")
         if item_id in seen_ids:
-            raise ContentModelError(f"details collection {section.id} contains duplicate id: {item_id}")
+            raise ContentModelError(f"website collection {section.id} contains duplicate id: {item_id}")
         seen_ids.add(item_id)
         relative_path = known_paths.get(item_id, _default_item_path(section.id, item_id))
         write_json_atomic(_details_path(relative_path), item)
@@ -219,47 +219,47 @@ def _write_collection_section(manifest: dict[str, Any], section: DetailSection, 
 def _manifest_section(manifest: dict[str, Any], section_id: str) -> dict[str, Any]:
     sections = manifest.get("website", {}).get("sections")
     if not isinstance(sections, list):  # Already checked by _detail_section_records.
-        raise ContentModelError("content/details.json must contain website.sections")
+        raise ContentModelError("content/site.json must contain website.sections")
     for section in sections:
         if isinstance(section, dict) and section.get("id") == section_id:
             return section
-    raise ContentModelError(f"content/details.json is missing section {section_id!r}")
+    raise ContentModelError(f"content/site.json is missing section {section_id!r}")
 
 
 def _detail_section_records(manifest: dict[str, Any]) -> list[DetailSection]:
     website = manifest.get("website")
     sections = website.get("sections") if isinstance(website, dict) else None
     if not isinstance(sections, list) or not sections:
-        raise ContentModelError("content/details.json must contain website.sections")
+        raise ContentModelError("content/site.json must contain website.sections")
     records: list[DetailSection] = []
     for index, section in enumerate(sections):
         if not isinstance(section, dict):
-            raise ContentModelError(f"details manifest section {index} must be an object")
+            raise ContentModelError(f"website manifest section {index} must be an object")
         section_id = section.get("id")
         relative_path = section.get("file")
         item_records = section.get("items")
         if not isinstance(section_id, str) or not section_id:
-            raise ContentModelError(f"details manifest section {index} needs an id")
+            raise ContentModelError(f"website manifest section {index} needs an id")
         if isinstance(relative_path, str) and relative_path.endswith(".json") and "items" not in section:
             records.append(DetailSection(section_id, path=_details_path(relative_path)))
             continue
         if "file" in section:
-            raise ContentModelError(f"details manifest section {section_id!r} cannot use both file and items")
+            raise ContentModelError(f"website manifest section {section_id!r} cannot use both file and items")
         if not isinstance(item_records, list) or not item_records:
-            raise ContentModelError(f"details manifest collection {section_id!r} needs one or more items")
+            raise ContentModelError(f"website manifest collection {section_id!r} needs one or more items")
         items: list[DetailItem] = []
         seen_ids: set[str] = set()
         for item_index, item in enumerate(item_records):
             if not isinstance(item, dict):
-                raise ContentModelError(f"details manifest collection {section_id!r} item {item_index} must be an object")
+                raise ContentModelError(f"website manifest collection {section_id!r} item {item_index} must be an object")
             item_id = item.get("id")
             item_path = item.get("file")
             if not isinstance(item_id, str) or not _SAFE_DETAIL_ID.fullmatch(item_id):
-                raise ContentModelError(f"details manifest collection {section_id!r} item {item_index} needs a safe id")
+                raise ContentModelError(f"website manifest collection {section_id!r} item {item_index} needs a safe id")
             if item_id in seen_ids:
-                raise ContentModelError(f"details manifest collection {section_id!r} contains duplicate id: {item_id}")
+                raise ContentModelError(f"website manifest collection {section_id!r} contains duplicate id: {item_id}")
             if not isinstance(item_path, str) or not item_path.endswith(".json"):
-                raise ContentModelError(f"details manifest collection {section_id!r} item {item_id!r} needs a JSON file path")
+                raise ContentModelError(f"website manifest collection {section_id!r} item {item_id!r} needs a JSON file path")
             seen_ids.add(item_id)
             items.append(DetailItem(item_id, item_path, _details_path(item_path)))
         metadata = {key: value for key, value in section.items() if key not in {"id", "items"}}
@@ -306,7 +306,7 @@ def compose_site_content(
     _require_object(site_data, "identity", "content/site.json")
     website = details_data.get("website")
     if not isinstance(website, dict):
-        raise ContentModelError("content/details.json must contain a website object")
+        raise ContentModelError("content/site.json must contain a website object")
 
     facts = facts_data if facts_data is not None else read_json(FACTS_CONTENT_PATH)
     _validate_facts(facts)
@@ -351,19 +351,19 @@ def _validate_facts(facts_data: dict[str, Any]) -> None:
 
 def _validate_assets(asset_data: dict[str, Any]) -> None:
     if not isinstance(asset_data, dict) or asset_data.get("schema_version") != 1:
-        raise ContentModelError("assets/asset-record.json must use schema_version 1")
+        raise ContentModelError("content/assets/asset-record.json must use schema_version 1")
     images = asset_data.get("images")
     if not isinstance(images, dict) or not images:
-        raise ContentModelError("assets/asset-record.json must contain an images object")
+        raise ContentModelError("content/assets/asset-record.json must contain an images object")
     for image_id, image in images.items():
         if not isinstance(image_id, str) or not _SAFE_DETAIL_ID.fullmatch(image_id) or not isinstance(image, dict):
-            raise ContentModelError("assets/asset-record.json images must use safe IDs and object records")
+            raise ContentModelError("content/assets/asset-record.json images must use safe IDs and object records")
         for key in ("src", "alt", "title"):
             if not isinstance(image.get(key), str) or not image[key].strip():
-                raise ContentModelError(f"assets/asset-record.json image {image_id!r} is missing {key!r}")
+                raise ContentModelError(f"content/assets/asset-record.json image {image_id!r} is missing {key!r}")
         display = image.get("display")
         if not isinstance(display, dict) or not all(isinstance(value, bool) for value in display.values()):
-            raise ContentModelError(f"assets/asset-record.json image {image_id!r} needs boolean display flags")
+            raise ContentModelError(f"content/assets/asset-record.json image {image_id!r} needs boolean display flags")
 
 def resolve_fact_references(value: Any, facts_data: dict[str, Any]) -> Any:
     """Resolve ``facts.*`` references while preserving the surrounding shape."""
@@ -464,7 +464,7 @@ def validate_content_model(
         errors.append("content/site.json still contains legacy resume content; move it to content/details/resume.json")
     website = details_data.get("website")
     if not isinstance(website, dict):
-        errors.append("content/details.json must contain a website object")
+        errors.append("content/site.json must contain a website object")
     if not isinstance(resume_data.get("pages"), list):
         errors.append("content/details/resume.json must contain sections")
 

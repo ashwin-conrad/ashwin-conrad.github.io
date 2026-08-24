@@ -1,22 +1,37 @@
 {
+  "schema_version": 1,
   "site": {
-    "title": "Ashwin Conrad | Engineering Portfolio",
+    "title": "Ashwin Conrad | Mechanical Engineering Portfolio",
     "year": "2026",
     "url": "https://ashwin-conrad.github.io/",
     "resume_path": "portfolio/resume.pdf",
-    "meta_description": "Ashwin Conrad is a mechanical engineering student focused on vehicle systems, manufacturing, testing, and build-ready engineering design.",
-    "social_title": "Ashwin Conrad | Vehicle Systems & Mechanical Engineering",
+    "meta_description": "I am a mechanical engineering student with special interests in vehicle systems, manufacturing, testing, and build-ready engineering design.",
+    "social_title": "Ashwin Conrad | Mechanical Engineering Student & Formula SAE Low Voltage Electronics Lead",
     "social_description": "Vehicle systems integration, manufacturing QA, engineering analysis, and build-ready design.",
-    "social_image": {"$source": "assets.images.image_07.src"},
-    "social_image_alt": "Formula UA27 race car at its unveiling"
+    "social_image": {
+      "$source": "assets.images.image_07.src"
+    },
+    "social_image_alt": "UA-27 Formula’s car at our annual unveiling"
   },
   "identity": {
-    "location": {"$source": "facts.identity.location"},
-    "phone": {"$source": "facts.identity.phone"},
-    "email": {"$source": "facts.identity.email"},
-    "website": {"$source": "facts.identity.website"},
-    "name": {"$source": "facts.identity.name"},
-    "initials": {"$source": "facts.identity.initials"}
+    "location": {
+      "$source": "facts.identity.location"
+    },
+    "phone": {
+      "$source": "facts.identity.phone"
+    },
+    "email": {
+      "$source": "facts.identity.email"
+    },
+    "website": {
+      "$source": "facts.identity.website"
+    },
+    "name": {
+      "$source": "facts.identity.name"
+    },
+    "initials": {
+      "$source": "facts.identity.initials"
+    }
   },
   "navigation": [
     {
@@ -43,5 +58,103 @@
       "label": "Contact",
       "href": "#contact"
     }
-  ]
+  ],
+  "website": {
+    "sections": [
+      {
+        "id": "hero",
+        "file": "details/website/hero.json"
+      },
+      {
+        "id": "profile",
+        "file": "details/website/profile.json"
+      },
+      {
+        "id": "case_studies",
+        "items": [
+          {
+            "id": "project_1",
+            "file": "details/website/projects/experience_1/project_1.json"
+          },
+          {
+            "id": "project_2",
+            "file": "details/website/projects/experience_2/project_2.json"
+          },
+          {
+            "id": "project_5",
+            "file": "details/website/projects/experience_3/project_5.json"
+          }
+        ]
+      },
+      {
+        "id": "experience",
+        "number": "05 / ENGINEERING EXPERIENCE",
+        "heading": "Experience that connects design intent to physical work.",
+        "items": [
+          {
+            "id": "experience_1",
+            "file": "details/website/experience/experience_1.json"
+          },
+          {
+            "id": "experience_2",
+            "file": "details/website/experience/experience_2.json"
+          },
+          {
+            "id": "experience_3",
+            "file": "details/website/experience/experience_3.json"
+          }
+        ]
+      },
+      {
+        "id": "skills",
+        "file": "details/website/skills.json"
+      },
+      {
+        "id": "documentation",
+        "file": "details/website/documentation.json"
+      },
+      {
+        "id": "leadership",
+        "number": "08 / LEADERSHIP & COMMUNICATION",
+        "heading": "Technical work becomes more useful when the team can act on it.",
+        "items": [
+          {
+            "id": "leadership_1",
+            "file": "details/website/leadership/leadership_1.json"
+          },
+          {
+            "id": "leadership_2",
+            "file": "details/website/leadership/leadership_2.json"
+          },
+          {
+            "id": "leadership_3",
+            "file": "details/website/leadership/leadership_3.json"
+          }
+        ]
+      },
+      {
+        "id": "personal_builds",
+        "number": "09 / HANDS-ON LEARNING",
+        "heading": "Materials and fabrication beyond the job description.",
+        "items": [
+          {
+            "id": "build_1",
+            "file": "details/website/personal-builds/build_1.json"
+          },
+          {
+            "id": "build_2",
+            "file": "details/website/personal-builds/build_2.json"
+          },
+          {
+            "id": "build_3",
+            "file": "details/website/personal-builds/build_3.json"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "file": "details/website/contact.json"
+      }
+    ]
+  }
 }

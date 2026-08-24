@@ -92,7 +92,7 @@ def read_content_control_values(docx_path: Path) -> dict[str, str]:
     """Read unique tag values from an editable resume document.
 
     This is the reverse half of the resume workflow: users edit the retained
-    ``portfolio/resume-working.docx`` in Word, then the sync command reads its content
+    ``content/working/resume-working.docx`` in Word, then the sync command reads its content
     controls back into the canonical JSON data.
     """
 

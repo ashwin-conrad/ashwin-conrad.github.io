@@ -13,44 +13,71 @@
     }
   },
   "organizations": {
-    "organization_1": {"name": "Formula EV Racing", "location": "University of Alberta"},
-    "organization_2": {"name": "AltaGas", "location": "Calgary, AB"},
-    "organization_3": {"name": "Spartan Controls", "location": "Calgary, AB"},
-    "organization_4": {"name": "Personal Project", "location": ""}
+    "organization_1": {
+      "name": "Formula EV Racing",
+      "location": "University of Alberta"
+    },
+    "organization_2": {
+      "name": "AltaGas",
+      "location": "Calgary, AB"
+    },
+    "organization_3": {
+      "name": "Spartan Controls",
+      "location": "Calgary, AB"
+    },
+    "organization_4": {
+      "name": "Personal Project",
+      "location": ""
+    }
   },
   "hero_facts": [
     "Mechanical Engineering · University of Alberta",
-    "Low Voltage Electronics Lead · Formula EV Racing",
+    "Formula SAE EV, Low Voltage Electronics Lead · University of Alberta",
     "Integrity & Reliability Engineering Student · AltaGas"
   ],
   "audience_profiles": {
     "automotive_product": {
       "label": "Automotive and product-development engineering",
-      "focus": ["Vehicle systems", "Packaging", "Manufacturing", "Testing"]
+      "focus": [
+        "Vehicle systems",
+        "Packaging",
+        "Manufacturing",
+        "Testing"
+      ]
     },
     "manufacturing_test": {
       "label": "Manufacturing and test engineering",
-      "focus": ["Engineering drawings", "Assembly", "QA", "Troubleshooting"]
+      "focus": [
+        "Engineering drawings",
+        "Assembly",
+        "QA",
+        "Troubleshooting"
+      ]
     },
     "reliability_data": {
       "label": "Reliability and engineering-data roles",
-      "focus": ["Asset integrity", "Inspection planning", "Python", "Technical reporting"]
+      "focus": [
+        "Asset integrity",
+        "Inspection planning",
+        "Python",
+        "Technical reporting"
+      ]
     }
   },
   "hero_proof_points": [
     {
-      "label": "FORMULA UA27",
-      "value": "Low-voltage systems integration",
+      "label": "Formula SAE UA-27",
+      "value": "Low-Voltage Systems Integration",
       "detail": "Packaging, sensors, power distribution, and safety interfaces"
     },
     {
       "label": "ALTAGAS",
-      "value": "12+ heat exchangers analyzed",
-      "detail": "2+ years of operating history screened against OEM limits"
+      "value": "Thermal Fatigue Remaining Life Analysis Across 12 Brazed Aluminum Heat Exchangers",
+      "detail": "2 years of historical operating data screened against OEM temperature rate-of-change limits"
     },
     {
       "label": "SPARTAN CONTROLS",
-      "value": "30+ panels and 250+ PLC updates",
+      "value": "I Completed Manufacturing & Quality Reviews of 40+ Panels During my Two Terms at Spartan Controls, Calgary Solution Centre.",
       "detail": "Assembly, pre-delivery QA, and production support"
     }
   ],
@@ -58,17 +85,26 @@
     "formula_ua27_integration": {
       "claim": "Leads Formula UA27 low-voltage planning and integration across hardware, safety interfaces, sensors, power distribution, and vehicle packaging.",
       "status": "current",
-      "audiences": ["automotive_product", "manufacturing_test"]
+      "audiences": [
+        "automotive_product",
+        "manufacturing_test"
+      ]
     },
     "altagas_heat_exchanger_analysis": {
       "claim": "Analyzed 2+ years of operating data across 12+ brazed aluminum heat exchangers and screened results against OEM limits.",
       "status": "verified",
-      "audiences": ["reliability_data", "automotive_product"]
+      "audiences": [
+        "reliability_data",
+        "automotive_product"
+      ]
     },
     "spartan_panel_execution": {
       "claim": "Built and quality-checked 30+ industrial control panels and processed 250+ PLC software updates in under half the allocated time.",
       "status": "verified",
-      "audiences": ["manufacturing_test", "automotive_product"]
+      "audiences": [
+        "manufacturing_test",
+        "automotive_product"
+      ]
     }
   },
   "experiences": {
@@ -98,13 +134,19 @@
   "projects": {
     "project_1": {
       "title": "Formula EV Electrical Systems",
-      "case_study_title": "Formula UA27 low-voltage systems",
+      "case_study_title": "Formula SAE, UA-26 Low-Voltage Design",
       "system": "Vehicle low-voltage systems",
       "experience_id": "experience_1",
       "organization_id": "organization_1",
       "dates": "Winter 2025 – Present",
       "tools_text": "Low-voltage electrical systems",
-      "tools": ["Low-voltage systems", "Power distribution", "Sensor integration", "Vehicle packaging", "Technical coordination"]
+      "tools": [
+        "Low-voltage systems",
+        "Power distribution",
+        "Sensor integration",
+        "Vehicle packaging",
+        "Technical coordination"
+      ]
     },
     "project_2": {
       "title": "Brazed Aluminum Heat-Exchanger Lifecycle Analysis",
@@ -114,8 +156,17 @@
       "organization_id": "organization_2",
       "dates": "2025 – 2026",
       "tools_text": "Python, PI Historian Excel add-in",
-      "tools": ["Python", "PI Historian Excel add-in", "Data analysis", "Technical assessment", "Engineering reporting"],
-      "metrics": {"operating_years": "2+", "heat_exchanger_count": "12+"}
+      "tools": [
+        "Python",
+        "PI Historian Excel add-in",
+        "Data analysis",
+        "Technical assessment",
+        "Engineering reporting"
+      ],
+      "metrics": {
+        "operating_years": "2+",
+        "heat_exchanger_count": "12+"
+      }
     },
     "project_3": {
       "title": "Inspection Scope Generation Tool",
@@ -123,8 +174,14 @@
       "organization_id": "organization_2",
       "dates": "2025 – 2026",
       "tools_text": "Python, openpyxl, python-docx",
-      "tools": ["Python", "openpyxl", "python-docx"],
-      "metrics": {"inspection_scope_count": "500+"}
+      "tools": [
+        "Python",
+        "openpyxl",
+        "python-docx"
+      ],
+      "metrics": {
+        "inspection_scope_count": "500+"
+      }
     },
     "project_4": {
       "title": "Corrosion Monitoring Dashboard",
@@ -132,8 +189,15 @@
       "organization_id": "organization_2",
       "dates": "2025 – 2026",
       "tools_text": "Microsoft Fabric, Power BI, Python",
-      "tools": ["Microsoft Fabric", "Power BI", "Python"],
-      "metrics": {"facility_count": "12", "monitored_asset_count": "100+"}
+      "tools": [
+        "Microsoft Fabric",
+        "Power BI",
+        "Python"
+      ],
+      "metrics": {
+        "facility_count": "12",
+        "monitored_asset_count": "100+"
+      }
     },
     "project_5": {
       "title": "Control Panel Builds",
@@ -144,8 +208,18 @@
       "organization_id": "organization_3",
       "dates": "Summer Terms, '23, '24",
       "tools_text": "Industrial controls and panel QA",
-      "tools": ["Engineering drawings", "Electrical schematics", "Panel assembly", "Wiring", "QA", "PLC software updates"],
-      "metrics": {"panel_count": "30+", "plc_update_count": "250+"}
+      "tools": [
+        "Engineering drawings",
+        "Electrical schematics",
+        "Panel assembly",
+        "Wiring",
+        "QA",
+        "PLC software updates"
+      ],
+      "metrics": {
+        "panel_count": "30+",
+        "plc_update_count": "250+"
+      }
     },
     "project_6": {
       "title": "Tool carrier",
@@ -186,24 +260,47 @@
   },
   "skills": {
     "mechanical_design": [
-      "SolidWorks", "AutoCAD & 2D laser cutting", "Engineering drawings", "Mechanical prototyping",
-      "3D modelling and printing", "Fabrication and materials", "Packaging considerations"
+      "SolidWorks",
+      "AutoCAD & 2D laser cutting",
+      "Engineering drawings",
+      "Mechanical prototyping",
+      "3D modelling and printing",
+      "Fabrication and materials",
+      "Packaging considerations"
     ],
     "vehicle_electrical": [
-      "Low-voltage systems", "Power distribution", "Sensor integration", "Safety interfaces",
-      "Electrical schematics", "Panel wiring"
+      "Low-voltage systems",
+      "Power distribution",
+      "Sensor integration",
+      "Safety interfaces",
+      "Electrical schematics",
+      "Panel wiring"
     ],
     "manufacturing_test": [
-      "Panel assembly", "Pre-delivery QA", "Inspection planning", "Troubleshooting",
+      "Panel assembly",
+      "Pre-delivery QA",
+      "Inspection planning",
+      "Troubleshooting",
       "Process and equipment context"
     ],
     "data_automation": [
-      "Python", "Excel data analysis", "Power BI", "Microsoft Fabric", "Power Query",
-      "openpyxl", "python-docx", "Aspen HYSYS", "Maximo", "JDE"
+      "Python",
+      "Excel data analysis",
+      "Power BI",
+      "Microsoft Fabric",
+      "Power Query",
+      "openpyxl",
+      "python-docx",
+      "Aspen HYSYS",
+      "Maximo",
+      "JDE"
     ],
     "engineering_communication": [
-      "Technical reporting", "Scope generation", "Engineering documentation",
-      "Cross-functional coordination", "Leadership presentations"
+      "Technical reporting",
+      "Scope generation",
+      "Engineering documentation",
+      "Cross-functional coordination",
+      "Leadership presentations"
     ]
   },
   "leadership": {
