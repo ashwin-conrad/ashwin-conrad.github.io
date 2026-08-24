@@ -56,7 +56,7 @@
           "category": {
             "$source": "facts.projects.project_9.category"
           },
-          "role": "ENG 160 Engineering Design Project",
+          "role": "ENG 160 Mechanical Design Project",
           "organization": {
             "$source": "facts.organizations.organization_5.name"
           },
