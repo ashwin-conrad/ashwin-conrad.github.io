@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "sections": [
     {"id": "intro", "file": "details/resume/intro.json"},
     {"id": "education", "file": "details/resume/education.json"},
@@ -25,7 +25,7 @@
       "leadership": ["leadership_2", "leadership_1"],
       "community": ["community_1"],
       "recognition": ["recognition_1", "recognition_2", "recognition_3"],
-      "projects": ["project_2", "project_3", "project_1", "project_6"]
+      "projects": ["project_2", "project_3", "project_9", "project_10", "project_1", "project_6", "project_7"]
     }
   }
 }

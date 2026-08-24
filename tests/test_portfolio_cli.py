@@ -78,16 +78,18 @@ class PortfolioCliTests(unittest.TestCase):
     def test_word_sync_reads_the_editable_working_resume(self) -> None:
         sentinel = object()
         with (
-            patch.object(portfolio_workflow, "validate_resume_document"),
+            patch.object(portfolio_workflow, "validate_resume_template_capacity"),
             patch.object(portfolio_workflow, "load_resume_content", return_value={}),
             patch.object(portfolio_workflow, "read_json", return_value={}),
             patch.object(portfolio_workflow, "resolve_fact_references", side_effect=lambda value, _facts: value),
             patch.object(portfolio_workflow, "read_content_control_values", return_value={}) as read_values,
             patch.object(portfolio_workflow, "sync_word_values_into_resume", return_value={}),
             patch.object(portfolio_workflow, "restore_fact_references", return_value={}),
+            patch.object(portfolio_workflow, "build_resume_record") as build_record,
             patch.object(portfolio_workflow, "write_resume_content"),
             patch.object(portfolio_workflow, "build_site", return_value=sentinel),
         ):
+            build_record.return_value.values = {}
             self.assertIs(portfolio_workflow.sync_word_resume(), sentinel)
 
         read_values.assert_called_once_with(portfolio_workflow.RESUME_WORKING_DOCX_PATH)

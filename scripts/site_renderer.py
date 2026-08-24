@@ -449,7 +449,7 @@ def render_resume(portfolio: dict, resume_path: str) -> str:
     return f"""        <section class="resume-section" id="resume" aria-labelledby="resume-heading">
             <div class="container resume-callout">
                 <div>
-                    <p class="section-label">TWO-PAGE RESUME / SELECTED PROJECT PORTFOLIO</p>
+                    <p class="section-label">TWO-PAGE RESUME / PROJECT PORTFOLIO</p>
                     <h2 id="resume-heading">The concise version, ready to share.</h2>
                     <p>Download a focused two-page resume with education, engineering experience, selected projects, and verified technical strengths.</p>
                 </div>

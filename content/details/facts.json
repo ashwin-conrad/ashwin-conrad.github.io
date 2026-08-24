@@ -28,6 +28,10 @@
     "organization_4": {
       "name": "Personal Project",
       "location": ""
+    },
+    "organization_5": {
+      "name": "University of Alberta",
+      "location": "Edmonton, AB"
     }
   },
   "hero_facts": [
@@ -134,11 +138,14 @@
   "projects": {
     "project_1": {
       "title": "Formula EV Electrical Systems",
+      "resume_title": "2026 Low-Voltage Systems and Harness Design, Manufacturing, and Development",
       "case_study_title": "Formula SAE, UA-26 Low-Voltage Design",
+      "category": "Extracurricular Projects",
       "system": "Vehicle low-voltage systems",
       "experience_id": "experience_1",
       "organization_id": "organization_1",
       "dates": "Winter 2025 – Present",
+      "resume_dates": "2026",
       "tools_text": "Low-voltage electrical systems",
       "tools": [
         "Low-voltage systems",
@@ -151,6 +158,7 @@
     "project_2": {
       "title": "Brazed Aluminum Heat-Exchanger Lifecycle Analysis",
       "case_study_title": "Brazed aluminum heat-exchanger lifecycle analysis",
+      "category": "Industry Projects",
       "role": "Engineering Co-op",
       "experience_id": "experience_2",
       "organization_id": "organization_2",
@@ -170,6 +178,7 @@
     },
     "project_3": {
       "title": "Inspection Scope Generation Tool",
+      "category": "Industry Projects",
       "experience_id": "experience_2",
       "organization_id": "organization_2",
       "dates": "2025 – 2026",
@@ -225,7 +234,8 @@
       "title": "Tool carrier",
       "resume_title": "Leather Tool Carrier",
       "experience_id": "experience_3",
-      "organization_id": "organization_3",
+      "organization_id": "organization_4",
+      "category": "Personal Projects",
       "dates": "2024",
       "tools_text": "Shop workflow tooling"
     },
@@ -233,6 +243,7 @@
       "title": "Composite skateboard deck",
       "resume_title": "Composite Skateboard Decks",
       "organization_id": "organization_4",
+      "category": "Personal Projects",
       "dates": "Earlier build series",
       "tools_text": "Lamination, fiberglass layups, embedded aluminum"
     },
@@ -242,6 +253,20 @@
       "organization_id": "organization_4",
       "dates": "2024",
       "tools_text": "Forging, heat, grinding, finishing"
+    },
+    "project_9": {
+      "title": "ENG 160 Mechanical Design Project",
+      "organization_id": "organization_5",
+      "category": "Course Projects",
+      "dates": "University Coursework",
+      "tools_text": "Mechanical design process, concept development, technical documentation"
+    },
+    "project_10": {
+      "title": "MEC 260 Mechanical Design Project",
+      "organization_id": "organization_5",
+      "category": "Course Projects",
+      "dates": "University Coursework",
+      "tools_text": "Mechanical prototyping, packaging, mechanism iteration"
     }
   },
   "education": {

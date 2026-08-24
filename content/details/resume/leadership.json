@@ -7,23 +7,38 @@
         {
           "id": "leadership_2",
           "include": true,
-          "role": {"$source": "facts.leadership.leadership_2.title"},
-          "organization": {"$source": "facts.leadership.leadership_2.organization"},
-          "location": {"$source": "facts.leadership.leadership_2.location"},
-          "dates": {"$source": "facts.leadership.leadership_2.dates"},
+          "role": {
+            "$source": "facts.leadership.leadership_2.title"
+          },
+          "organization": "Formula SAE EV",
+          "location": {
+            "$source": "facts.leadership.leadership_2.location"
+          },
+          "dates": {
+            "$source": "facts.leadership.leadership_2.dates"
+          },
           "bullets": [
-            "Lead Formula UA27 low-voltage planning and integration across hardware, safety interfaces, sensors, power distribution, and vehicle packaging."
+            "Lead the UA-26 Low-Voltage subsystem remotely by focusing on new-member onboarding and transparent documentation.",
+            "Coordinated design goals, integration, and manufacturing with other subsystems to ensure a shared knowledge base."
           ]
         },
         {
           "id": "leadership_1",
           "include": true,
-          "role": {"$source": "facts.leadership.leadership_1.title"},
-          "organization": {"$source": "facts.leadership.leadership_1.organization"},
-          "location": {"$source": "facts.leadership.leadership_1.location"},
-          "dates": {"$source": "facts.leadership.leadership_1.dates"},
+          "role": {
+            "$source": "facts.leadership.leadership_1.title"
+          },
+          "organization": {
+            "$source": "facts.leadership.leadership_1.organization"
+          },
+          "location": {
+            "$source": "facts.leadership.leadership_1.location"
+          },
+          "dates": {
+            "$source": "facts.leadership.leadership_1.dates"
+          },
           "bullets": [
-            "Served as an Engineering Student Engagement Leader and received the Undergraduate Student Leadership Award in 2024-2025."
+            "As an Engineering Student Engagement Leader, I supported the faculty in hosting open houses, first year events, and community events."
           ]
         }
       ]

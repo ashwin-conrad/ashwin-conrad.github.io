@@ -77,6 +77,10 @@ def write_resume_content(resume_data: dict[str, Any]) -> None:
             headings = [str(block.get("heading")) for block in current.get("blocks", []) if isinstance(block, dict)]
             current["blocks"] = [by_heading[heading] for heading in headings if heading in by_heading]
         write_json_atomic(path, current)
+    meta = resume_data.get("_meta")
+    if isinstance(meta, dict) and manifest.get("_meta") != meta:
+        manifest["_meta"] = deepcopy(meta)
+        write_json_atomic(RESUME_CONTENT_PATH, manifest)
 
 
 def write_json_atomic(path: Path, data: dict[str, Any]) -> None:
@@ -393,14 +397,18 @@ def restore_fact_references(original: Any, updated: Any, facts_data: dict[str, A
         resolved = resolve_fact_references(original, facts_data)
         return original if updated == resolved else updated
     if isinstance(original, list) and isinstance(updated, list):
-        return [restore_fact_references(source, value, facts_data) for source, value in zip(original, updated)]
+        restored = [restore_fact_references(source, value, facts_data) for source, value in zip(original, updated)]
+        restored.extend(deepcopy(updated[len(original) :]))
+        return restored
     if isinstance(original, dict) and isinstance(updated, dict):
-        return {
+        restored = {
             key: restore_fact_references(value, updated.get(key), facts_data)
             if key in updated
             else value
             for key, value in original.items()
         }
+        restored.update({key: deepcopy(value) for key, value in updated.items() if key not in original})
+        return restored
     return updated
 
 

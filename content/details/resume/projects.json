@@ -2,71 +2,184 @@
   "blocks": [
     {
       "type": "section",
-      "heading": "Selected Project Portfolio",
+      "heading": "Project Portfolio",
       "items": [
         {
           "id": "project_2",
           "include": true,
-          "role": {"$source": "facts.projects.project_2.title"},
-          "organization": {"$source": "facts.organizations.organization_2.name"},
-          "location": {"$source": "facts.projects.project_2.tools_text"},
-          "dates": {"$source": "facts.projects.project_2.dates"},
+          "category": {
+            "$source": "facts.projects.project_2.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_2.title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_2.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_2.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_2.dates"
+          },
           "bullets": [
             "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers.",
-            "Assessed fatigue risk and monitoring gaps against available operating history.",
-            "Screened lifecycle evidence against OEM thermal and cycling limits.",
-            "Summarized findings into inspection and operating-awareness recommendations."
+            "Screened lifecycle evidence against OEM limits and summarized inspection and operating-awareness recommendations."
           ]
         },
         {
           "id": "project_3",
           "include": true,
-          "role": {"$source": "facts.projects.project_3.title"},
-          "organization": {"$source": "facts.organizations.organization_2.name"},
-          "location": {"$source": "facts.projects.project_3.tools_text"},
-          "dates": {"$source": "facts.projects.project_3.dates"},
+          "category": {
+            "$source": "facts.projects.project_3.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_3.title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_2.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_3.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_3.dates"
+          },
           "bullets": [
             "Developed a Python tool for equipment-specific inspection-scope generation.",
-            "Generated 500+ scopes from database exports.",
-            "Used openpyxl and python-docx to standardize Excel-to-Word output.",
-            "Replaced a manual Power Query and Power BI export workflow."
+            "Generated 500+ standardized scopes from database exports using openpyxl and python-docx."
+          ]
+        },
+        {
+          "id": "project_9",
+          "include": true,
+          "category": {
+            "$source": "facts.projects.project_9.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_9.title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_5.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_9.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_9.dates"
+          },
+          "bullets": [
+            "Completed a mechanical design project as part of ENG 160 coursework.",
+            "Developed the design through concept work, evaluation, and technical documentation."
+          ]
+        },
+        {
+          "id": "project_10",
+          "include": true,
+          "category": {
+            "$source": "facts.projects.project_10.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_10.title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_5.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_10.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_10.dates"
+          },
+          "bullets": [
+            "Designed and built a small mechanical vehicle prototype with wheels and linkage.",
+            "Iterated on physical packaging and mechanism performance through hands-on prototyping."
           ]
         },
         {
           "id": "project_1",
           "include": true,
-          "role": {"$source": "facts.projects.project_1.title"},
-          "organization": {"$source": "facts.organizations.organization_1.name"},
-          "location": {"$source": "facts.projects.project_1.tools_text"},
-          "dates": {"$source": "facts.projects.project_1.dates"},
+          "category": {
+            "$source": "facts.projects.project_1.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_1.resume_title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_1.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_1.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_1.resume_dates"
+          },
           "bullets": [
-            "Planned the Formula UA27 low-voltage system around the vehicle package.",
-            "Coordinated power distribution and sensor integration work.",
-            "Supported safety-interface planning with mechanical and software teammates.",
-            "Considered accessibility and serviceability alongside electrical function."
+            "Designed and developed the 2026 low-voltage system and vehicle harness architecture.",
+            "Supported harness manufacturing, integration, serviceability, and cross-team development."
           ]
         },
         {
           "id": "project_6",
           "include": true,
-          "role": {"$source": "facts.projects.project_6.resume_title"},
-          "organization": {"$source": "facts.organizations.organization_3.name"},
-          "location": {"$source": "facts.projects.project_6.tools_text"},
-          "dates": {"$source": "facts.projects.project_6.dates"},
+          "category": {
+            "$source": "facts.projects.project_6.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_6.resume_title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_4.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_6.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_6.dates"
+          },
           "bullets": [
             "Designed a leather tool carrier for common hand tools used during panel assembly.",
-            "Built the carrier as a durable, hands-on shop aid.",
-            "Kept frequently used tools organized and accessible.",
-            "Turned a personal workflow problem into support for faster repeated work."
+            "Built a durable shop aid that kept frequently used tools organized and accessible."
+          ]
+        },
+        {
+          "id": "project_7",
+          "include": true,
+          "category": {
+            "$source": "facts.projects.project_7.category"
+          },
+          "role": {
+            "$source": "facts.projects.project_7.resume_title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_4.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_7.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_7.dates"
+          },
+          "bullets": [
+            "Built composite skateboard decks through hands-on lamination and fiberglass layup.",
+            "Experimented with embedded aluminum and finish work across an early build series."
           ]
         },
         {
           "id": "project_5",
           "include": false,
-          "role": {"$source": "facts.projects.project_5.title"},
-          "organization": {"$source": "facts.organizations.organization_3.name"},
-          "location": {"$source": "facts.projects.project_5.tools_text"},
-          "dates": {"$source": "facts.projects.project_5.dates"},
+          "role": {
+            "$source": "facts.projects.project_5.title"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_3.name"
+          },
+          "location": {
+            "$source": "facts.projects.project_5.tools_text"
+          },
+          "dates": {
+            "$source": "facts.projects.project_5.dates"
+          },
           "bullets": [
             "Built, wired, loaded, and checked 30+ industrial control panels.",
             "Read engineering drawings and electrical schematics during assembly.",

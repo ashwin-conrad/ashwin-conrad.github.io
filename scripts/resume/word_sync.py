@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import re
 from typing import Any
 
 from .mapper import (
     _resume_items_by_id,
+    build_resume_record,
     education_slot_order,
+    education_tag_prefix,
     word_slot_order,
 )
-from .validation import ALL_RESUME_TAGS, OPTIONAL_TAGS
 
 
 class WordResumeSyncError(RuntimeError):
@@ -27,10 +29,12 @@ def sync_word_values_into_resume(resume_data: dict[str, Any], values: dict[str, 
     the document and are not copied into website JSON.
     """
 
-    missing = sorted((ALL_RESUME_TAGS - OPTIONAL_TAGS) - set(values))
+    canonical_record = build_resume_record(resume_data)
+    missing = sorted((set(canonical_record.values) - canonical_record.optional_tags) - set(values))
     if missing:
         raise WordResumeSyncError("Word resume is missing value(s): " + ", ".join(missing))
-    values = {**{tag: "" for tag in OPTIONAL_TAGS}, **values}
+    working_record = build_resume_record(resume_data, include_working_blanks=True)
+    values = {**{tag: "" for tag in working_record.values}, **values}
 
     resume = deepcopy(resume_data)
 
@@ -38,12 +42,18 @@ def sync_word_values_into_resume(resume_data: dict[str, Any], values: dict[str, 
     items = _resume_items_by_id(resume)
     _sync_education(items, education_slot_order(resume), values)
     experience_ids, leadership_ids, community_ids, recognition_ids, project_ids = word_slot_order(resume)
-    _sync_entries(items, "EXP", experience_ids, 4, values)
-    _sync_entries(items, "LEAD", leadership_ids, 1, values)
-    _sync_entries(items, "COMM", community_ids, 1, values)
-    _sync_entries(items, "RECOG", recognition_ids, 1, values)
+    _sync_entries(items, "EXP", experience_ids, values)
+    _sync_entries(items, "LEAD", leadership_ids, values)
+    _sync_entries(items, "COMM", community_ids, values)
+    _sync_entries(items, "RECOG", recognition_ids, values)
     _sync_general_skills(resume, values)
-    _sync_entries(items, "PROJECT", project_ids, 4, values)
+    _sync_entries(items, "PROJECT", project_ids, values)
+    _sync_new_education(resume, len(education_slot_order(resume)) + 1, values)
+    _sync_new_entry(resume, "experience", "Experience", "EXP", len(experience_ids) + 1, values)
+    _sync_new_entry(resume, "leadership", "Leadership", "LEAD", len(leadership_ids) + 1, values)
+    _sync_new_entry(resume, "community", "Community Involvement", "COMM", len(community_ids) + 1, values)
+    _sync_new_entry(resume, "recognition", "Recognition", "RECOG", len(recognition_ids) + 1, values)
+    _sync_new_entry(resume, "projects", "Project Portfolio", "PROJECT", len(project_ids) + 1, values)
     _sync_technical_skills(resume, values)
     return resume
 
@@ -60,20 +70,21 @@ def _sync_header(resume: dict[str, Any], values: dict[str, str]) -> None:
 
 
 def _sync_education(
-    items: dict[str, dict[str, Any]], education_ids: tuple[str, str], values: dict[str, str]
+    items: dict[str, dict[str, Any]], education_ids: tuple[str, ...], values: dict[str, str]
 ) -> None:
-    for tag_prefix, item_id in zip(("EDU", "EDU2"), education_ids, strict=True):
+    for index, item_id in enumerate(education_ids, start=1):
+        tag_prefix = education_tag_prefix(index)
         education = _item(items, item_id)
         education["organization"] = values[f"{tag_prefix}_INSTITUTION"]
         education["role"], education["location"] = _split_with_fallback(
             values[f"{tag_prefix}_DEGREE"], education.get("role", ""), education.get("location", "")
         )
         education["dates"] = values[f"{tag_prefix}_DATES"]
-        education["bullets"] = [values[f"{tag_prefix}_BULLET1"]]
+        education["bullets"] = _control_bullets(values, tag_prefix)
 
 
 def _sync_entries(
-    items: dict[str, dict[str, Any]], prefix: str, item_ids: tuple[str, ...], bullet_count: int, values: dict[str, str]
+    items: dict[str, dict[str, Any]], prefix: str, item_ids: tuple[str, ...], values: dict[str, str]
 ) -> None:
     for index, item_id in enumerate(item_ids, start=1):
         item = _item(items, item_id)
@@ -82,7 +93,121 @@ def _sync_entries(
         )
         item["role"] = values[f"{prefix}{index}_TITLE"]
         item["dates"] = values[f"{prefix}{index}_DATES"]
-        item["bullets"] = [values[f"{prefix}{index}_BULLET{bullet_index}"] for bullet_index in range(1, bullet_count + 1)]
+        item["bullets"] = _control_bullets(values, f"{prefix}{index}")
+
+
+def _sync_new_education(resume: dict[str, Any], index: int, values: dict[str, str]) -> None:
+    entry_key = education_tag_prefix(index)
+    entry_values = {
+        "organization": values[f"{entry_key}_INSTITUTION"],
+        "degree": values[f"{entry_key}_DEGREE"],
+        "dates": values[f"{entry_key}_DATES"],
+        "bullets": _control_bullets(values, entry_key),
+    }
+    if not _has_new_entry_value(entry_values):
+        return
+    _require_new_fields("Education", entry_values, ("organization", "degree", "dates"))
+    role, location = _split_with_fallback(entry_values["degree"], "", "")
+    item_id = _next_item_id(resume, "education")
+    _append_new_item(
+        resume,
+        "education",
+        "Education",
+        {
+            "id": item_id,
+            "include": True,
+            "role": role,
+            "organization": entry_values["organization"],
+            "location": location,
+            "dates": entry_values["dates"],
+            "bullets": entry_values["bullets"],
+        },
+    )
+
+
+def _sync_new_entry(
+    resume: dict[str, Any], slot_key: str, heading: str, prefix: str, index: int, values: dict[str, str]
+) -> None:
+    entry_key = f"{prefix}{index}"
+    entry_values = {
+        "title": values[f"{entry_key}_TITLE"],
+        "meta": values[f"{entry_key}_META"],
+        "dates": values[f"{entry_key}_DATES"],
+        "bullets": _control_bullets(values, entry_key),
+    }
+    if not _has_new_entry_value(entry_values):
+        return
+    required = ("title",)
+    if prefix in {"EXP", "LEAD", "PROJECT"}:
+        required = ("title", "meta", "dates")
+    elif prefix == "COMM":
+        required = ("title", "meta")
+    elif prefix == "RECOG":
+        required = ("title", "dates")
+    _require_new_fields(heading, entry_values, required)
+    organization, location = _split_with_fallback(entry_values["meta"], "", "")
+    id_prefix = "project" if slot_key == "projects" else slot_key
+    item_id = _next_item_id(resume, id_prefix)
+    _append_new_item(
+        resume,
+        slot_key,
+        heading,
+        {
+            "id": item_id,
+            "include": True,
+            "role": entry_values["title"],
+            "organization": organization,
+            "location": location,
+            "dates": entry_values["dates"],
+            "bullets": entry_values["bullets"],
+        },
+    )
+
+
+def _append_new_item(
+    resume: dict[str, Any], slot_key: str, heading: str, item: dict[str, Any]
+) -> None:
+    block = _list_block(resume, heading)
+    block.setdefault("items", []).append(item)
+    meta = resume.setdefault("_meta", {})
+    slots = meta.setdefault("word_slot_order", {}) if isinstance(meta, dict) else None
+    if not isinstance(slots, dict) or not isinstance(slots.get(slot_key), list):
+        raise WordResumeSyncError(f"resume._meta.word_slot_order.{slot_key} must be a list")
+    slots[slot_key].append(item["id"])
+
+
+def _next_item_id(resume: dict[str, Any], prefix: str) -> str:
+    pattern = re.compile(rf"^{re.escape(prefix)}_(\d+)$")
+    numbers = [
+        int(match.group(1))
+        for page in resume.get("pages", [])
+        for block in page.get("blocks", [])
+        for item in block.get("items", [])
+        if isinstance(item, dict)
+        and isinstance(item.get("id"), str)
+        and (match := pattern.fullmatch(item["id"]))
+    ]
+    return f"{prefix}_{max(numbers, default=0) + 1}"
+
+
+def _control_bullets(values: dict[str, str], entry_key: str) -> list[str]:
+    pattern = re.compile(rf"^{re.escape(entry_key)}_BULLET(\d+)$")
+    indexed = sorted(
+        (int(match.group(1)), value.strip())
+        for tag, value in values.items()
+        if (match := pattern.fullmatch(tag))
+    )
+    return [value for _, value in indexed if value]
+
+
+def _has_new_entry_value(values: dict[str, Any]) -> bool:
+    return any(value if not isinstance(value, list) else bool(value) for value in values.values())
+
+
+def _require_new_fields(heading: str, values: dict[str, Any], required: tuple[str, ...]) -> None:
+    missing = [field for field in required if not str(values.get(field, "")).strip()]
+    if missing:
+        raise WordResumeSyncError(f"New {heading} entry is missing: {', '.join(missing)}")
 
 
 def _sync_general_skills(resume: dict[str, Any], values: dict[str, str]) -> None:

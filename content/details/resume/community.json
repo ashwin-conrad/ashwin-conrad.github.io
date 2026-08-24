@@ -7,11 +7,16 @@
         {
           "id": "community_1",
           "include": true,
-          "role": {"$source": "facts.community.community_1.title"},
-          "organization": {"$source": "facts.community.community_1.organization"},
-          "location": {"$source": "facts.community.community_1.location"},
-          "dates": {"$source": "facts.community.community_1.dates"},
-          "bullets": [{"$source": "facts.community.community_1.detail"}]
+          "role": "Youth Basketball Coach",
+          "organization": {
+            "$source": "facts.community.community_1.organization"
+          },
+          "location": "Calgary, AB",
+          "dates": "2023-2026",
+          "bullets": [
+            "Working with groups of 20-40 kids, ranging in age from 8-17 years old,  during weekly practices over 4 month seasons",
+            "Focused player development on teamwork, communication, fundamental basketball skills, agility, and general physical fitness."
+          ]
         }
       ]
     }

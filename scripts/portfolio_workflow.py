@@ -50,7 +50,13 @@ from resume.build import ResumeBuildResult, build_resume
 from resume.mapper import build_resume_record
 from resume.template_builder import create_resume_template
 from resume.theme import apply_resume_theme
-from resume.validation import ResumeValidationError, validate_pdf_page_count, validate_record, validate_resume_document
+from resume.validation import (
+    ResumeValidationError,
+    validate_pdf_page_count,
+    validate_record,
+    validate_resume_document,
+    validate_resume_template_capacity,
+)
 from resume.word_renderer import read_content_control_values, render_word_template
 from resume.word_sync import sync_word_values_into_resume
 from site_renderer import render_engineering_index, render_engineering_styles, render_site_script
@@ -125,12 +131,12 @@ def create_working_resume() -> None:
     """
 
     resume_data = resolve_fact_references(load_resume_content(), read_json(FACTS_CONTENT_PATH))
-    record = build_resume_record(resume_data)
+    record = build_resume_record(resume_data, include_working_blanks=True)
     validate_record(record)
-    create_resume_template(RESUME_WORKING_DOCX_PATH)
+    create_resume_template(RESUME_WORKING_DOCX_PATH, set(record.values))
     render_word_template(RESUME_WORKING_DOCX_PATH, RESUME_WORKING_DOCX_PATH, record.values)
     apply_resume_theme(RESUME_WORKING_DOCX_PATH, load_design_tokens(DESIGN_TOKENS_PATH))
-    validate_resume_document(RESUME_WORKING_DOCX_PATH)
+    validate_resume_document(RESUME_WORKING_DOCX_PATH, expected_tags=set(record.values))
 
 
 def create_working_documents() -> None:
@@ -187,11 +193,18 @@ def _read_working_resume_update(*, progress: ProgressCallback | None = None) -> 
     """Stage the working resume import without writing or rebuilding."""
 
     _report(progress, "Reading and validating content/working/resume-working.docx...")
-    validate_resume_document(RESUME_WORKING_DOCX_PATH)
     original = load_resume_content()
     facts = read_json(FACTS_CONTENT_PATH)
+    resolved = resolve_fact_references(original, facts)
+    required = build_resume_record(resolved)
+    allowed = build_resume_record(resolved, include_working_blanks=True)
+    validate_resume_template_capacity(
+        RESUME_WORKING_DOCX_PATH,
+        required_tags=set(required.values),
+        allowed_tags=set(allowed.values),
+    )
     updated = sync_word_values_into_resume(
-        resolve_fact_references(original, facts), read_content_control_values(RESUME_WORKING_DOCX_PATH)
+        resolved, read_content_control_values(RESUME_WORKING_DOCX_PATH)
     )
     return restore_fact_references(original, updated, facts)
 

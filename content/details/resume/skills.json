@@ -5,11 +5,56 @@
       "column": "main",
       "heading": "Technical Skills",
       "groups": [
-        {"label": "Mechanical design", "items": {"$source": "facts.skills.mechanical_design"}},
-        {"label": "Vehicle and electrical systems", "items": {"$source": "facts.skills.vehicle_electrical"}},
-        {"label": "Manufacturing and test", "items": {"$source": "facts.skills.manufacturing_test"}},
-        {"label": "Data and automation", "items": {"$source": "facts.skills.data_automation"}},
-        {"label": "Engineering communication", "items": {"$source": "facts.skills.engineering_communication"}}
+        {
+          "label": "Mechanical design",
+          "items": [
+            "SolidWorks",
+            "AutoCAD & 2D laser cutting",
+            "Engineering drawings",
+            "Mechanical prototyping",
+            "3D modelling and printing",
+            "Low-voltage systems",
+            "Power distribution",
+            "Sensor integration",
+            "Electrical schematics",
+            "Panel assembly",
+            "Pre-delivery QA",
+            "Python",
+            "Excel data analysis",
+            "Power BI",
+            "Microsoft Fabric",
+            "Power Query",
+            "openpyxl",
+            "python-docx",
+            "Aspen HYSYS",
+            "Maximo",
+            "JDE"
+          ]
+        },
+        {
+          "label": "Vehicle and electrical systems",
+          "items": {
+            "$source": "facts.skills.vehicle_electrical"
+          }
+        },
+        {
+          "label": "Manufacturing and test",
+          "items": {
+            "$source": "facts.skills.manufacturing_test"
+          }
+        },
+        {
+          "label": "Data and automation",
+          "items": {
+            "$source": "facts.skills.data_automation"
+          }
+        },
+        {
+          "label": "Engineering communication",
+          "items": {
+            "$source": "facts.skills.engineering_communication"
+          }
+        }
       ]
     }
   ]

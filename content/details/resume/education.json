@@ -8,20 +8,37 @@
         {
           "id": "education_1",
           "include": true,
-          "role": {"$source": "facts.education.education_1.program"},
-          "organization": {"$source": "facts.education.education_1.institution"},
-          "location": {"$source": "facts.education.education_1.location"},
-          "dates": {"$source": "facts.education.education_1.dates"},
-          "bullets": ["Mechanical Engineering student; Formula EV Low Voltage Electronics Lead and Engineering Student Engagement Leader."]
+          "role": "Faculty of Engineering, BSc in Mechanical Engineering",
+          "organization": {
+            "$source": "facts.education.education_1.institution"
+          },
+          "location": {
+            "$source": "facts.education.education_1.location"
+          },
+          "dates": {
+            "$source": "facts.education.education_1.dates"
+          },
+          "bullets": []
         },
         {
           "id": "education_2",
           "include": true,
-          "role": {"$source": "facts.education.education_2.program"},
-          "organization": {"$source": "facts.education.education_2.institution"},
-          "location": {"$source": "facts.education.education_2.location"},
-          "dates": {"$source": "facts.education.education_2.dates"},
-          "bullets": ["Played on the Basketball, Track, and Rugby teams along side Club Basketball and volunteer coaching. Also an active member in the Diversity Equity and Inclusion Club at school supporting a multicultural community. "]
+          "role": {
+            "$source": "facts.education.education_2.program"
+          },
+          "organization": {
+            "$source": "facts.education.education_2.institution"
+          },
+          "location": {
+            "$source": "facts.education.education_2.location"
+          },
+          "dates": {
+            "$source": "facts.education.education_2.dates"
+          },
+          "bullets": [
+            "Played varsity Basketball & Rugby; concurrent with Club Basketball and volunteer coaching Youth Basketball.",
+            "Active Leader in the Young Men & Diversity Equity and Inclusion Clubs supporting an inclusive and multicultural community."
+          ]
         }
       ]
     }

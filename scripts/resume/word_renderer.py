@@ -104,7 +104,11 @@ def read_content_control_values(docx_path: Path) -> dict[str, str]:
 
 
 def render_word_template(
-    template_path: Path, output_path: Path, values: dict[str, str], remove_blank_tags: set[str] | None = None
+    template_path: Path,
+    output_path: Path,
+    values: dict[str, str],
+    remove_blank_tags: set[str] | None = None,
+    remove_blank_entries: set[str] | None = None,
 ) -> list[str]:
     """Populate a DOCX template by SDT tag while preserving its layout package.
 
@@ -122,7 +126,12 @@ def render_word_template(
         raise ContentControlNotFoundError("Content Control tag is duplicated: " + ", ".join(duplicate))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    modified_parts, removed_tags = _populate_parts(template_path, values, remove_blank_tags or set())
+    modified_parts, removed_tags = _populate_parts(
+        template_path,
+        values,
+        remove_blank_tags or set(),
+        remove_blank_entries or set(),
+    )
     replace_in_place = template_path.resolve() == output_path.resolve()
     destination = output_path
     if replace_in_place:
@@ -225,7 +234,7 @@ def fix_page_two_project_layout(docx_path: Path) -> None:
             (
                 candidate
                 for candidate in root.xpath("./w:body/w:tbl", namespaces=NS)
-                if "SELECTED PROJECT PORTFOLIO" in "".join(candidate.xpath(".//w:t/text()", namespaces=NS))
+                if "PROJECT PORTFOLIO" in "".join(candidate.xpath(".//w:t/text()", namespaces=NS))
             ),
             None,
         )
@@ -290,7 +299,10 @@ def _controls_by_tag(docx_path: Path) -> dict[str, list[ContentControl]]:
 
 
 def _populate_parts(
-    template_path: Path, values: dict[str, str], remove_blank_tags: set[str]
+    template_path: Path,
+    values: dict[str, str],
+    remove_blank_tags: set[str],
+    remove_blank_entries: set[str],
 ) -> tuple[dict[str, bytes], set[str]]:
     modified: dict[str, bytes] = {}
     removed: set[str] = set()
@@ -301,23 +313,47 @@ def _populate_parts(
                 continue
             root = etree.fromstring(payload)
             changed = False
-            for control in find_content_controls(root, part_name):
+            controls = find_content_controls(root, part_name)
+            for entry_key in remove_blank_entries:
+                entry_controls = [control for control in controls if control.tag.startswith(entry_key + "_")]
+                removable_nodes: list[etree._Element] = []
+                for control in entry_controls:
+                    removable = _removable_container(control.element)
+                    if removable is not None and removable not in removable_nodes:
+                        removable_nodes.append(removable)
+                    removed.add(control.tag)
+                for removable in removable_nodes:
+                    if removable.getparent() is not None:
+                        removable.getparent().remove(removable)
+                        changed = True
+            for control in controls:
                 tag = control.tag
-                if tag not in values:
+                if tag not in values or tag in removed:
                     continue
                 if tag in remove_blank_tags and not values[tag]:
-                    removable = control.element.getparent()
-                    while removable is not None and removable.tag not in {qn("tr"), qn("p")}:
-                        removable = removable.getparent()
+                    removable = _removable_container(control.element)
                     if removable is not None and removable.getparent() is not None:
                         removable.getparent().remove(removable)
                         removed.add(tag)
+                        changed = True
                     continue
                 replace_control_text(control.element, values[tag])
                 changed = True
             if changed:
                 modified[part_name] = etree.tostring(root, encoding="UTF-8", xml_declaration=True, standalone=True)
     return modified, removed
+
+
+def _removable_container(element: etree._Element) -> etree._Element | None:
+    # Word may promote a run-level control to a block-level SDT whose content
+    # owns the paragraph. Removing the SDT itself is the paragraph-safe cleanup
+    # in that representation.
+    if element.find("w:sdtContent/w:p", namespaces=NS) is not None:
+        return element
+    removable = element.getparent()
+    while removable is not None and removable.tag not in {qn("tr"), qn("p")}:
+        removable = removable.getparent()
+    return removable
 
 
 def replace_control_text(control: etree._Element, value: str) -> None:

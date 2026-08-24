@@ -15,10 +15,10 @@ from typing import Any
 from .mapper import ResumeRecord, build_resume_record
 from .theme import apply_resume_theme
 from .validation import (
-    ALL_RESUME_TAGS,
     validate_pdf_page_count,
     validate_record,
     validate_resume_document,
+    validate_resume_template_capacity,
 )
 from .word_renderer import render_word_template
 
@@ -61,8 +61,18 @@ def build_resume(
     """
 
     _report(progress, "Validating the working resume and content mappings...")
-    validate_resume_document(template_path)
     record = build_resume_record(resume_data)
+    working_record = build_resume_record(resume_data, include_working_blanks=True)
+    actual_tags = validate_resume_template_capacity(
+        template_path,
+        required_tags=set(record.values),
+        allowed_tags=set(working_record.values),
+    )
+    for tag in sorted(actual_tags - set(record.values)):
+        record.add(tag, "", "working resume blank capacity", optional=True)
+    for entry_key in working_record.blank_entries:
+        if any(tag.startswith(entry_key + "_") for tag in actual_tags):
+            record.blank_entries.add(entry_key)
     validate_record(record)
     if validate_only:
         return ResumeBuildResult(record=record, docx_path=None, pdf_path=None, pdf_backend=None)
@@ -75,12 +85,15 @@ def build_resume(
         output_path,
         record.values,
         remove_blank_tags={
-            tag for tag, value in record.values.items() if not value and (tag.endswith("_META") or "_BULLET" in tag)
+            tag
+            for tag, value in record.values.items()
+            if not value and (tag.endswith("_META") or tag.endswith("_CATEGORY") or "_BULLET" in tag)
         },
+        remove_blank_entries=record.blank_entries,
     )
     if design_tokens is not None:
         apply_resume_theme(output_path, design_tokens)
-    validate_resume_document(output_path, expected_tags=set(ALL_RESUME_TAGS) - set(removed_tags))
+    validate_resume_document(output_path, expected_tags=set(record.values) - set(removed_tags))
     if pdf_path is None:
         return ResumeBuildResult(record=record, docx_path=output_path, pdf_path=None, pdf_backend=None)
 

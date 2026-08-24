@@ -118,9 +118,13 @@ STATIC_RESUME_TEXT_STYLES = {
     "COMMUNITY INVOLVEMENT": "resume.section_heading",
     "CORE CAPABILITIES": "resume.section_heading",
     "RECOGNITION": "resume.section_heading",
-    "SELECTED PROJECT PORTFOLIO": "resume.section_heading",
+    "PROJECT PORTFOLIO": "resume.section_heading",
     "TECHNICAL SKILLS": "resume.section_heading",
-    "PROJECT PORTFOLIO": "resume.page_heading",
+}
+DYNAMIC_RESUME_TEXT_STYLES = {
+    "resume.organization", "resume.body", "resume.metadata", "resume.position_title",
+    "resume.detail", "resume.award", "resume.skill", "resume.project_title",
+    "resume.project_tool", "resume.page_meta",
 }
 POINT_VALUE = re.compile(r"^(\d+(?:\.\d+)?)pt$")
 
@@ -138,7 +142,11 @@ def apply_resume_theme(docx_path: Path, design_tokens: DesignTokens) -> None:
     missing = sorted(name for name in required if name not in colors)
     if missing:
         raise ValueError(f"Resume theme is missing design token: {missing[0]}")
-    required_styles = set(RESUME_TEXT_STYLE_BY_TAG.values()) | set(STATIC_RESUME_TEXT_STYLES.values())
+    required_styles = (
+        set(RESUME_TEXT_STYLE_BY_TAG.values())
+        | set(STATIC_RESUME_TEXT_STYLES.values())
+        | DYNAMIC_RESUME_TEXT_STYLES
+    )
     missing_styles = sorted(required_styles - set(design_tokens.text_styles))
     if missing_styles:
         raise ValueError(f"Resume theme is missing text style token: {missing_styles[0]}")
@@ -218,7 +226,7 @@ def _apply_resume_text_styles(root: etree._Element, text_styles: Mapping[str, Te
     changed = False
     for control in root.xpath(".//w:sdt", namespaces=NS):
         tag = control.xpath("string(w:sdtPr/w:tag/@w:val)", namespaces=NS)
-        style_name = RESUME_TEXT_STYLE_BY_TAG.get(tag)
+        style_name = resume_text_style_for_tag(tag)
         if not style_name:
             continue
         style = text_styles[style_name]
@@ -238,6 +246,37 @@ def _apply_resume_text_styles(root: etree._Element, text_styles: Mapping[str, Te
             _apply_text_style_to_run(run, style)
             changed = True
     return changed
+
+
+def resume_text_style_for_tag(tag: str) -> str | None:
+    static = RESUME_TEXT_STYLE_BY_TAG.get(tag)
+    if static is not None:
+        return static
+    education = re.fullmatch(r"EDU\d*_(INSTITUTION|DEGREE|DATES|BULLET\d+)", tag)
+    if education:
+        return {
+            "INSTITUTION": "resume.organization",
+            "DEGREE": "resume.body",
+            "DATES": "resume.metadata",
+        }.get(education.group(1), "resume.body")
+    entry = re.fullmatch(r"(EXP|LEAD|COMM|RECOG|PROJECT)\d+_(CATEGORY|TITLE|META|DATES|BULLET\d+)", tag)
+    if entry:
+        prefix, field = entry.groups()
+        if field == "CATEGORY":
+            return "resume.project_context" if prefix == "PROJECT" else None
+        if field == "TITLE":
+            return {
+                "RECOG": "resume.award",
+                "PROJECT": "resume.project_title",
+            }.get(prefix, "resume.position_title")
+        if field == "META":
+            return "resume.project_tool" if prefix == "PROJECT" else "resume.detail"
+        if field == "DATES":
+            return "resume.page_meta" if prefix == "PROJECT" else "resume.metadata"
+        return "resume.body"
+    if re.fullmatch(r"GENERAL_SKILL_\d+", tag):
+        return "resume.skill"
+    return None
 
 
 def _apply_text_style_to_run(run: etree._Element, style: TextStyle) -> None:

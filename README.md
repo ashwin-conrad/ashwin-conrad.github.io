@@ -27,7 +27,7 @@ Choose a numbered purpose area, then a numbered action. The menu groups every op
 | `content/details/facts.json` | Canonical identity, organization, experience, and project facts shared by editing surfaces |
 | `content/site.json` | Site-wide settings, metadata, navigation, references to canonical identity facts, and the ordered website section manifest |
 | `content/details/website/` | Individual website sections and case studies, including copy, images, captions, links, and contact content |
-| `content/resume.json` | Resume manifest, shared-field policy, and fixed Word slot selections |
+| `content/resume.json` | Resume manifest, shared-field policy, and ID-based Word slot selections |
 | `content/details/resume/` | Resume section files recombined by `content/resume.json` |
 | `content/styles.json` | Colour, font-family, and complete named text-style tokens emitted as site CSS variables and applied to the generated resume during the build |
 | `content/assets/asset-record.json` | Canonical image paths, alt text, titles, and display controls; photos live beside it under `content/assets/photos/` |
@@ -94,7 +94,9 @@ The two retained editors live under `content/working/`. Use **Working content â†
 
 `website-working.docx` lists each editable value beside its canonical source path and full website typography token (family, size, weight, style, line height, tracking, and transform). The editable control is styled as a Word preview of that token. `$source` values point to their canonical `facts.json` or `asset-record.json` leaf, so an import updates the owner while preserving the reference in the section file. Structural values such as IDs, file paths, image paths, URLs, include switches, and relationship keys stay in JSON.
 
-`resume-working.docx` contains the fixed-capacity two-page resume layout, including four bullet controls per work-experience slot. A build reads it without changing it, removes public rows whose optional controls are blank, and writes generated `portfolio/resume.docx` and PDF.
+`resume-working.docx` is the expandable editing projection. Every populated Education, Experience, Leadership, Community Involvement, Recognition, and Selected Project entry receives one trailing blank bullet control, and each section receives one entirely blank add-new entry. Filling an add-new entry creates a stable neutral JSON ID during sync and adds it to `resume.json > _meta.word_slot_order`. Rebuilding the working file always recalculates the controls from JSON and adds a fresh trailing bullet and add-new entry.
+
+The public resume remains compact: generation removes every unused bullet paragraph and every entirely blank add-new entry before writing `portfolio/resume.docx` and the validated two-page PDF.
 
 After editing either file, select **Working content â†’ Sync both Word files to JSON and rebuild**. Both documents are validated before any source is written, their controls are imported to the owning JSON files, and all public outputs are rebuilt once. Independent website and resume sync actions are available when only one working file was edited.
 

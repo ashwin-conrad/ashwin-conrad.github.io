@@ -8,10 +8,18 @@
         {
           "id": "experience_1",
           "include": true,
-          "role": {"$source": "facts.experiences.experience_1.role"},
-          "organization": {"$source": "facts.organizations.organization_1.name"},
-          "location": {"$source": "facts.experiences.experience_1.location"},
-          "dates": {"$source": "facts.experiences.experience_1.dates"},
+          "role": {
+            "$source": "facts.experiences.experience_1.role"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_1.name"
+          },
+          "location": {
+            "$source": "facts.experiences.experience_1.location"
+          },
+          "dates": {
+            "$source": "facts.experiences.experience_1.dates"
+          },
           "bullets": [
             "Lead low-voltage planning and integration for Formula UA27 around the vehicle package.",
             "Coordinate power distribution, board-level hardware, sensors, and safety interfaces across the subsystem.",
@@ -22,10 +30,18 @@
         {
           "id": "experience_2",
           "include": true,
-          "role": {"$source": "facts.experiences.experience_2.role"},
-          "organization": {"$source": "facts.organizations.organization_2.name"},
-          "location": {"$source": "facts.experiences.experience_2.location"},
-          "dates": {"$source": "facts.experiences.experience_2.dates"},
+          "role": {
+            "$source": "facts.experiences.experience_2.role"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_2.name"
+          },
+          "location": {
+            "$source": "facts.experiences.experience_2.location"
+          },
+          "dates": {
+            "$source": "facts.experiences.experience_2.dates"
+          },
           "bullets": [
             "Built Python, Microsoft Fabric, and Power BI workflows for corrosion monitoring and inspection planning.",
             "Analyzed 2+ years of operating data for 12+ brazed aluminum heat exchangers.",
@@ -36,10 +52,18 @@
         {
           "id": "experience_3",
           "include": true,
-          "role": {"$source": "facts.experiences.experience_3.role"},
-          "organization": {"$source": "facts.organizations.organization_3.name"},
-          "location": {"$source": "facts.experiences.experience_3.location"},
-          "dates": {"$source": "facts.experiences.experience_3.dates"},
+          "role": {
+            "$source": "facts.experiences.experience_3.role"
+          },
+          "organization": {
+            "$source": "facts.organizations.organization_3.name"
+          },
+          "location": {
+            "$source": "facts.experiences.experience_3.location"
+          },
+          "dates": {
+            "$source": "facts.experiences.experience_3.dates"
+          },
           "bullets": [
             "Built, wired, loaded, and checked 30+ industrial control panels from drawings and electrical schematics.",
             "Performed pre-delivery quality checks and documented deficiency resolution before customer delivery.",

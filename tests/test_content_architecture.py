@@ -4,6 +4,7 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import sys
+from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
@@ -13,7 +14,7 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 import content_model  # noqa: E402
-from content_model import compose_site_content, detail_source_paths, load_details_content, load_resume_content, resolve_fact_references, validate_content_model  # noqa: E402
+from content_model import compose_site_content, detail_source_paths, load_details_content, load_resume_content, resolve_fact_references, validate_content_model, write_resume_content  # noqa: E402
 from project_paths import ASSETS_DIR, ASSET_RECORD_PATH, DESIGN_TOKENS_PATH, FACTS_CONTENT_PATH, RESUME_CONTENT_PATH, SITE_CONTENT_PATH  # noqa: E402
 from portfolio_workflow import sync_shared_fields  # noqa: E402
 
@@ -107,6 +108,10 @@ class ContentArchitectureTests(unittest.TestCase):
         self.assertEqual(self.facts["projects"]["project_2"]["metrics"]["heat_exchanger_count"], "12+")
         self.assertEqual(self.facts["projects"]["project_3"]["metrics"]["inspection_scope_count"], "500+")
         self.assertEqual(self.facts["projects"]["project_5"]["metrics"]["panel_count"], "30+")
+        self.assertEqual(self.facts["projects"]["project_9"]["category"], "Course Projects")
+        self.assertEqual(self.facts["projects"]["project_10"]["category"], "Course Projects")
+        self.assertEqual(self.facts["projects"]["project_1"]["category"], "Extracurricular Projects")
+        self.assertEqual(self.facts["projects"]["project_6"]["category"], "Personal Projects")
         self.assertIn("Python", self.facts["skills"]["data_automation"])
         self.assertEqual(self.facts["recognitions"]["recognition_1"]["dates"], "2024-2025")
 
@@ -145,6 +150,45 @@ class ContentArchitectureTests(unittest.TestCase):
         updated, report = sync_shared_fields(self.site, self.resume, facts)
         self.assertEqual(updated["name"], {"$source": "facts.identity.name"})
         self.assertIn("Current: Name", report)
+
+    def test_resume_write_persists_new_items_and_dynamic_slot_order(self) -> None:
+        with TemporaryDirectory() as temporary:
+            content_dir = Path(temporary)
+            manifest_path = content_dir / "resume.json"
+            section_path = content_dir / "details" / "resume" / "experience.json"
+            section_path.parent.mkdir(parents=True)
+            manifest_path.write_text(
+                json.dumps(
+                    {
+                        "sections": [{"id": "experience", "file": "details/resume/experience.json"}],
+                        "_meta": {"word_slot_order": {"experience": ["experience_1"]}},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            original_item = {"id": "experience_1", "role": "Existing", "bullets": ["Existing detail"]}
+            section_path.write_text(
+                json.dumps({"blocks": [{"heading": "Experience", "items": [original_item]}]}),
+                encoding="utf-8",
+            )
+            added_item = {"id": "experience_2", "role": "Added in Word", "bullets": ["New detail"]}
+            composed = {
+                "pages": [{"blocks": [{"heading": "Experience", "items": [original_item, added_item]}]}],
+                "_meta": {"word_slot_order": {"experience": ["experience_1", "experience_2"]}},
+            }
+            with (
+                patch.object(content_model, "RESUME_CONTENT_PATH", manifest_path),
+                patch.object(content_model, "RESUME_DIR", content_dir),
+            ):
+                write_resume_content(composed)
+
+            saved_section = json.loads(section_path.read_text(encoding="utf-8"))
+            saved_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(saved_section["blocks"][0]["items"][-1]["id"], "experience_2")
+            self.assertEqual(
+                saved_manifest["_meta"]["word_slot_order"]["experience"],
+                ["experience_1", "experience_2"],
+            )
 
 
 if __name__ == "__main__":

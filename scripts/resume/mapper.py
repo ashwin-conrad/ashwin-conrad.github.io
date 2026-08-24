@@ -1,9 +1,8 @@
-"""Translate the canonical resume JSON into Word content-control values.
+"""Translate canonical resume JSON into public and working Word controls.
 
-The Word template is deliberately fixed to two pages, so its presentation slots
-use a documented ID-based selection policy rather than mirroring every resume
-item automatically. Content comes from ``content/details/resume.json``; these constants
-only decide which existing stable IDs occupy the fixed slots.
+The public projection uses the documented ID-based selection policy in
+``resume.json``. The working projection adds a trailing bullet to every mapped
+entry and one blank add-new entry per repeatable section.
 """
 
 from __future__ import annotations
@@ -14,7 +13,7 @@ from typing import Any
 
 
 class ResumeMappingError(RuntimeError):
-    """Raised when canonical resume content cannot fill the fixed Word layout."""
+    """Raised when canonical resume content cannot fill its Word controls."""
 
 
 TECHNICAL_SKILL_RULES = (
@@ -36,6 +35,14 @@ TECHNICAL_SKILL_RULES = (
     ),
 )
 
+DEFAULT_ENTRY_BULLET_CAPACITY = {
+    "EXP": 4,
+    "LEAD": 1,
+    "COMM": 1,
+    "RECOG": 1,
+    "PROJECT": 4,
+}
+
 
 @dataclass
 class ResumeRecord:
@@ -43,13 +50,17 @@ class ResumeRecord:
 
     values: dict[str, str] = field(default_factory=dict)
     sources: dict[str, str] = field(default_factory=dict)
+    optional_tags: set[str] = field(default_factory=set)
+    blank_entries: set[str] = field(default_factory=set)
 
-    def add(self, tag: str, value: object, source: str) -> None:
+    def add(self, tag: str, value: object, source: str, *, optional: bool = False) -> None:
         self.values[tag] = "" if value is None else str(value).strip()
         self.sources[tag] = source
+        if optional:
+            self.optional_tags.add(tag)
 
 
-def build_resume_record(resume: dict[str, Any]) -> ResumeRecord:
+def build_resume_record(resume: dict[str, Any], *, include_working_blanks: bool = False) -> ResumeRecord:
     """Build a tag-addressed record from independent concise resume content."""
 
     if not resume:
@@ -69,25 +80,48 @@ def build_resume_record(resume: dict[str, Any]) -> ResumeRecord:
     items_by_id = _resume_items_by_id(resume)
     education_ids = education_slot_order(resume)
     _ensure_known_ids(items_by_id, education_ids, "education")
-    for tag_prefix, item_id in zip(("EDU", "EDU2"), education_ids, strict=True):
-        _add_education_entry(record, tag_prefix, items_by_id[item_id], f"resume item {item_id}")
+    for index, item_id in enumerate(education_ids, start=1):
+        _add_education_entry(
+            record,
+            education_tag_prefix(index),
+            items_by_id[item_id],
+            f"resume item {item_id}",
+            add_blank_bullet=include_working_blanks,
+        )
+    if include_working_blanks:
+        _add_education_entry(
+            record,
+            education_tag_prefix(len(education_ids) + 1),
+            {},
+            "new education entry",
+            add_blank_bullet=True,
+            blank_entry=True,
+        )
 
     _ensure_known_ids(items_by_id, experience_ids, "experience")
     for index, item_id in enumerate(experience_ids, start=1):
         item = items_by_id[item_id]
-        _add_entry(record, "EXP", index, item, 4, f"resume item {item_id}")
+        _add_entry(record, "EXP", index, item, f"resume item {item_id}", add_blank_bullet=include_working_blanks)
+    if include_working_blanks:
+        _add_entry(record, "EXP", len(experience_ids) + 1, {}, "new experience entry", bullet_capacity=4, blank_entry=True)
 
     _ensure_known_ids(items_by_id, leadership_ids, "leadership")
     for index, item_id in enumerate(leadership_ids, start=1):
-        _add_entry(record, "LEAD", index, items_by_id[item_id], 1, f"resume item {item_id}")
+        _add_entry(record, "LEAD", index, items_by_id[item_id], f"resume item {item_id}", add_blank_bullet=include_working_blanks)
+    if include_working_blanks:
+        _add_entry(record, "LEAD", len(leadership_ids) + 1, {}, "new leadership entry", bullet_capacity=1, blank_entry=True)
 
     _ensure_known_ids(items_by_id, community_ids, "community")
     for index, item_id in enumerate(community_ids, start=1):
-        _add_entry(record, "COMM", index, items_by_id[item_id], 1, f"resume item {item_id}")
+        _add_entry(record, "COMM", index, items_by_id[item_id], f"resume item {item_id}", add_blank_bullet=include_working_blanks)
+    if include_working_blanks:
+        _add_entry(record, "COMM", len(community_ids) + 1, {}, "new community entry", bullet_capacity=1, blank_entry=True)
 
     _ensure_known_ids(items_by_id, recognition_ids, "recognition")
     for index, item_id in enumerate(recognition_ids, start=1):
-        _add_entry(record, "RECOG", index, items_by_id[item_id], 1, f"resume item {item_id}")
+        _add_entry(record, "RECOG", index, items_by_id[item_id], f"resume item {item_id}", add_blank_bullet=include_working_blanks)
+    if include_working_blanks:
+        _add_entry(record, "RECOG", len(recognition_ids) + 1, {}, "new recognition entry", bullet_capacity=1, blank_entry=True)
 
     general_skills = list(resume.get("general_skills", []))[:6]
     if len(general_skills) < 6:
@@ -99,9 +133,26 @@ def build_resume_record(resume: dict[str, Any]) -> ResumeRecord:
     record.add("PAGE2_WEBSITE", contact["website"], "resume.contact")
 
     _ensure_known_ids(items_by_id, project_ids, "project")
+    previous_category = ""
     for index, item_id in enumerate(project_ids, start=1):
         project = items_by_id[item_id]
-        _add_entry(record, "PROJECT", index, project, 4, f"resume item {item_id}")
+        category = str(project.get("category", "")).strip()
+        record.add(
+            f"PROJECT{index}_CATEGORY",
+            category if category != previous_category else "",
+            f"resume item {item_id}.category",
+            optional=category == previous_category,
+        )
+        _add_entry(record, "PROJECT", index, project, f"resume item {item_id}", add_blank_bullet=include_working_blanks)
+        previous_category = category
+    if include_working_blanks:
+        record.add(
+            f"PROJECT{len(project_ids) + 1}_CATEGORY",
+            "",
+            "new project entry.category",
+            optional=True,
+        )
+        _add_entry(record, "PROJECT", len(project_ids) + 1, {}, "new project entry", bullet_capacity=4, blank_entry=True)
 
     skill_sources = _skill_sources(resume)
     for value_tag, keywords in TECHNICAL_SKILL_RULES:
@@ -176,35 +227,73 @@ def _list_items(resume: dict[str, Any], heading: str) -> list[str]:
 
 
 def _add_entry(
-    record: ResumeRecord, prefix: str, index: int, item: dict[str, Any], bullet_count: int, source: str
+    record: ResumeRecord,
+    prefix: str,
+    index: int,
+    item: dict[str, Any],
+    source: str,
+    *,
+    add_blank_bullet: bool = False,
+    bullet_capacity: int | None = None,
+    blank_entry: bool = False,
 ) -> None:
     bullets = list(item.get("bullets", []))
-    if len(bullets) != bullet_count:
-        noun = "bullets" if bullet_count != 1 else "bullet"
-        raise ResumeMappingError(f"{source} must provide exactly {bullet_count} {noun} for its Word slot")
-    record.add(f"{prefix}{index}_TITLE", item.get("role", ""), source)
-    record.add(f"{prefix}{index}_META", _join_nonempty((item.get("organization", ""), item.get("location", "")), " - "), source)
-    record.add(f"{prefix}{index}_DATES", item.get("dates", ""), source)
-    for bullet_index in range(1, bullet_count + 1):
+    capacity = bullet_capacity if bullet_capacity is not None else len(bullets)
+    if add_blank_bullet:
+        capacity = max(capacity + 1, DEFAULT_ENTRY_BULLET_CAPACITY[prefix])
+    entry_key = f"{prefix}{index}"
+    record.add(f"{entry_key}_TITLE", item.get("role", ""), source, optional=blank_entry)
+    record.add(
+        f"{entry_key}_META",
+        _join_nonempty((item.get("organization", ""), item.get("location", "")), " - "),
+        source,
+        optional=blank_entry or prefix == "RECOG",
+    )
+    record.add(
+        f"{entry_key}_DATES",
+        item.get("dates", ""),
+        source,
+        optional=blank_entry or prefix in {"COMM", "RECOG"},
+    )
+    for bullet_index in range(1, capacity + 1):
         record.add(
-            f"{prefix}{index}_BULLET{bullet_index}",
-            bullets[bullet_index - 1],
+            f"{entry_key}_BULLET{bullet_index}",
+            bullets[bullet_index - 1] if bullet_index <= len(bullets) else "",
             f"{source}.bullets[{bullet_index - 1}]",
+            optional=blank_entry or bullet_index > len(bullets),
         )
+    if blank_entry:
+        record.blank_entries.add(entry_key)
 
 
-def _add_education_entry(record: ResumeRecord, tag_prefix: str, item: dict[str, Any], source: str) -> None:
+def _add_education_entry(
+    record: ResumeRecord,
+    tag_prefix: str,
+    item: dict[str, Any],
+    source: str,
+    *,
+    add_blank_bullet: bool = False,
+    blank_entry: bool = False,
+) -> None:
     bullets = list(item.get("bullets", []))
-    if len(bullets) != 1:
-        raise ResumeMappingError(f"{source} must provide exactly one bullet for its Word education slot")
-    record.add(f"{tag_prefix}_INSTITUTION", item.get("organization", ""), source)
+    record.add(f"{tag_prefix}_INSTITUTION", item.get("organization", ""), source, optional=blank_entry)
     record.add(
         f"{tag_prefix}_DEGREE",
         _join_nonempty((item.get("role", ""), item.get("location", "")), " - "),
         source,
+        optional=blank_entry,
     )
-    record.add(f"{tag_prefix}_DATES", item.get("dates", ""), source)
-    record.add(f"{tag_prefix}_BULLET1", bullets[0], f"{source}.bullets[0]")
+    record.add(f"{tag_prefix}_DATES", item.get("dates", ""), source, optional=blank_entry)
+    capacity = len(bullets) + int(add_blank_bullet)
+    for bullet_index in range(1, capacity + 1):
+        record.add(
+            f"{tag_prefix}_BULLET{bullet_index}",
+            bullets[bullet_index - 1] if bullet_index <= len(bullets) else "",
+            f"{source}.bullets[{bullet_index - 1}]",
+            optional=blank_entry or bullet_index > len(bullets),
+        )
+    if blank_entry:
+        record.blank_entries.add(tag_prefix)
 
 
 def _bullets_as_text(item: dict[str, Any]) -> str:
@@ -265,38 +354,47 @@ def _join_nonempty(parts: tuple[object, ...], separator: str) -> str:
 def word_slot_order(
     resume: dict[str, Any],
 ) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
-    """Read the fixed Word layout's selections from neutral resume metadata."""
+    """Read the Word layout selections from neutral resume metadata."""
 
     meta = resume.get("_meta")
     slots = meta.get("word_slot_order") if isinstance(meta, dict) else None
     if not isinstance(slots, dict):
         raise ResumeMappingError("resume._meta.word_slot_order must configure the fixed Word layout")
     return (
-        _slot_ids(slots.get("experience"), "experience", 2),
-        _slot_ids(slots.get("leadership"), "leadership", 2),
-        _slot_ids(slots.get("community"), "community", 1),
-        _slot_ids(slots.get("recognition"), "recognition", 3),
-        _slot_ids(slots.get("projects"), "projects", 4),
+        _slot_ids(slots.get("experience"), "experience"),
+        _slot_ids(slots.get("leadership"), "leadership"),
+        _slot_ids(slots.get("community"), "community"),
+        _slot_ids(slots.get("recognition"), "recognition"),
+        _slot_ids(slots.get("projects"), "projects"),
     )
 
 
-def education_slot_order(resume: dict[str, Any]) -> tuple[str, str]:
-    """Read the two education records assigned to the fixed Word layout."""
+def education_slot_order(resume: dict[str, Any]) -> tuple[str, ...]:
+    """Read the education records assigned to the Word layout."""
 
     meta = resume.get("_meta")
     slots = meta.get("word_slot_order") if isinstance(meta, dict) else None
     if not isinstance(slots, dict):
         raise ResumeMappingError("resume._meta.word_slot_order must configure the fixed Word layout")
-    education_ids = _slot_ids(slots.get("education"), "education", 2)
-    return education_ids[0], education_ids[1]
+    return _slot_ids(slots.get("education"), "education")
 
 
-def _slot_ids(value: object, label: str, expected_count: int) -> tuple[str, ...]:
-    if not isinstance(value, list) or len(value) != expected_count or not all(isinstance(item, str) and item for item in value):
+def _slot_ids(value: object, label: str, expected_count: int | None = None) -> tuple[str, ...]:
+    if (
+        not isinstance(value, list)
+        or not value
+        or (expected_count is not None and len(value) != expected_count)
+        or not all(isinstance(item, str) and item for item in value)
+    ):
+        expectation = f"exactly {expected_count}" if expected_count is not None else "one or more"
         raise ResumeMappingError(
-            f"resume._meta.word_slot_order.{label} must contain exactly {expected_count} non-empty item IDs"
+            f"resume._meta.word_slot_order.{label} must contain {expectation} non-empty item IDs"
         )
     return tuple(value)
+
+
+def education_tag_prefix(index: int) -> str:
+    return "EDU" if index == 1 else f"EDU{index}"
 
 
 def _is_included(item: dict[str, Any]) -> bool:

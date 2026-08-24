@@ -1,11 +1,23 @@
 {
-  "name": {"$source": "facts.identity.name"},
+  "name": {
+    "$source": "facts.identity.name"
+  },
   "headline": "Mechanical engineering student focused on vehicle systems, manufacturing, testing, and build-ready design. Experience in Formula EV low-voltage integration, industrial control-panel QA, engineering analysis, and Python automation.",
   "contact": {
-    "location": {"$source": "facts.identity.location"},
-    "phone": {"$source": "facts.identity.phone"},
-    "email": {"$source": "facts.identity.email"},
-    "website": {"$source": "facts.identity.website"}
+    "location": {
+      "$source": "facts.identity.location"
+    },
+    "phone": {
+      "$source": "facts.identity.phone"
+    },
+    "email": {
+      "$source": "facts.identity.email"
+    },
+    "website": {
+      "$source": "facts.identity.website"
+    }
   },
-  "general_skills": {"$source": "facts.resume_general_skills"}
+  "general_skills": {
+    "$source": "facts.resume_general_skills"
+  }
 }
